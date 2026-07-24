@@ -17,6 +17,7 @@ Discord tags of the people that helped make this possible
 - @haydumbb (Some ideas and art)
 - @divine_lumine (Armor sprites)
 - @the_trueterrafox (Item idea and sprites)
+- @tea_kettles (i-frames visual bugfix)
 
 [c/EFBF00:Full credits]
 [wgmodcred:0]

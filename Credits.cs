@@ -25,6 +25,7 @@ public enum ProjectRole
 /// <summary> A contributor's Discord handle </summary>
 public enum Contributor
 {
+    /// <summary> Meooow </summary>
     [Category("Team")]
     follycake,
     /// <summary> Haiiii :3 </summary>
@@ -42,6 +43,7 @@ public enum Contributor
     haydumbb,
     divine_lumine,
     the_trueterrafox,
+    tea_kettles,
 
     [Category("Other")]
     purple_circle,
