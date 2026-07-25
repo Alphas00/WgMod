@@ -125,4 +125,11 @@ public static class Utility
     }
 
     public static float GetJumpSpeedIncrease(float speed) => speed / 6.51f;
+
+    public static ModPacket GetPacket(this Mod mod, WgMod.MessageType type, int capacity = 256)
+    {
+        ModPacket packet = mod.GetPacket(capacity);
+        packet.Write((byte)type);
+        return packet;
+    }
 }

@@ -1,5 +1,7 @@
 using System.IO;
 using Terraria;
+using Terraria.Audio;
+using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 
@@ -9,8 +11,7 @@ public partial class WgPlayer
 {
     public override void SyncPlayer(int toWho, int fromWho, bool newPlayer)
     {
-        ModPacket packet = Mod.GetPacket();
-        packet.Write((byte)WgMod.MessageType.WgPlayerSync);
+        ModPacket packet = Mod.GetPacket(WgMod.MessageType.WgPlayerSync);
         packet.Write((byte)Player.whoAmI);
         packet.Write(Weight.Mass);
         packet.Send(toWho, fromWho);
@@ -32,6 +33,18 @@ public partial class WgPlayer
         WgPlayer clone = (WgPlayer)clientPlayer;
         if (Weight != clone.Weight)
             SyncPlayer(-1, Main.myPlayer, false);
+    }
+
+    public void Gurgle(bool network = true)
+    {
+        if (Main.netMode == NetmodeID.SinglePlayer || !network)
+        {
+            SoundEngine.PlaySound(WgSounds.Gurgle, Player.Center);
+            return;
+        }
+        ModPacket packet = Mod.GetPacket(WgMod.MessageType.WgPlayerGurgle);
+        packet.Write((byte)Player.whoAmI);
+        packet.Send();
     }
 
     // Saving
