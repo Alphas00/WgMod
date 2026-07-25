@@ -2,8 +2,8 @@
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
-using WgMod.Content.NPCs.GroundedHarpy;
-using WgMod.Content.NPCs.Milkmaid;
+using WgMod.Content.NPCs.TownNPCs.GroundedHarpy;
+using WgMod.Content.NPCs.TownNPCs.Milkmaid;
 
 namespace WgMod.Common.Systems;
 

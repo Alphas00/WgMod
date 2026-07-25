@@ -14,7 +14,7 @@ using WgMod.Content.Items.Consumables.Potions.WeightGainPotions;
 using WgMod.Content.Items.Consumables.Potions.WeightLossPotions;
 using WgMod.Content.Items.Placeable.Furniture.Barn;
 
-namespace WgMod.Content.NPCs.Milkmaid;
+namespace WgMod.Content.NPCs.TownNPCs.Milkmaid;
 
 [AutoloadHead]
 
@@ -22,7 +22,7 @@ namespace WgMod.Content.NPCs.Milkmaid;
 [Credit(ProjectRole.Artist, Contributor._d_u_m_m_y_)]
 public class MilkmaidNPC : ModNPC
 {
-    public override string Texture => "WgMod/Content/NPCs/Milkmaid/Milkmaid";
+    public override string Texture => "WgMod/Content/NPCs/TownNPCs/Milkmaid/Milkmaid";
 
     public override bool CanGoToStatue(bool toQueenStatue) => toQueenStatue;
 

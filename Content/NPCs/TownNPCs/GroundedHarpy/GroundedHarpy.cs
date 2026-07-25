@@ -13,7 +13,7 @@ using WgMod.Content.Items.Consumables;
 using WgMod.Content.Items.Weapons.Ranged;
 using WgMod.Content.Projectiles;
 
-namespace WgMod.Content.NPCs.GroundedHarpy;
+namespace WgMod.Content.NPCs.TownNPCs.GroundedHarpy;
 
 [AutoloadHead]
 
@@ -21,7 +21,7 @@ namespace WgMod.Content.NPCs.GroundedHarpy;
 [Credit(ProjectRole.Artist, Contributor.sinnerdrip)]
 public class GroundedHarpyNPC : ModNPC
 {
-    public override string Texture => "WgMod/Content/NPCs/GroundedHarpy/GroundedHarpy";
+    public override string Texture => "WgMod/Content/NPCs/TownNPCs/GroundedHarpy/GroundedHarpy";
 
     public override bool CanGoToStatue(bool toQueenStatue) => toQueenStatue;
 
