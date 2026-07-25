@@ -37,7 +37,7 @@ public class FullOfSpider : ModBuff
             _cooldown = 0;
 
             wg.SetWeight(wg.Weight + FatPerCycle);
-            CombatText.NewText(player.getRect(), Color.Yellow, FatPerCycle + " kg");
+            wg.CombatWeightText(FatPerCycle, false);
             SoundEngine.PlaySound(WgSounds.Gulp, player.Center);
         }
     }

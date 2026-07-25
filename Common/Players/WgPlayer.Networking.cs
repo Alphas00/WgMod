@@ -1,4 +1,5 @@
 using System.IO;
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
@@ -35,7 +36,7 @@ public partial class WgPlayer
             SyncPlayer(-1, Main.myPlayer, false);
     }
 
-    public void Gurgle(bool network = true)
+    public void Gurgle(bool network)
     {
         if (Main.netMode == NetmodeID.SinglePlayer || !network)
         {
@@ -44,6 +45,19 @@ public partial class WgPlayer
         }
         ModPacket packet = Mod.GetPacket(WgMod.MessageType.WgPlayerGurgle);
         packet.Write((byte)Player.whoAmI);
+        packet.Send();
+    }
+
+    public void CombatWeightText(float amount, bool network)
+    {
+        if (Main.netMode == NetmodeID.SinglePlayer || !network)
+        {
+            CombatText.NewText(Player.getRect(), Color.Yellow, amount + " kg");
+            return;
+        }
+        ModPacket packet = Mod.GetPacket(WgMod.MessageType.WgPlayerCombatWeightText);
+        packet.Write((byte)Player.whoAmI);
+        packet.Write(amount);
         packet.Send();
     }
 

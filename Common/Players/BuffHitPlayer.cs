@@ -38,7 +38,7 @@ public partial class BuffHitPlayer : ModPlayer
         wg.SetWeight(wg.Weight + weightGain);
         SoundEngine.PlaySound(WgSounds.Gulp, Player.Center);
         if (weightGain > 0f)
-            CombatText.NewText(Player.getRect(), Color.Yellow, weightGain + " kg");
+            wg.CombatWeightText(weightGain, true);
     }
 
     public override void OnHitByNPC(NPC npc, Player.HurtInfo hurtInfo)

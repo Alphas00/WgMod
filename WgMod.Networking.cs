@@ -12,7 +12,8 @@ partial class WgMod
     {
         Invalid = 0,
         WgPlayerSync,
-        WgPlayerGurgle
+        WgPlayerGurgle,
+        WgPlayerCombatWeightText
     }
 
     public override void HandlePacket(BinaryReader reader, int whoAmI)
@@ -29,12 +30,23 @@ partial class WgMod
             case MessageType.WgPlayerGurgle:
                 if (Main.netMode == NetmodeID.Server)
                 {
-                    ModPacket packet = this.GetPacket(MessageType.WgPlayerGurgle);
+                    ModPacket packet = this.GetPacket(type);
                     packet.Write(reader.ReadByte());
                     packet.Send();
                 }
                 else
                     Main.player[reader.ReadByte()].Wg().Gurgle(false);
+                break;
+            case MessageType.WgPlayerCombatWeightText:
+                if (Main.netMode == NetmodeID.Server)
+                {
+                    ModPacket packet = this.GetPacket(type);
+                    packet.Write(reader.ReadByte());
+                    packet.Write(reader.ReadSingle());
+                    packet.Send();
+                }
+                else
+                    Main.player[reader.ReadByte()].Wg().CombatWeightText(reader.ReadSingle(), false);
                 break;
             default:
                 Logger.WarnFormat("WgMod: Unknown Message type: {0}", type);
