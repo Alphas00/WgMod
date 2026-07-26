@@ -66,7 +66,8 @@ public partial class WgPlayer : ModPlayer
         SetWeightForced(weight, effects);
     }
 
-    void SetWeightForced(Weight weight, bool effects = true)
+    /// <summary> Do not use this unless you know what you're doing </summary>
+    internal void SetWeightForced(Weight weight, bool effects = true)
     {
         int prevStage = Weight.GetStage();
         Weight = Weight.Clamp(weight, _finalMaxStage);

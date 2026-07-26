@@ -155,15 +155,25 @@ public static class WgArmor
 
         Array.Clear(wg._armorLayers);
         if (player.body > 0)
-            wg._armorLayers[0] = new(TextureAssets.ArmorBodyComposite[player.body], Light(player, position, Color.White));
+        {
+            Color lit = Light(player, position, Color.White);
+            if (player.isDisplayDollOrInanimate)
+                wg._armorLayers[0] = new(TextureAssets.Players[player.skinVariant, 3], lit);
+            wg._armorLayers[1] = new(TextureAssets.ArmorBodyComposite[player.body], lit);
+        }
         else
         {
-            Color underShirt = Light(player, position, player.underShirtColor);
-            Color shirt = Light(player, position, player.shirtColor);
-            wg._armorLayers[0] = new(TextureAssets.Players[player.skinVariant, 4], underShirt);
-            wg._armorLayers[1] = new(TextureAssets.Players[player.skinVariant, 8], underShirt);
-            wg._armorLayers[2] = new(TextureAssets.Players[player.skinVariant, 13], shirt);
-            wg._armorLayers[3] = new(TextureAssets.Players[player.skinVariant, 6], shirt);
+            if (player.isDisplayDollOrInanimate)
+                wg._armorLayers[0] = new(TextureAssets.Players[player.skinVariant, 3], Light(player, position, Color.White));
+            else
+            {
+                Color underShirt = Light(player, position, player.underShirtColor);
+                Color shirt = Light(player, position, player.shirtColor);
+                wg._armorLayers[0] = new(TextureAssets.Players[player.skinVariant, 4], underShirt);
+                wg._armorLayers[1] = new(TextureAssets.Players[player.skinVariant, 8], underShirt);
+                wg._armorLayers[2] = new(TextureAssets.Players[player.skinVariant, 13], shirt);
+                wg._armorLayers[3] = new(TextureAssets.Players[player.skinVariant, 6], shirt);
+            }
         }
     }
 }

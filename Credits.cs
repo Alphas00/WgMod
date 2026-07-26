@@ -44,6 +44,7 @@ public enum Contributor
     divine_lumine,
     the_trueterrafox,
     tea_kettles,
+    anolivewine,
 
     [Category("Other")]
     purple_circle,
