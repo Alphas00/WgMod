@@ -935,7 +935,7 @@ NPCs: {
 			DislikeBiome: It's c-c-cold! I need to fly south for the winter!
 		}
 
-		Census.SpawnCondition: Use {$ItemName.PowderedSugar} [i:PowderedSugar] on a harpy
+		Census.SpawnCondition: Use {$Items.PowderedSugar.DisplayName} [i:WgMod/PowderedSugar] on a harpy
 	}
 
 	HomingFood.DisplayName: Cursed Food
