@@ -24,7 +24,7 @@ public class MilkmaidNPC : ModNPC
 {
     public override string Texture => "WgMod/Content/NPCs/TownNPCs/Milkmaid/Milkmaid";
 
-    public override bool CanGoToStatue(bool toQueenStatue) => toQueenStatue;
+    public override bool CanGoToStatue(bool toQueenStatue) => true;
 
     public static bool milkedToday;
 

@@ -23,7 +23,7 @@ public class GroundedHarpyNPC : ModNPC
 {
     public override string Texture => "WgMod/Content/NPCs/TownNPCs/GroundedHarpy/GroundedHarpy";
 
-    public override bool CanGoToStatue(bool toQueenStatue) => toQueenStatue;
+    public override bool CanGoToStatue(bool toQueenStatue) => true;
 
     public const string ShopName = "Shop";
 
