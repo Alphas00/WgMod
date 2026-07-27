@@ -203,6 +203,7 @@ public class GroundedHarpyNPC : ModNPC
 
             chat.Add(Language.GetTextValue("Mods.WgMod.Dialogue.GroundedHarpy.StandardDialogue1")); // "Scraw! I'm still mad at you for making me this big!"
             chat.Add(Language.GetTextValue("Mods.WgMod.Dialogue.GroundedHarpy.StandardDialogue2")); // "No wonder humans can't fly if all of their food tastes this good!"
+            chat.Add(Language.GetTextValue("Mods.WgMod.Dialogue.GroundedHarpy.StandardDialogue3")); // "What? No we don't die when you kill us! We respawn, just like you! Scraw!"
             chat.Add(Language.GetTextValue("Mods.WgMod.Dialogue.GroundedHarpy.StandardDialogue4")); // "Have any more of that sweet powder stuff? Why? Mind your business!"
             chat.Add(Language.GetTextValue("Mods.WgMod.Dialogue.GroundedHarpy.StandardDialogue5")); // "Living on the ground is boring, I wanna touch the clouds again!"
             chat.Add(Language.GetTextValue("Mods.WgMod.Dialogue.GroundedHarpy.StandardDialogue6")); // "You've killed some big baddies, did you roast their meat by the fire?"
