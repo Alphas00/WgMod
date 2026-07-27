@@ -38,14 +38,14 @@ public partial class WgPlayer
         }
     }
 
-    void PreUpdateVisuals()
+    internal void PreUpdateVisuals()
     {
         Player.gfxOffY = _lastGfxOffY;
         _addedGfxOffY = WeightValues.DrawOffsetY(Weight.GetStage()) * -Player.gravDir;
         _headOverride = null;
     }
 
-    void PostUpdateVisuals()
+    internal void PostUpdateVisuals()
     {
         // Can't find a better way to change the draw position
         _lastGfxOffY = Player.gfxOffY;
@@ -98,11 +98,13 @@ public partial class WgPlayer
 
     public override void ModifyDrawInfo(ref PlayerDrawSet drawInfo)
     {
-        if (Player.mount.Active)
+        if (Player.isDisplayDollOrInanimate)
+            drawInfo.Position.Y += Player.gfxOffY;
+        /*if (Player.mount.Active)
         {
-            /*drawInfo.Position.Y += drawInfo.mountOffSet;
+            drawInfo.Position.Y += drawInfo.mountOffSet;
             drawInfo.mountOffSet *= WeightValues.GetMountScale(Weight.GetStage());
-            drawInfo.Position.Y -= drawInfo.mountOffSet;*/
-        }
+            drawInfo.Position.Y -= drawInfo.mountOffSet;
+        }*/
     }
 }

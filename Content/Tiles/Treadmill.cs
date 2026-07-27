@@ -32,7 +32,7 @@ public class Treadmill : ModTile
         TileObjectData.newTile.CoordinatePaddingFix = new Point16(0, -2);
         TileObjectData.addTile(Type);
 
-        AddMapEntry(new Color(191, 142, 111), Mod.GetLocalization("Items.Treadmill.DisplayName"));
+        AddMapEntry(new Color(130, 130, 130), Mod.GetLocalization("Items.Treadmill.DisplayName"));
     }
 
     public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings)

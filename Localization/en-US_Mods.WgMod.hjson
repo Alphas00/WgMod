@@ -676,6 +676,15 @@ Items: {
 		DisplayName: Spider Donut
 		Tooltip: Don't worry. Spider didn't.
 	}
+
+	Scale: {
+		DisplayName: Scale
+		Tooltip:
+			'''
+			Right click to weigh yourself!
+			Just don't expect this to work with a land whale...
+			'''
+	}
 }
 
 Buffs: {
