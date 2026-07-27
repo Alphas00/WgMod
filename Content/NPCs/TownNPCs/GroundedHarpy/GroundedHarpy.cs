@@ -39,6 +39,8 @@ public class GroundedHarpyNPC : ModNPC
         NPCID.Sets.AttackAverageChance[Type] = 5;
         NPCID.Sets.HatOffsetY[Type] = 4;
 
+        NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Confused] = true;
+
         NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new() { Velocity = -1f, Direction = -1 };
         NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, drawModifiers);
 
