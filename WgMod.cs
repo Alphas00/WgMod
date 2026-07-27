@@ -6,11 +6,12 @@ using WgMod.Common.Configs;
 namespace WgMod;
 
 // TODO: Use calories instead
-public record struct GainOptions(float TotalGain, float Time = 0f)
+public record struct GainOptions(Mass TotalGain, float Time = 0f)
 {
     public readonly bool IsInstant => Time < 0.01f;
 
     public static implicit operator GainOptions(float mass) => new(mass);
+    public static implicit operator GainOptions(Mass mass) => new(mass);
 }
 
 // Please read https://github.com/tModLoader/tModLoader/wiki/Basic-tModLoader-Modding-Guide#mod-skeleton-contents for more information about the various files in a mod.

@@ -47,7 +47,7 @@ public class WeightManipulator : ModItem
         {
             int sign = player.altFunctionUse == 2 ? -1 : 1;
             wg.SetWeight(wg.Weight + sign * 10f);
-            Main.NewText($"Weight: {wg.Weight} ({wg.Weight.ToPounds()} lbs), Stage: {wg.Weight.GetStage()}", 255, 255, 0);
+            Main.NewText($"Weight: {wg.Weight}, Stage: {wg.Weight.GetStage()}", 255, 255, 0);
             return true;
         }
         return null;

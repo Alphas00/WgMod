@@ -76,6 +76,6 @@ public partial class WgPlayer
 
     public override void SaveData(TagCompound tag)
     {
-        tag["Weight"] = Weight.Mass;
+        tag["Weight"] = Weight.Mass.Value;
     }
 }

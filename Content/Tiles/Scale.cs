@@ -46,11 +46,11 @@ public class Scale : ModTile
         Weight weight = wg.Weight;
         if (weight.Mass > WeightLimit)
         {
-            Main.NewText($"Scale: ERROR - TOO HEAVY", Color.Red);
+            Main.NewText("Scale: ERROR - TOO HEAVY", Color.Red);
             WorldGen.KillTile(i, j, noItem: true);
         }
         else
-            Main.NewText($"Scale: {weight.Mass:0.#} kg ({weight.ToPounds():0.#} lbs)", Color.Lime);
+            Main.NewText("Scale: " + weight, Color.Lime);
         return true;
     }
 
