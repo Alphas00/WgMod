@@ -1,11 +1,18 @@
 ﻿using Terraria;
 using Terraria.ID;
+using Terraria.ModLoader;
+using WgMod.Content.Items.Consumables.Potions.WeightGainPotions;
 
 namespace WgMod.Content.Items.Consumables.Potions.WeightLossPotions;
 
 public class LesserWeightLossPotion : WeightPotion
 {
     public override float WeightEffect => -10f;
+
+    public override void SetStaticDefaults()
+    {
+        ItemID.Sets.ShimmerTransformToItem[Type] = ModContent.ItemType<LesserWeightGainPotion>();
+    }
 
     public override void SetDefaults()
     {
@@ -21,6 +28,11 @@ public class WeightLossPotion : WeightPotion
 {
     public override float WeightEffect => -20f;
 
+    public override void SetStaticDefaults()
+    {
+        ItemID.Sets.ShimmerTransformToItem[Type] = ModContent.ItemType<WeightGainPotion>();
+    }
+
     public override void SetDefaults()
     {
         base.SetDefaults();
@@ -35,6 +47,11 @@ public class GreaterWeightLossPotion : WeightPotion
 {
     public override float WeightEffect => -30f;
 
+    public override void SetStaticDefaults()
+    {
+        ItemID.Sets.ShimmerTransformToItem[Type] = ModContent.ItemType<GreaterWeightGainPotion>();
+    }
+
     public override void SetDefaults()
     {
         base.SetDefaults();
@@ -48,6 +65,11 @@ public class GreaterWeightLossPotion : WeightPotion
 public class SuperWeightLossPotion : WeightPotion
 {
     public override float WeightEffect => -40f;
+
+    public override void SetStaticDefaults()
+    {
+        ItemID.Sets.ShimmerTransformToItem[Type] = ModContent.ItemType<SuperWeightGainPotion>();
+    }
 
     public override void SetDefaults()
     {
