@@ -5,6 +5,7 @@ using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
+using WgMod.Common.Configs;
 
 namespace WgMod.Common.Players;
 
@@ -50,6 +51,8 @@ public partial class WgPlayer
 
     public void CombatWeightText(float amount, bool network)
     {
+        if (OwnsPlayer() && WgClientConfig.Instance.DisableWeightGain)
+            return;
         if (Main.netMode == NetmodeID.SinglePlayer || !network)
         {
             CombatText.NewText(Player.getRect(), Color.Yellow, amount + " kg");
