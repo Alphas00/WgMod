@@ -49,13 +49,13 @@ public partial class WgPlayer
         packet.Send();
     }
 
-    public void CombatWeightText(float amount, bool network)
+    public void CombatWeightText(Mass amount, bool network)
     {
         if (OwnsPlayer() && WgClientConfig.Instance.DisableWeightGain)
             return;
         if (Main.netMode == NetmodeID.SinglePlayer || !network)
         {
-            CombatText.NewText(Player.getRect(), Color.Yellow, amount + " kg");
+            CombatText.NewText(Player.getRect(), Color.Yellow, amount.ShortDisplay());
             return;
         }
         ModPacket packet = Mod.GetPacket(WgMod.MessageType.WgPlayerCombatWeightText);

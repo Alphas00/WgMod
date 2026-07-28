@@ -894,6 +894,11 @@ Configs: {
 			Tooltip: The volume of gurgles compared to the rest of the game's audio, setting it to 0 mutes gurgles entirely.
 			Label: Gurgle Volume
 		}
+
+		UseImperialUnits: {
+			Label: Use Imperial Units
+			Tooltip: Use imperial (lbs) units instead of metric (kg)
+		}
 	}
 }
 
