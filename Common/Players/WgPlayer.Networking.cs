@@ -62,9 +62,15 @@ public partial class WgPlayer
     }
 
     // Saving
+    public override void SaveData(TagCompound tag)
+    {
+        tag[nameof(Weight)] = Weight.Mass.Value;
+        tag[nameof(Stomach)] = Stomach.Value;
+    }
+
     public override void LoadData(TagCompound tag)
     {
-        if (tag.TryGet("Weight", out float w))
+        if (tag.TryGet(nameof(Weight), out float w))
         {
             if (float.IsNaN(w) || !float.IsFinite(w))
                 w = Weight.Base.Mass;
@@ -72,10 +78,6 @@ public partial class WgPlayer
         }
         else
             SetWeightForced(Weight.Base, false);
-    }
-
-    public override void SaveData(TagCompound tag)
-    {
-        tag["Weight"] = Weight.Mass.Value;
+        Stomach = tag.Get<float>(nameof(Stomach));
     }
 }

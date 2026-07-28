@@ -13,8 +13,15 @@ namespace WgMod.Common.Players;
 
 public partial class WgPlayer : ModPlayer
 {
+    public const int DigestTime = 10;
+    public const float DigestAmount = 0.5f;
+    public const float StomachCapacity = 25f;
+
     /// <summary> The player's weight </summary>
     public Weight Weight { get; private set; } = Weight.Base;
+
+    // <summary> The to be digested mass inside the player's stomach. Only relevant for the local client. </summary>
+    public Mass Stomach { get; private set; }
 
     /// <summary> How much movement will be reduced because of the player's weight, multiply this </summary>
     public StatModifier MovementPenalty;
@@ -40,6 +47,7 @@ public partial class WgPlayer : ModPlayer
     internal bool _displayWeight;
 
     Vector2 _prevVel;
+    int _digestTimer;
 
     public override void Initialize()
     {
@@ -52,17 +60,17 @@ public partial class WgPlayer : ModPlayer
         _ignoreWgBuffTimer = 2;
     }
 
-    public bool CanSetWeight()
+    public bool OwnsPlayer()
     {
         return !Main.dedServ && Player.whoAmI == Main.myPlayer;
     }
 
     public void SetWeight(Weight weight, bool effects = true)
     {
-        if (!CanSetWeight())
+        if (!OwnsPlayer())
             return;
         if (WgClientConfig.Instance.DisableWeightGain)
-            weight = new Weight(Math.Min(weight.Mass, Weight.Mass));
+            weight = new Weight(MathF.Min(weight.Mass, Weight.Mass));
         SetWeightForced(weight, effects);
     }
 
@@ -78,6 +86,22 @@ public partial class WgPlayer : ModPlayer
         }
     }
 
+    public void SetStomach(Mass mass, bool effects = true)
+    {
+        if (!OwnsPlayer())
+            return;
+        if (WgClientConfig.Instance.DisableWeightGain)
+            mass = MathF.Min(mass, Stomach);
+        SetStomachForced(mass, effects);
+    }
+
+    internal void SetStomachForced(Mass mass, bool effects = true)
+    {
+        Stomach = Math.Clamp(mass, 0f, StomachCapacity);
+        if (mass > StomachCapacity)
+            SetWeight(Weight + (mass - StomachCapacity), effects);
+    }
+
     public override void ResetEffects()
     {
         // Custom stats
@@ -91,6 +115,11 @@ public partial class WgPlayer : ModPlayer
     {
         // Ensure fat buff
         int type = ModContent.BuffType<FatBuff>();
+        if (!Player.HasBuff(type))
+            Player.AddBuff(type, 60);
+
+        // Ensure stomach buff
+        type = ModContent.BuffType<StomachBuff>();
         if (!Player.HasBuff(type))
             Player.AddBuff(type, 60);
     }
@@ -196,6 +225,26 @@ public partial class WgPlayer : ModPlayer
 
     public override void PostUpdate()
     {
+        if (OwnsPlayer())
+        {
+            if (Stomach > 0f)
+            {
+                if (_digestTimer < 0)
+                {
+                    float delta = Stomach - MathF.Max(Stomach - Main.rand.NextFloat(DigestAmount * 0.5f, DigestAmount), 0f);
+                    SetStomach(Stomach - delta);
+                    SetWeight(Weight + delta);
+                    if (Main.rand.NextBool(75))
+                        Gurgle(true);
+                    _digestTimer = Main.rand.Next(DigestTime, DigestTime * 2);
+                }
+                else
+                    _digestTimer--;
+            }
+            else
+                _digestTimer = DigestTime * 2;
+        }
+
         UpdateJiggle();
         PostUpdateVisuals();
 

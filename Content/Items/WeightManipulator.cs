@@ -43,7 +43,7 @@ public class WeightManipulator : ModItem
 
     public override bool? UseItem(Player player)
     {
-        if (player.TryGetModPlayer(out WgPlayer wg) && wg.CanSetWeight())
+        if (player.TryGetModPlayer(out WgPlayer wg) && wg.OwnsPlayer())
         {
             int sign = player.altFunctionUse == 2 ? -1 : 1;
             wg.SetWeight(wg.Weight + sign * 10f);

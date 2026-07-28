@@ -712,6 +712,11 @@ Buffs: {
 		}
 	}
 
+	StomachBuff: {
+		DisplayName: Stomach
+		Description: Indicates how much food has yet to be digested
+	}
+
 	GainingBuff: {
 		DisplayName: Gaining
 		Description: Fattening over time
