@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.DataStructures;
+using Terraria.ID;
 using Terraria.ModLoader;
 using WgMod.Common.Players;
 
@@ -131,5 +133,10 @@ public static class Utility
         ModPacket packet = mod.GetPacket(capacity);
         packet.Write((byte)type);
         return packet;
+    }
+
+    public static bool ShouldHidePlayer(this PlayerDrawSet drawInfo)
+    {
+        return drawInfo.drawPlayer.invis || drawInfo.drawPlayer.dead || drawInfo.hideEntirePlayer;
     }
 }

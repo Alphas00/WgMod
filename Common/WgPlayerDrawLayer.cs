@@ -44,13 +44,11 @@ public class WgPlayerDrawLayer : PlayerDrawLayer
 
     public static void Draw(ref PlayerDrawSet drawInfo, bool top)
     {
-        Player player = drawInfo.drawPlayer;
-        if (player.dead)
+        if (drawInfo.ShouldHidePlayer())
             return;
-
+        Player player = drawInfo.drawPlayer;
         if (!player.TryGetModPlayer(out WgPlayer wg))
             return;
-
         int stage = wg.Weight.GetStage();
         if (stage <= 0)
             return;

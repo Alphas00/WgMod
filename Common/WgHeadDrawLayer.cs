@@ -16,9 +16,9 @@ public class WgHeadDrawLayer : PlayerDrawLayer
 
     protected override void Draw(ref PlayerDrawSet drawInfo)
     {
-        Player player = drawInfo.drawPlayer;
-        if (player.invis || player.dead)
+        if (drawInfo.ShouldHidePlayer())
             return;
+        Player player = drawInfo.drawPlayer;
         if (!player.TryGetModPlayer(out WgPlayer wg))
             return;
         if (wg._headOverride == null)
