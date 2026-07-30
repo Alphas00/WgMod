@@ -91,7 +91,7 @@ public class WgPlayerDrawLayer : PlayerDrawLayer
         if (drawInfo.drawPlayer.isDisplayDollOrInanimate)
             skinColor = new Color(154, 115, 85).MultiplyRGB(skinColor);
         float t = wg.Weight.ClampedImmobility;
-        float bellySquish = float.Lerp(wg._squishPos, 1f, t * t * 0.4f);
+        float bellySquish = float.Lerp(wg._squishPos, 1f, t * t * 0.2f);
         float baseSquish = (bellySquish + 1f) * 0.5f;
 
         bool drawArmor = WgArmor.ShouldDraw(drawInfo);

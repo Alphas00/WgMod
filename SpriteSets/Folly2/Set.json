@@ -1,0 +1,33 @@
+{
+    "Author": "folly",
+    "DrawOffsetX": 6,
+    "DrawOffsetY": 8,
+    "ArmCount": 3,
+    "Layers": [
+        {
+            "Name": "Leg",
+            "Type": "Legs"
+        },
+        {
+            "Name": "BackBoob",
+            "Type": "Breasts"
+        },
+        {
+            "Name": "Belly",
+            "Type": "Belly"
+        }
+    ],
+    "TopLayers": [
+        {
+            "Name": "FrontBoob",
+            "Type": "Breasts"
+        }
+    ],
+    "Stages": {
+        "7": {
+            "Arm": 1,
+            "OnTop": true,
+            "OffsetY": 14
+        }
+    }
+}
