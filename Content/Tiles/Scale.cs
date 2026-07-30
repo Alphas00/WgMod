@@ -48,6 +48,8 @@ public class Scale : ModTile
         {
             Main.NewText("Scale: ERROR - TOO HEAVY", Color.Red);
             WorldGen.KillTile(i, j, noItem: true);
+            if (Main.netMode == NetmodeID.MultiplayerClient)
+                NetMessage.SendTileSquare(Main.myPlayer, i, j);
         }
         else
             Main.NewText("Scale: " + weight, Color.Lime);
