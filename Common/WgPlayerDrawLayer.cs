@@ -24,7 +24,7 @@ public class WgPlayerDrawLayer : PlayerDrawLayer
     public override Position GetDefaultPosition() => new Multiple()
     {
         { new Between(PlayerDrawLayers.Torso, PlayerDrawLayers.OffhandAcc), drawInfo => !CheckTop(drawInfo) },
-        { new Between(PlayerDrawLayers.Head, PlayerDrawLayers.Shield), CheckTop }
+        { new Between(PlayerDrawLayers.Head, PlayerDrawLayers.MountFront), CheckTop }
     };
 
     static bool CheckTop(PlayerDrawSet drawInfo)
