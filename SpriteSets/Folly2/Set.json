@@ -31,7 +31,8 @@
             "OnTop": false
         },
         "3": {
-            "OnTop": false
+            "OnTop": true,
+            "Arm": 0
         },
         "4": {
             "Arm": 0,
