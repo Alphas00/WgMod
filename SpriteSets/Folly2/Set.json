@@ -24,6 +24,30 @@
         }
     ],
     "Stages": {
+        "1": {
+            "OnTop": false
+        },
+        "2": {
+            "OnTop": false
+        },
+        "3": {
+            "OnTop": false
+        },
+        "4": {
+            "Arm": 0,
+            "OnTop": true,
+            "OffsetY": 2
+        },
+        "5": {
+            "Arm": 0,
+            "OnTop": true,
+            "OffsetY": 6
+        },
+        "6": {
+            "Arm": 0,
+            "OnTop": true,
+            "OffsetY": 8
+        },
         "7": {
             "Arm": 1,
             "OnTop": true,
