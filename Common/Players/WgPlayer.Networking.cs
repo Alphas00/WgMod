@@ -82,5 +82,7 @@ public partial class WgPlayer
         else
             SetWeightForced(Weight.Base, false);
         Stomach = tag.Get<float>(nameof(Stomach));
+        // Hopefully less error prone than doing it on Initialize.
+        InitializeVisuals();
     }
 }

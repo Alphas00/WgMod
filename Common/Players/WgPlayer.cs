@@ -52,7 +52,6 @@ public partial class WgPlayer : ModPlayer
     public override void Initialize()
     {
         SetWeightForced(Weight.Base, false);
-        InitializeVisuals();
     }
 
     public override void OnEnterWorld()
