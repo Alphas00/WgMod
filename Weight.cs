@@ -2,11 +2,8 @@ using System;
 
 namespace WgMod;
 
-// Mass in kg.
-public readonly record struct Weight(float Mass)
+public readonly record struct Weight(Mass Mass)
 {
-    const float KgToPounds = 2.2046226218f;
-
     public static readonly Weight Base = new(70f);
     public static readonly Weight Immobile = new(400f);
 
@@ -20,8 +17,7 @@ public readonly record struct Weight(float Mass)
     public readonly float Immobility => GetFactor(Base, Immobile);
     public readonly float ClampedImmobility => GetClampedFactor(Base, Immobile);
 
-    public override readonly string ToString() => $"{Mass} kg";
-    public readonly float ToPounds() => Mass * KgToPounds;
+    public override readonly string ToString() => Mass.Display();
     public readonly int GetStage() => (int)MathF.Floor(Immobility * ImmobileStage);
 
     public readonly float GetStageFactor()
@@ -38,10 +34,9 @@ public readonly record struct Weight(float Mass)
     public static Weight FromStage(int stage) => FromImmobility(stage / (float)ImmobileStage);
     public static Weight FromImmobility(float factor) => new(float.Lerp(Base.Mass, Immobile.Mass, factor));
 
-    public static Weight FromPounds(float pounds) => new(pounds / KgToPounds);
     public static Weight Clamp(Weight weight) => Clamp(weight, MaxStage);
     public static Weight Clamp(Weight weight, int maxStage) => new(Math.Clamp(weight.Mass, Base.Mass, FromStage(maxStage).Mass + 10f));
 
-    public static Weight operator +(Weight w, float mass) => new(w.Mass + mass);
-    public static Weight operator -(Weight w, float mass) => new(w.Mass - mass);
+    public static Weight operator +(Weight w, Mass mass) => new(w.Mass + mass);
+    public static Weight operator -(Weight w, Mass mass) => new(w.Mass - mass);
 }

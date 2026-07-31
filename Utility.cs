@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ModLoader;
 using WgMod.Common.Players;
 
@@ -8,7 +9,6 @@ namespace WgMod;
 
 public static class Utility
 {
-    // TODO: Decide if we're gonna use this or not...
     public static WgPlayer Wg(this Player player)
     {
         return player.GetModPlayer<WgPlayer>();
@@ -131,5 +131,10 @@ public static class Utility
         ModPacket packet = mod.GetPacket(capacity);
         packet.Write((byte)type);
         return packet;
+    }
+
+    public static bool ShouldHidePlayer(this PlayerDrawSet drawInfo)
+    {
+        return drawInfo.drawPlayer.invis || drawInfo.drawPlayer.dead || drawInfo.hideEntirePlayer;
     }
 }

@@ -19,20 +19,23 @@ public class WgArmsDrawLayer : PlayerDrawLayer
 
     protected override void Draw(ref PlayerDrawSet drawInfo)
     {
-        if (!drawInfo.drawPlayer.TryGetModPlayer(out WgPlayer wg))
+        if (drawInfo.ShouldHidePlayer())
+            return;
+        Player player = drawInfo.drawPlayer;
+        if (!player.TryGetModPlayer(out WgPlayer wg))
             return;
         int stage = wg.Weight.GetStage();
         int armStage = WeightValues.GetArmStage(stage);
         if (armStage < 0)
             return;
 
-        Vector2 armPosition = new Vector2((int)(drawInfo.Position.X - Main.screenPosition.X - drawInfo.drawPlayer.bodyFrame.Width / 2 + drawInfo.drawPlayer.width / 2), (int)(drawInfo.Position.Y - Main.screenPosition.Y + drawInfo.drawPlayer.height - drawInfo.drawPlayer.bodyFrame.Height + 4f)) + drawInfo.drawPlayer.bodyPosition + new Vector2(drawInfo.drawPlayer.bodyFrame.Width / 2, drawInfo.drawPlayer.bodyFrame.Height / 2);
-        Vector2 vector2 = Main.OffsetsPlayerHeadgear[drawInfo.drawPlayer.bodyFrame.Y / drawInfo.drawPlayer.bodyFrame.Height];
+        Vector2 armPosition = new Vector2((int)(drawInfo.Position.X - Main.screenPosition.X - player.bodyFrame.Width / 2 + player.width / 2), (int)(drawInfo.Position.Y - Main.screenPosition.Y + player.height - player.bodyFrame.Height + 4f)) + player.bodyPosition + new Vector2(player.bodyFrame.Width / 2, player.bodyFrame.Height / 2);
+        Vector2 vector2 = Main.OffsetsPlayerHeadgear[player.bodyFrame.Y / player.bodyFrame.Height];
         vector2.Y -= 2f;
         armPosition += vector2 * -drawInfo.playerEffect.HasFlag(SpriteEffects.FlipVertically).ToDirectionInt();
 
-        float bodyRotation = drawInfo.drawPlayer.bodyRotation;
-        float rotation = drawInfo.drawPlayer.bodyRotation + drawInfo.compositeFrontArmRotation;
+        float bodyRotation = player.bodyRotation;
+        float rotation = player.bodyRotation + drawInfo.compositeFrontArmRotation;
         Vector2 bodyVect = drawInfo.bodyVect;
         Vector2 compositeOffset_FrontArm = new(5 * drawInfo.playerEffect.HasFlag(SpriteEffects.FlipHorizontally).ToDirectionInt(), 0f);
         bodyVect += compositeOffset_FrontArm;
@@ -56,7 +59,10 @@ public class WgArmsDrawLayer : PlayerDrawLayer
         if (drawArmor && !drawInfo.compShoulderOverFrontArm)
             DrawCompShoulder(ref drawInfo, shoulderPosition, bodyRotation, bodyVect);
 
-        DrawData drawData = new(texture.Value, armPosition, frame, drawInfo.colorBodySkin, rotation, bodyVect, 1f, drawInfo.playerEffect)
+        Color skinColor = drawInfo.colorBodySkin;
+        if (player.isDisplayDollOrInanimate)
+            skinColor = new Color(154, 115, 85).MultiplyRGB(skinColor);
+        DrawData drawData = new(texture.Value, armPosition, frame, skinColor, rotation, bodyVect, 1f, drawInfo.playerEffect)
         {
             shader = drawInfo.skinDyePacked
         };

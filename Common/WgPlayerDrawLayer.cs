@@ -44,13 +44,11 @@ public class WgPlayerDrawLayer : PlayerDrawLayer
 
     public static void Draw(ref PlayerDrawSet drawInfo, bool top)
     {
-        Player player = drawInfo.drawPlayer;
-        if (player.dead)
+        if (drawInfo.ShouldHidePlayer())
             return;
-
+        Player player = drawInfo.drawPlayer;
         if (!player.TryGetModPlayer(out WgPlayer wg))
             return;
-
         int stage = wg.Weight.GetStage();
         if (stage <= 0)
             return;
@@ -89,7 +87,9 @@ public class WgPlayerDrawLayer : PlayerDrawLayer
         }
         wg._bellyOffset = bellyOffset;
 
-        Color skinColor = drawInfo.colorBodySkin; //player.GetImmuneAlphaPure(player.skinColor, drawInfo.shadow);
+        Color skinColor = drawInfo.colorBodySkin;
+        if (drawInfo.drawPlayer.isDisplayDollOrInanimate)
+            skinColor = new Color(154, 115, 85).MultiplyRGB(skinColor);
         float t = wg.Weight.ClampedImmobility;
         float bellySquish = float.Lerp(wg._squishPos, 1f, t * t * 0.4f);
         float baseSquish = (bellySquish + 1f) * 0.5f;

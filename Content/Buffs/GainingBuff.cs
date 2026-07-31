@@ -16,7 +16,7 @@ public class GainingBuff : WgBuffBase
         int duration = wg.BuffDuration[buffIndex];
         if (duration == 0)
             return;
-        wg.SetWeight(wg.Weight + wg._buffTotalGain / duration);
+        wg.SetStomach(wg.Stomach + wg._buffTotalGain / duration);
     }
 
     public static bool AddBuff(WgPlayer wg, GainOptions gain)

@@ -677,6 +677,15 @@ Items: {
 		Tooltip: Don't worry. Spider didn't.
 	}
 
+	Scale: {
+		DisplayName: Scale
+		Tooltip:
+			'''
+			Right click to weigh yourself!
+			Just don't expect this to work with a land whale...
+			'''
+	}
+
 	HoneyGun: {
 		DisplayName: Honey Gun
 		Tooltip: "Sprays tasty honey! (WIP)"
@@ -706,6 +715,11 @@ Buffs: {
 			Name6: Barely mobile
 			Name7: Immobile
 		}
+	}
+
+	StomachBuff: {
+		DisplayName: Stomach
+		Description: Indicates how much food has yet to be digested
 	}
 
 	GainingBuff: {
@@ -885,6 +899,11 @@ Configs: {
 			Tooltip: The volume of gurgles compared to the rest of the game's audio, setting it to 0 mutes gurgles entirely.
 			Label: Gurgle Volume
 		}
+
+		UseImperialUnits: {
+			Label: Use Imperial Units
+			Tooltip: Use imperial (lbs) units instead of metric (kg)
+		}
 	}
 }
 
@@ -941,7 +960,7 @@ NPCs: {
 			DislikeBiome: It's c-c-cold! I need to fly south for the winter!
 		}
 
-		Census.SpawnCondition: Use {$ItemName.PowderedSugar} [i:PowderedSugar] on a harpy
+		Census.SpawnCondition: Use {$Items.PowderedSugar.DisplayName} [i:WgMod/PowderedSugar] on a harpy
 	}
 
 	HomingFood.DisplayName: Cursed Food
@@ -978,6 +997,7 @@ Dialogue: {
 	GroundedHarpy: {
 		StandardDialogue1: Scraw! I'm still mad at you for making me this big!
 		StandardDialogue2: No wonder humans can't fly if all of their food tastes this good!
+		StandardDialogue3: What? No we don't die when you kill us! We respawn, just like you! Scraw!
 		StandardDialogue4: Have any more of that sweet powder stuff? Why? Mind your business!
 		StandardDialogue5: Living on the ground is boring, I wanna touch the clouds again!
 		StandardDialogue6: You've killed some big baddies, did you roast their meat by the fire?
@@ -985,7 +1005,7 @@ Dialogue: {
 		StandardDialogue8: Can you groom my plumage? I've had a hard time doing it myself since... you know!
 		DayDialogue1: You're interrupting my exercises! I will fly again soon!
 		PartyDialogue1: Human festivities are so fun! And tasty!
-		PartyDialogue2: Please tell {1} not to pin the tail on the harpy!
+		PartyDialogue2: Please tell {0} not to pin the tail on the harpy!
 		WindyDayDialogue1: I feel like the wind's gonna take me away!
 		WindyDayDialogue2: Screech! I flew! Did you see? What? It was just the wind?
 		BloodMoonDialogue1: Come any closer and I'll use my talons! Craw!
