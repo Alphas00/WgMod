@@ -28,7 +28,7 @@ public class MilkmaidNPC : ModNPC
 
     public static bool milkedToday;
 
-    public const string ShopName = "Shop";
+    public const string MilkmaidShop = "Shop";
 
     public override void SetStaticDefaults()
     {
@@ -206,7 +206,7 @@ public class MilkmaidNPC : ModNPC
 
         if (firstButton)
         {
-            shop = ShopName;
+            shop = MilkmaidShop;
         }
         else
         {
@@ -256,7 +256,7 @@ public class MilkmaidNPC : ModNPC
 
     public override void AddShops()
     {
-        var milkyShop = new NPCShop(Type, ShopName)
+        var milkyShop = new NPCShop(Type, MilkmaidShop)
             .Add(ModContent.ItemType<BarnWorktable>())
             .Add(ItemID.MilkCarton)
             .Add(ModContent.ItemType<LesserWeightGainPotion>())

@@ -25,7 +25,7 @@ public class GroundedHarpyNPC : ModNPC
 
     public override bool CanGoToStatue(bool toQueenStatue) => true;
 
-    public const string ShopName = "Shop";
+    public const string HarpyShop = "Shop";
 
     public override void SetStaticDefaults()
     {
@@ -222,12 +222,12 @@ public class GroundedHarpyNPC : ModNPC
     public override void OnChatButtonClicked(bool firstButton, ref string shop)
     {
         if (firstButton)
-            shop = ShopName;
+            shop = HarpyShop;
     }
 
     public override void AddShops()
     {
-        var harpyShop = new NPCShop(Type, ShopName)
+        var harpyShop = new NPCShop(Type, HarpyShop)
             .Add(ModContent.ItemType<HarpyStormbow>(), Condition.DownedSkeletron)
             .Add(ModContent.ItemType<HornOfMore>(), Condition.DownedEowOrBoc)
             .Add(new Item(ItemID.CreativeWings) { shopCustomPrice = Item.buyPrice(gold: 30) })

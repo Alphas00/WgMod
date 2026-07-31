@@ -12,7 +12,7 @@ public class TransformGlobalNPC : GlobalNPC
 {
     public override void PostAI(NPC npc)
     {
-        if (npc.type == NPCID.Harpy && TownNPCRespawnSystem.unlockGroundedHarpy == false)
+        if (npc.type == NPCID.Harpy && !TownNPCRespawnSystem.unlockGroundedHarpy)
         {
             for (int i = 0; i < 300; i++)
             {
