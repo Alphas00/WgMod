@@ -676,6 +676,11 @@ Items: {
 		DisplayName: Spider Donut
 		Tooltip: Don't worry. Spider didn't.
 	}
+
+	HoneyGun: {
+		DisplayName: Honey Gun
+		Tooltip: "Sprays tasty honey! (WIP)"
+	}
 }
 
 Buffs: {
@@ -911,6 +916,7 @@ Projectiles: {
 	SunriseProjectile.DisplayName: Sunrise
 	SporeCloud.DisplayName: Spore Cloud
 	Plate.DisplayName: Plate
+	HoneySprayProjectile.DisplayName: Honey Spray Projectile
 }
 
 NPCs: {
