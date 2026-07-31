@@ -55,9 +55,9 @@
             "OffsetY": 14
         },
         "8": {
-            "Arm": 1,
+            "Arm": 2,
             "OnTop": true,
-            "OffsetY": 14
+            "OffsetY": 18
         },
         "9": {
             "Arm": 2,
