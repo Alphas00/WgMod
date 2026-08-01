@@ -985,6 +985,28 @@ NPCs: {
 	}
 
 	SweetSpirit.DisplayName: Sweet Spirit
+
+	OverflowingMimicNPC: {
+		TownNPCMood: {
+			HateNPC: Taxman take gold coins! Evil! Full of malice!
+			LikeNPC: Like bomb guy! Throw bombs! Boom!
+			DislikeNPC: Mean and evil plunderer, tried to reach and find treasure! All plunderer found was flabby!
+			DislikeBiome: It's too pretty up here! Don't like it one bit!
+			LikeBiome: Cozy cold home, comfy and nice!
+			LoveBiome: We most comfy in the caves! Yay!
+			HateCrowded: Too many others around... no good!
+			DislikeCrowded: Needs personal space!
+			LoveSpace: Human built good spacious chest!
+			FarFromHome: Help! Got lost!
+			NoHome: Need comfy chest to live in!
+			Content: Happy!
+			LikeNPC_Princess: Pink girl give tasty loot!
+			Princess_LovesNPC: I've never seen a mimic like {NPCName} in person before! She's so pretty!
+		}
+
+		DisplayName: Overflowing Mimic
+		Census.SpawnCondition: Use {$Items.PowderedSugar.DisplayName} [i:WgMod/PowderedSugar] on a mimic
+	}
 }
 
 Dialogue: {
@@ -1060,6 +1082,36 @@ Dialogue: {
 		BloodMilked2: BACK OFF!
 		BloodMilked3: Next time I'm kickin'.
 		BloodMilkedDeny: Ya already had yer fill, beat it hoss.
+	}
+
+	OverflowingMimic: {
+		StandardDialogue1: Why make {0} big, human? Mean human! Bad!
+		StandardDialogue2: "{0} is big for real! {0} is just... shy!"
+		StandardDialogue3: Slime like {0} can ride chest! Look like loot!
+		StandardDialogue4: Your name {1}? That name silly! {0} name better!
+		StandardDialogue5: "{0} chest is getting so heavy to bounce around in... human fault!"
+		StandardDialogue6: Hungry... {1}! Give {0} food! Now!
+		StandardDialogue7: Bouncy bouncy bouncy! Yay!
+		StandardDialogue8: Uuurrp... {0} found a little bunny... so yummy!
+		BloodMoonDialogue1: GRAHAHA! THE MOON HUNGRY TONIGHT!
+		BloodMoonDialogue2: EAT EVERYTHING! EAT EVERYONE!
+		BloodMoonDialogue3: OOUUURRRPP...
+		HomelessDialogue1: Mean human! Give {0} a home!
+		HomelessDialogue2: Can human make {0} really really big chest?
+		HomelessDialogue3: "{0} too fat for chest now! Oh no!"
+		PirateDialogue1: Mean and evil plunderer, tried to reach and find treasure! All plunderer found was flabby!
+		PartyDialogue1: "{0} tried to take a nap and humans put cups on top of {0}! So rude!"
+		PartyDialogue2: Woo woo woo! Dance dance!
+		StormDialogue1: Human, help! There giant loud monster outside!
+		StormDialogue2: AH! RUN AWAY!
+		RainDialogue1: Rain rain, go away...
+		RainDialogue2: "{0} so boooooored... wants to play outside!"
+		RainDialogue3: Does {1} know spell to stop rain?
+		WindyDayDialogue1: Sky try to steal {0}, but {0} too heavy!
+		WindyDayDialogue2: "{0} watch the plants dance all day... so pretty..."
+		DayDialogue1: Pretty day! Full of play!
+		NightDialogue1: "{0} love nighttime, so many friends out to play!"
+		LoveStruckDialogue1: "{1}... {0} kinda wants to... bite {1} face..."
 	}
 }
 
