@@ -40,7 +40,7 @@ public partial class WgPlayer : ModPlayer
 
     internal float _finalKnockbackResistance;
     internal float _finalMovementFactor = 1f;
-    internal int _finalMaxStage = Weight.ImmobileStage;
+    internal int _finalMaxStage = Weight.MaxStage;
 
     internal float _buffTotalGain;
     internal int _iceBreakTimer;
@@ -107,7 +107,7 @@ public partial class WgPlayer : ModPlayer
         MovementPenalty = StatModifier.Default;
         WeightLossRate = StatModifier.Default;
         FoodAbsorption = StatModifier.Default;
-        MaxStage = Weight.ImmobileStage;
+        MaxStage = Weight.MaxStage;
     }
 
     public override void PreUpdateBuffs()
