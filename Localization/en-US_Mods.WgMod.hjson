@@ -685,6 +685,33 @@ Items: {
 			Just don't expect this to work with a land whale...
 			'''
 	}
+
+	BarnBathtub: {
+		DisplayName: Barn Bathtub
+		Tooltip: ""
+	}
+
+	BarnSofa: {
+		Tooltip: ""
+		DisplayName: Barn Sofa
+	}
+
+	BarnPiano: {
+		DisplayName: BarnPiano
+		Tooltip: ""
+	}
+
+	BarnCandelabra: {
+		DisplayName: Barn Candelabra
+		Tooltip: ""
+	}
+
+	BarnCouch.DisplayName: Mods.WgMod.Items.BarnCouch.DisplayName
+
+	BarnCandle: {
+		DisplayName: Barn Candle
+		Tooltip: ""
+	}
 }
 
 Buffs: {

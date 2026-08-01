@@ -7,7 +7,8 @@ using Terraria.ObjectData;
 namespace WgMod.Content.Tiles.Furniture.Barn;
 
 [Credit(ProjectRole.Programmer, Contributor.maimaichubs)]
-public class BarnWorktable : ModTile
+[Credit(ProjectRole.Artist, Contributor.subparnitragen)]
+public class BarnBathtub : ModTile
 {
     public override void SetStaticDefaults()
     {
@@ -18,12 +19,12 @@ public class BarnWorktable : ModTile
 
         DustType = DustID.WoodFurniture;
 
-        TileObjectData.newTile.CopyFrom(TileObjectData.Style3x2);
+        TileObjectData.newTile.CopyFrom(TileObjectData.Style4x2);
         TileObjectData.newTile.StyleHorizontal = true;
-        TileObjectData.newTile.CoordinateHeights = [16, 18];
+        TileObjectData.newTile.CoordinateHeights = [16, 16];
         TileObjectData.addTile(Type);
 
-        AddMapEntry(new Color(215, 186, 54), Mod.GetLocalization("Items.BarnWorktable.DisplayName"));
+        AddMapEntry(new Color(215, 186, 54), Mod.GetLocalization("Items.BarnBathtub.DisplayName"));
     }
 
     public override void NumDust(int x, int y, bool fail, ref int num)

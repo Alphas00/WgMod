@@ -7,7 +7,8 @@ using Terraria.ObjectData;
 namespace WgMod.Content.Tiles.Furniture.Barn;
 
 [Credit(ProjectRole.Programmer, Contributor.maimaichubs)]
-public class BarnWorktable : ModTile
+[Credit(ProjectRole.Artist, Contributor.subparnitragen)]
+public class BarnPiano : ModTile
 {
     public override void SetStaticDefaults()
     {
@@ -23,7 +24,7 @@ public class BarnWorktable : ModTile
         TileObjectData.newTile.CoordinateHeights = [16, 18];
         TileObjectData.addTile(Type);
 
-        AddMapEntry(new Color(215, 186, 54), Mod.GetLocalization("Items.BarnWorktable.DisplayName"));
+        AddMapEntry(new Color(215, 186, 54), Mod.GetLocalization("Items.BarnPiano.DisplayName"));
     }
 
     public override void NumDust(int x, int y, bool fail, ref int num)
