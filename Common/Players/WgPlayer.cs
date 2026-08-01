@@ -52,7 +52,6 @@ public partial class WgPlayer : ModPlayer
     public override void Initialize()
     {
         SetWeightForced(Weight.Base, false);
-        InitializeVisuals();
     }
 
     public override void OnEnterWorld()
@@ -253,7 +252,7 @@ public partial class WgPlayer : ModPlayer
             _ignoreWgBuffTimer--;
 
         int stage = Weight.GetStage();
-        if (Player.sleeping.isSleeping && Weight.GetStage() >= 4)
+        if (Player.sleeping.isSleeping && stage >= 4)
         {
             Player.fullRotation = 0;
             Player.gfxOffY -= 16;

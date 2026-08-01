@@ -53,15 +53,16 @@ partial class WgMod
                     Main.player[reader.ReadByte()].Wg().CombatWeightText(reader.ReadSingle(), false);
                 break;
             case MessageType.MannequinSetStage:
+                int id = reader.ReadInt32();
+                byte stage = reader.ReadByte();
+                WgMannequinSystem.SetStage((TEDisplayDoll)TileEntity.ByID[id], stage, false);
                 if (Main.netMode == NetmodeID.Server)
                 {
                     ModPacket packet = this.GetPacket(type);
-                    packet.Write(reader.ReadInt32());
-                    packet.Write(reader.ReadByte());
+                    packet.Write(id);
+                    packet.Write(stage);
                     packet.Send();
                 }
-                else
-                    WgMannequinSystem.SetStage((TEDisplayDoll)TileEntity.ByID[reader.ReadInt32()], reader.ReadByte(), false);
                 break;
             default:
                 Logger.WarnFormat("WgMod: Unknown Message type: {0}", type);

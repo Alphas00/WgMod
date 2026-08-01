@@ -53,6 +53,8 @@ public class WgMannequinSystem : ModSystem
     {
         On_TEDisplayDoll.SaveData -= OnSaveData;
         On_TEDisplayDoll.LoadData -= OnLoadData;
+        On_TEDisplayDoll.NetSend -= OnNetSend;
+        On_TEDisplayDoll.NetReceive -= OnNetReceive;
         On_TEDisplayDoll.OnInventoryDraw -= OnInventoryDraw;
     }
 
@@ -80,16 +82,15 @@ public class WgMannequinSystem : ModSystem
 
     public static void SetStage(TEDisplayDoll doll, int stage, bool network = true)
     {
-        if (GetPlayer(doll).TryGetModPlayer(out WgPlayer wg))
+        if (!GetPlayer(doll).TryGetModPlayer(out WgPlayer wg))
+            return;
+        wg.SetWeightForced(Weight.FromStage(stage), false);
+        if (network && Main.netMode != NetmodeID.SinglePlayer)
         {
-            wg.SetWeightForced(Weight.FromStage(stage), false);
-            if (network && Main.netMode != NetmodeID.SinglePlayer)
-            {
-                ModPacket packet = _mod.GetPacket(WgMod.MessageType.MannequinSetStage);
-                packet.Write(doll.ID);
-                packet.Write((byte)Math.Clamp(stage, 0, 255));
-                packet.Send();
-            }
+            ModPacket packet = _mod.GetPacket(WgMod.MessageType.MannequinSetStage);
+            packet.Write(doll.ID);
+            packet.Write((byte)Math.Clamp(stage, 0, 255));
+            packet.Send();
         }
     }
 

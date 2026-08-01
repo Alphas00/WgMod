@@ -686,6 +686,11 @@ Items: {
 			'''
 	}
 
+	HoneyGun: {
+		DisplayName: Honey Gun
+		Tooltip: "Sprays tasty honey! (WIP)"
+	}
+
 	BarnBathtub: {
 		DisplayName: Barn Bathtub
 		Tooltip: ""
@@ -957,6 +962,7 @@ Projectiles: {
 	SunriseProjectile.DisplayName: Sunrise
 	SporeCloud.DisplayName: Spore Cloud
 	Plate.DisplayName: Plate
+	HoneySprayProjectile.DisplayName: Honey Spray Projectile
 }
 
 NPCs: {
