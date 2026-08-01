@@ -102,13 +102,29 @@ public class OverflowingMimicNPC : ModNPC
             NPC.damage = 60;
             NPC.lifeMax = 600;
             NPC.knockBackResist = 0.73f;
-        }
 
-        if (Main.masterMode)
+            if (Main.hardMode)
+            {
+                NPC.damage = 160;
+                NPC.lifeMax = 1000;
+            }
+        }
+        else if (Main.masterMode)
         {
             NPC.damage = 90;
             NPC.lifeMax = 900;
             NPC.knockBackResist = 0.76f;
+
+            if (Main.hardMode)
+            {
+                NPC.damage = 240;
+                NPC.lifeMax = 1500;
+            }
+        }
+        else if (Main.hardMode)
+        {
+            NPC.damage = 80;
+            NPC.lifeMax = 500;
         }
 
         NPC.ApplyTownNPCModifiers();
