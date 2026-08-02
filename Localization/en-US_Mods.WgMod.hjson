@@ -718,8 +718,8 @@ Items: {
 		Tooltip: ""
 	}
 	GreedyFlask: {
-		Tooltip: ""
 		DisplayName: Greedy Flask
+		Tooltip: Effects scale with your obesity
 	}
 }
 
