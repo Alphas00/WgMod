@@ -12,11 +12,6 @@ public abstract class WeightPotion : ModItem
 {
     public abstract float WeightEffect { get; }
 
-    public override void SetStaticDefaults()
-    {
-        Item.ResearchUnlockCount = 30;
-    }
-
     public override void SetDefaults()
     {
         Item.useStyle = ItemUseStyleID.DrinkLiquid;

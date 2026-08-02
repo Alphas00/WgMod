@@ -11,6 +11,7 @@ public class LesserWeightGainPotion : WeightPotion
 
     public override void SetStaticDefaults()
     {
+        Item.ResearchUnlockCount = 30;
         ItemID.Sets.ShimmerTransformToItem[Type] = ModContent.ItemType<LesserWeightLossPotion>();
     }
 
@@ -30,6 +31,7 @@ public class WeightGainPotion : WeightPotion
 
     public override void SetStaticDefaults()
     {
+        Item.ResearchUnlockCount = 30;
         ItemID.Sets.ShimmerTransformToItem[Type] = ModContent.ItemType<WeightLossPotion>();
     }
 
@@ -49,6 +51,7 @@ public class GreaterWeightGainPotion : WeightPotion
 
     public override void SetStaticDefaults()
     {
+        Item.ResearchUnlockCount = 30;
         ItemID.Sets.ShimmerTransformToItem[Type] = ModContent.ItemType<GreaterWeightLossPotion>();
     }
 
@@ -68,6 +71,7 @@ public class SuperWeightGainPotion : WeightPotion
 
     public override void SetStaticDefaults()
     {
+        Item.ResearchUnlockCount = 30;
         ItemID.Sets.ShimmerTransformToItem[Type] = ModContent.ItemType<SuperWeightLossPotion>();
     }
 

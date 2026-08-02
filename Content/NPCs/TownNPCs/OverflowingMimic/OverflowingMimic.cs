@@ -178,59 +178,60 @@ public class OverflowingMimicNPC : ModNPC
 
         if (Main.bloodMoon)
         {
-            chat.Add(Language.GetTextValue("Mods.WgMod.Dialogue.OverflowingMimic.BloodMoonDialogue1", overflowingMimic)); // ""
-            chat.Add(Language.GetTextValue("Mods.WgMod.Dialogue.OverflowingMimic.BloodMoonDialogue2", overflowingMimic)); // ""
-            chat.Add(Language.GetTextValue("Mods.WgMod.Dialogue.OverflowingMimic.BloodMoonDialogue3", overflowingMimic)); // ""
+            chat.Add(Language.GetTextValue("Mods.WgMod.Dialogue.OverflowingMimic.BloodMoonDialogue1", overflowingMimic)); // "GRAHAHA! THE MOON HUNGRY TONIGHT!"
+            chat.Add(Language.GetTextValue("Mods.WgMod.Dialogue.OverflowingMimic.BloodMoonDialogue2", overflowingMimic)); // "EAT EVERYTHING! EAT EVERYONE!"
+            chat.Add(Language.GetTextValue("Mods.WgMod.Dialogue.OverflowingMimic.BloodMoonDialogue3", overflowingMimic)); // "OOUUURRRPP..."
         }
         else if (NPC.loveStruck)
-            chat.Add(Language.GetTextValue("Mods.WgMod.Dialogue.OverflowingMimic.LoveStruckDialogue1", overflowingMimic, player)); // ""
+            chat.Add(Language.GetTextValue("Mods.WgMod.Dialogue.OverflowingMimic.LoveStruckDialogue1", overflowingMimic, player)); // "{1}... {0} kinda wants to... bite {1} face..."
         else if (NPC.homeless)
         {
-            chat.Add(Language.GetTextValue("Mods.WgMod.Dialogue.OverflowingMimic.HomelessDialogue1", overflowingMimic)); // ""
-            chat.Add(Language.GetTextValue("Mods.WgMod.Dialogue.OverflowingMimic.HomelessDialogue2", overflowingMimic)); // ""
-            chat.Add(Language.GetTextValue("Mods.WgMod.Dialogue.OverflowingMimic.HomelessDialogue3", overflowingMimic)); // ""
+            chat.Add(Language.GetTextValue("Mods.WgMod.Dialogue.OverflowingMimic.HomelessDialogue1", overflowingMimic)); // "Mean human! Give {0} a home!"
+            chat.Add(Language.GetTextValue("Mods.WgMod.Dialogue.OverflowingMimic.HomelessDialogue2", overflowingMimic)); // "Can human make {0} really really big chest?"
+            chat.Add(Language.GetTextValue("Mods.WgMod.Dialogue.OverflowingMimic.HomelessDialogue3", overflowingMimic)); // "{0} too fat for chest now! Oh no!"
         }
         else
         {
             if (Main.IsItRaining)
             {
-                chat.Add(Language.GetTextValue("Mods.WgMod.Dialogue.OverflowingMimic.RainDialogue1", overflowingMimic), 2); // ""
-                chat.Add(Language.GetTextValue("Mods.WgMod.Dialogue.OverflowingMimic.RainDialogue2", overflowingMimic), 2); // ""
-                chat.Add(Language.GetTextValue("Mods.WgMod.Dialogue.OverflowingMimic.RainDialogue3", overflowingMimic, player), 2); // ""
+                chat.Add(Language.GetTextValue("Mods.WgMod.Dialogue.OverflowingMimic.RainDialogue1", overflowingMimic), 2); // "Rain rain, go away..."
+                chat.Add(Language.GetTextValue("Mods.WgMod.Dialogue.OverflowingMimic.RainDialogue2", overflowingMimic), 2); // "{0} so boooooored... wants to play outside!"
+                chat.Add(Language.GetTextValue("Mods.WgMod.Dialogue.OverflowingMimic.RainDialogue3", overflowingMimic, player), 2); // "Does {1} know spell to stop rain?"
             }
             else if (Main.IsItStorming)
             {
-                chat.Add(Language.GetTextValue("Mods.WgMod.Dialogue.OverflowingMimic.StormDialogue1", overflowingMimic), 10); // ""
-                chat.Add(Language.GetTextValue("Mods.WgMod.Dialogue.OverflowingMimic.StormDialogue2", overflowingMimic), 10); // ""
+                chat.Add(Language.GetTextValue("Mods.WgMod.Dialogue.OverflowingMimic.StormDialogue1", overflowingMimic), 10); // "Human, help! There giant loud monster outside!"
+                chat.Add(Language.GetTextValue("Mods.WgMod.Dialogue.OverflowingMimic.StormDialogue2", overflowingMimic), 10); // "AH! RUN AWAY!"
             }
             else if (Main.dayTime)
             {
-                chat.Add(Language.GetTextValue("Mods.WgMod.Dialogue.OverflowingMimic.DayDialogue1", overflowingMimic)); // ""
+                chat.Add(Language.GetTextValue("Mods.WgMod.Dialogue.OverflowingMimic.DayDialogue1", overflowingMimic)); // "Pretty day! Full of play!"
             }
             else
             {
-                chat.Add(Language.GetTextValue("Mods.WgMod.Dialogue.OverflowingMimic.NightDialogue1", overflowingMimic)); // ""
+                chat.Add(Language.GetTextValue("Mods.WgMod.Dialogue.OverflowingMimic.NightDialogue1", overflowingMimic)); // "{0} love nighttime, so many friends out to play!"
             }
 
             if (Main.IsItAHappyWindyDay)
             {
-                chat.Add(Language.GetTextValue("Mods.WgMod.Dialogue.OverflowingMimic.WindyDayDialogue1", overflowingMimic), 2); // ""
-                chat.Add(Language.GetTextValue("Mods.WgMod.Dialogue.OverflowingMimic.WindyDayDialogue2", overflowingMimic), 2); // ""
+                chat.Add(Language.GetTextValue("Mods.WgMod.Dialogue.OverflowingMimic.WindyDayDialogue1", overflowingMimic), 2); // "Sky try to steal {0}, but {0} too heavy!"
+                chat.Add(Language.GetTextValue("Mods.WgMod.Dialogue.OverflowingMimic.WindyDayDialogue2", overflowingMimic), 2); // "{0} watch the plants dance all day... so pretty..."
             }
 
             if (BirthdayParty.PartyIsUp)
             {
-                chat.Add(Language.GetTextValue("Mods.WgMod.Dialogue.OverflowingMimic.PartyDialogue1", overflowingMimic), 2); // ""
-                chat.Add(Language.GetTextValue("Mods.WgMod.Dialogue.OverflowingMimic.PartyDialogue2", overflowingMimic), 2); // ""
+                chat.Add(Language.GetTextValue("Mods.WgMod.Dialogue.OverflowingMimic.PartyDialogue1", overflowingMimic), 2); // "{0} tried to take a nap and humans put cups on top of {0}! So rude!"
+                chat.Add(Language.GetTextValue("Mods.WgMod.Dialogue.OverflowingMimic.PartyDialogue2", overflowingMimic), 2); // "Woo woo woo! Dance dance!"
             }
 
-            chat.Add(Language.GetTextValue("Mods.WgMod.Dialogue.OverflowingMimic.StandardDialogue1", overflowingMimic)); // ""
-            chat.Add(Language.GetTextValue("Mods.WgMod.Dialogue.OverflowingMimic.StandardDialogue2", overflowingMimic)); // ""
-            chat.Add(Language.GetTextValue("Mods.WgMod.Dialogue.OverflowingMimic.StandardDialogue4", overflowingMimic, player)); // ""
-            chat.Add(Language.GetTextValue("Mods.WgMod.Dialogue.OverflowingMimic.StandardDialogue5", overflowingMimic)); // ""
-            chat.Add(Language.GetTextValue("Mods.WgMod.Dialogue.OverflowingMimic.StandardDialogue6", overflowingMimic, player)); // ""
-            chat.Add(Language.GetTextValue("Mods.WgMod.Dialogue.OverflowingMimic.StandardDialogue7", overflowingMimic)); // ""
-            chat.Add(Language.GetTextValue("Mods.WgMod.Dialogue.OverflowingMimic.StandardDialogue8", overflowingMimic)); // ""
+            chat.Add(Language.GetTextValue("Mods.WgMod.Dialogue.OverflowingMimic.StandardDialogue1", overflowingMimic)); // "Why make {0} big, human? Mean human! Bad!"
+            chat.Add(Language.GetTextValue("Mods.WgMod.Dialogue.OverflowingMimic.StandardDialogue2", overflowingMimic)); // "{0} is big for real! {0} is just... shy!"
+            chat.Add(Language.GetTextValue("Mods.WgMod.Dialogue.OverflowingMimic.StandardDialogue3", overflowingMimic)); // "{Slime like {0} can ride chest! Look like loot!"
+            chat.Add(Language.GetTextValue("Mods.WgMod.Dialogue.OverflowingMimic.StandardDialogue4", overflowingMimic, player)); // "Your name {1}? That name silly! {0} name better!"
+            chat.Add(Language.GetTextValue("Mods.WgMod.Dialogue.OverflowingMimic.StandardDialogue5", overflowingMimic)); // "{0} chest is getting so heavy to bounce around in... human fault!"
+            chat.Add(Language.GetTextValue("Mods.WgMod.Dialogue.OverflowingMimic.StandardDialogue6", overflowingMimic, player)); // "Hungry... {1}! Give {0} food! Now!"
+            chat.Add(Language.GetTextValue("Mods.WgMod.Dialogue.OverflowingMimic.StandardDialogue7", overflowingMimic)); // "Bouncy bouncy bouncy! Yay!"
+            chat.Add(Language.GetTextValue("Mods.WgMod.Dialogue.OverflowingMimic.StandardDialogue8", overflowingMimic)); // "Uuurrp... {0} found a little bunny... so yummy!"
         }
 
         return chat;
