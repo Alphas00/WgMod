@@ -35,6 +35,9 @@ public partial class WgPlayer : ModPlayer
     /// <summary> The maximum weight stage that the player can reach </summary>
     public int MaxStage;
 
+    /// <summary> Whether the weight is currently fixed/pinned. No gain or loss. </summary>
+    public bool WeightFixed;
+
     public readonly int[] BuffDuration = new int[Player.MaxBuffs];
     internal int _ignoreWgBuffTimer = 2;
 
@@ -66,7 +69,7 @@ public partial class WgPlayer : ModPlayer
 
     public void SetWeight(Weight weight, bool effects = true)
     {
-        if (!OwnsPlayer())
+        if (!OwnsPlayer() || WeightFixed)
             return;
         if (WgClientConfig.Instance.DisableWeightGain)
             weight = new Weight(MathF.Min(weight.Mass, Weight.Mass));
@@ -108,6 +111,7 @@ public partial class WgPlayer : ModPlayer
         WeightLossRate = StatModifier.Default;
         FoodAbsorption = StatModifier.Default;
         MaxStage = Weight.MaxStage;
+        WeightFixed = false;
     }
 
     public override void PreUpdateBuffs()
