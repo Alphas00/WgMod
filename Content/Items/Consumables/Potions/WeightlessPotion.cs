@@ -3,10 +3,10 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace WgMod.Content.Items.Consumables;
+namespace WgMod.Content.Items.Consumables.Potions;
 
 [Credit(ProjectRole.Programmer, Contributor.maimaichubs)]
-[Credit(ProjectRole.Artist, Contributor.maimaichubs)]
+[Credit(ProjectRole.Artist, Contributor.PLACEHOLDER)]
 public class WeightlessPotion : ModItem
 {
     public override void SetStaticDefaults()
