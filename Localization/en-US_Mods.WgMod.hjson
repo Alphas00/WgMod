@@ -688,7 +688,7 @@ Items: {
 
 	HoneyGun: {
 		DisplayName: Honey Gun
-		Tooltip: "Sprays tasty honey! (WIP)"
+		Tooltip: Sprays tasty honey! (WIP)
 	}
 
 	BarnBathtub: {
