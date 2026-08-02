@@ -40,7 +40,7 @@
             "OffsetY": 2
         },
         "5": {
-            "Arm": 0,
+            "Arm": 1,
             "OnTop": true,
             "OffsetY": 6
         },
@@ -50,7 +50,7 @@
             "OffsetY": 10
         },
         "7": {
-            "Arm": 1,
+            "Arm": 2,
             "OnTop": true,
             "OffsetY": 14
         },
