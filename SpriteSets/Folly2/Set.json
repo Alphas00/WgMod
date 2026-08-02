@@ -2,7 +2,7 @@
     "Author": "folly",
     "DrawOffsetX": 8,
     "DrawOffsetY": 16,
-    "ArmCount": 3,
+    "ArmCount": 4,
     "Layers": [
         {
             "Name": "Leg",
@@ -60,7 +60,7 @@
             "OffsetY": 18
         },
         "9": {
-            "Arm": 2,
+            "Arm": 3,
             "OnTop": true,
             "OffsetY": 24
         }
