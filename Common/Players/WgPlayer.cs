@@ -126,7 +126,10 @@ public partial class WgPlayer : ModPlayer
     public override void PostUpdateRunSpeeds()
     {
         if (WgServerConfig.Instance.DisableFatBuffs)
+        {
+            _finalMovementFactor = 1f;
             return;
+        }
 
         if (Player.mount.Active)
             MovementPenalty *= 0.8f;
@@ -142,15 +145,20 @@ public partial class WgPlayer : ModPlayer
         else
             _finalKnockbackResistance = 0f;
 
-        float basePenalty;
-        if (stage < Weight.ImmobileStage)
+        if (stage < Weight.ForcedImmobileStage)
         {
-            float immobility = Weight.ClampedImmobility;
-            basePenalty = float.Lerp(0f, 0.7f, immobility * immobility);
+            float basePenalty;
+            if (stage < Weight.ImmobileStage)
+            {
+                float immobility = Weight.ClampedImmobility;
+                basePenalty = float.Lerp(0f, 0.7f, immobility * immobility);
+            }
+            else
+                basePenalty = 1f;
+            _finalMovementFactor = Math.Clamp(1f - MovementPenalty.ApplyTo(basePenalty), 0f, 1f);
         }
         else
-            basePenalty = 1f;
-        _finalMovementFactor = Math.Clamp(1f - MovementPenalty.ApplyTo(basePenalty), 0f, 1f);
+            _finalMovementFactor = 0f;
 
         Player.runAcceleration *= _finalMovementFactor;
         Player.maxRunSpeed *= _finalMovementFactor;

@@ -7,10 +7,13 @@ public readonly record struct Weight(Mass Mass)
     public static readonly Weight Base = new(70f);
     public static readonly Weight Immobile = new(400f);
 
-    public const int StageCount = 8; // The total amount of stages and player sprites
+    public const int StageCount = 10; // The total amount of stages and player sprites
     public const int MaxStage = StageCount - 1; // The last weight stage
 
     public const int ImmobileStage = 7; // Stage at which the player would be considered immobile under normal conditions
+    public const int ForcedImmobileStage = 8; // Stage at which the player will no longer move, at all
+    public const int BlobStage = 9; // Stage at which the player can no longer move their arms
+
     public const int DamageReductionStage = 2; // Stage at which damage reduction starts being applied
     public const int HeavyStage = 3; // Stage at which thin ice breaks, max life starts being increased
 

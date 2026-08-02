@@ -1,7 +1,9 @@
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ModLoader;
+using WgMod.Common.Configs;
 using WgMod.Common.Players;
+using WgMod.Content.Items;
 
 namespace WgMod.Common.GlobalItems;
 
@@ -11,6 +13,8 @@ public class WgItem : GlobalItem
     {
         if (!player.TryGetModPlayer(out WgPlayer wg))
             return true;
+        if (!WgServerConfig.Instance.DisableFatBuffs && wg.Weight.GetStage() >= Weight.BlobStage)
+            return item.noUseGraphic || item.type == ModContent.ItemType<WeightManipulator>();
         if (WgMod._buffTable.TryGetValue(item.buffType, out GainOptions gain) && gain.IsInstant)
         {
             if (wg.Stomach + gain.TotalGain > WgPlayer.StomachCapacity)
