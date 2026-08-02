@@ -93,10 +93,10 @@ public class SweetSpirit : ModNPC
 
     public override void AI()
     {
-        NPC.TargetClosest();
         switch (_state)
         {
             case State.Wandering:
+                NPC.TargetClosest();
                 IdleAnimation();
                 if (NPC.HasPlayerTarget)
                 {
@@ -121,6 +121,8 @@ public class SweetSpirit : ModNPC
                     if (Vector2.DistanceSquared(NPC.Center, target) < 20f * 20f)
                         SetState(State.Entering);
                 }
+                else
+                    SetState(State.Wandering);
                 break;
             case State.Entering:
                 if (NPC.HasPlayerTarget)
@@ -128,16 +130,19 @@ public class SweetSpirit : ModNPC
                     Player player = Main.player[NPC.target];
                     NPC.direction = -player.direction;
                     NPC.velocity = GetEnterPosition(player) - NPC.Center;
+
+                    NPC.frameCounter++;
+                    if (NPC.frameCounter > 5)
+                    {
+                        NPC.frameCounter = 0;
+                        if (_frame >= FrameCount - 1)
+                            SetState(State.Possess);
+                        else
+                            _frame++;
+                    }
                 }
-                NPC.frameCounter++;
-                if (NPC.frameCounter > 5)
-                {
-                    NPC.frameCounter = 0;
-                    if (_frame >= FrameCount - 1)
-                        SetState(State.Possess);
-                    else
-                        _frame++;
-                }
+                else
+                    SetState(State.Wandering);
                 break;
             case State.Possess:
                 if (NPC.HasPlayerTarget && Main.player[NPC.target].TryGetModPlayer(out WgPlayer wg))
