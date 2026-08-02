@@ -651,13 +651,13 @@ Items: {
 	}
 
 	MintyTail: {
-		Tooltip: ""
 		DisplayName: Minty Tail
+		Tooltip: ""
 	}
 
 	MintyEars: {
-		Tooltip: ""
 		DisplayName: Minty Ears
+		Tooltip: ""
 	}
 
 	FollyPlush: {
@@ -697,8 +697,8 @@ Items: {
 	}
 
 	BarnSofa: {
-		Tooltip: ""
 		DisplayName: Barn Sofa
+		Tooltip: ""
 	}
 
 	BarnPiano: {
