@@ -204,15 +204,22 @@ public partial class WgPlayer : ModPlayer
     {
         // None of our business
         if ((Player.width + 12) % 16 != 0 || Player.height != Player.defaultHeight)
+        {
+            if (Player.mount.Active && Player.width != Player.defaultWidth) // However... vanilla mounts don't change the width. Cater to them.
+            {
+                float targetX = Player.position.X + Player.width * 0.5f - Player.defaultWidth * 0.5f;
+                Player.width = Player.defaultWidth;
+                Player.position.X = targetX;
+            }
             return;
+        }
 
         int targetWidth = Player.defaultWidth;
         if (!WgServerConfig.Instance.DisableFatHitbox && !Player.mount.Active && !Player.isLockedToATile)
             targetWidth = WeightValues.GetHitboxWidthInTiles(stage) * 16 - 12;
         if (Player.width != targetWidth)
         {
-            float centerX = Player.position.X + Player.width * 0.5f;
-            float targetX = centerX - targetWidth * 0.5f;
+            float targetX = Player.position.X + Player.width * 0.5f - targetWidth * 0.5f;
             // Make sure we have enough space... otherwise we'd be able to walk through walls
             if (!Collision.SolidCollision(new Vector2(targetX, Player.position.Y), targetWidth, Player.height))
             {
