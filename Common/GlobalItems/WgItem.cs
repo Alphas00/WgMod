@@ -19,6 +19,8 @@ public class WgItem : GlobalItem
             bool allow = item.type == ModContent.ItemType<WeightManipulator>(); // Is dev object
             allow |= item.shoot != ProjectileID.None && ProjectileID.Sets.SingleGrappleHook[item.shoot]; // Is grappling hook
             allow |= item.mountType != -1; // Is mount
+            if (!allow)
+                player.PlayDroppedItemAnimation(30);
             return allow;
         }
         if (WgMod._buffTable.TryGetValue(item.buffType, out GainOptions gain) && gain.IsInstant)
