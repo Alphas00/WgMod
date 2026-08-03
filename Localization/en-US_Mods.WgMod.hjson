@@ -1185,3 +1185,28 @@ Emotes: {
 	WeightGainEmote.Command: weightgainpotion
 	HellishBeeEmote.Command: hellishbee
 }
+
+Prefixes: {
+	MaxLifeTooltip: +{0} max life
+	MovePenaltyTooltip: "{0}% movement penalty"
+	DamageAttackSpeedTooltip:
+		'''
+		+{0}% damage
+		{1}% attack speed
+		'''
+
+	Padded: {
+		DisplayName: Padded
+		AdditionalTooltip: uwu
+	}
+
+	Lightweight: {
+		DisplayName: Lightweight
+		AdditionalTooltip: uwu
+	}
+
+	Rotund: {
+		DisplayName: Rotund
+		AdditionalTooltip: uwu
+	}
+}
