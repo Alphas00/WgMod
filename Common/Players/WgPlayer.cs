@@ -8,7 +8,6 @@ using Terraria.ModLoader;
 using WgMod.Common.Configs;
 using WgMod.Common.Systems;
 using WgMod.Content.Buffs;
-using WgMod.Content.Buffs.Consumables;
 
 namespace WgMod.Common.Players;
 
@@ -45,6 +44,7 @@ public partial class WgPlayer : ModPlayer
     internal float _finalKnockbackResistance;
     internal float _finalMovementFactor = 1f;
     internal int _finalMaxStage = Weight.MaxStage;
+    internal bool _finalWeightFixed;
 
     internal float _buffTotalGain;
     internal int _iceBreakTimer;
@@ -70,7 +70,7 @@ public partial class WgPlayer : ModPlayer
 
     public void SetWeight(Weight weight, bool effects = true)
     {
-        if (!OwnsPlayer() || WeightFixed)
+        if (!OwnsPlayer() || _finalWeightFixed)
             return;
         if (WgClientConfig.Instance.DisableWeightGain)
             weight = new Weight(MathF.Min(weight.Mass, Weight.Mass));
@@ -112,10 +112,9 @@ public partial class WgPlayer : ModPlayer
         WeightLossRate = StatModifier.Default;
         FoodAbsorption = StatModifier.Default;
         MaxStage = Weight.MaxStage;
-        WeightFixed = false;
 
-        if (Player.HasBuff<Stagnant>())
-            WeightFixed = true;
+        _finalWeightFixed = WeightFixed;
+        WeightFixed = false;
     }
 
     public override void PreUpdateBuffs()
