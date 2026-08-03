@@ -717,6 +717,12 @@ Items: {
 		DisplayName: Barn Candle
 		Tooltip: ""
 	}
+
+	StagnantPotion: {
+		DisplayName: Stagnant Potion
+		Tooltip: Completely pauses weight loss and weight gain.
+	}
+
 	GreedyFlask: {
 		DisplayName: Greedy Flask
 		Tooltip: Effects scale with your obesity
@@ -872,6 +878,11 @@ Buffs: {
 			Increases summon damage by {0}%
 			'... I think purple is a better look on you! Ahuhuhu~'
 			'''
+	}
+
+	Stagnant: {
+		DisplayName: Stagnant
+		Description: Completely pauses weight loss and weight gain.
 	}
 }
 

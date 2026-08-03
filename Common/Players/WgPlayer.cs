@@ -8,6 +8,7 @@ using Terraria.ModLoader;
 using WgMod.Common.Configs;
 using WgMod.Common.Systems;
 using WgMod.Content.Buffs;
+using WgMod.Content.Buffs.Consumables;
 
 namespace WgMod.Common.Players;
 
@@ -112,6 +113,9 @@ public partial class WgPlayer : ModPlayer
         FoodAbsorption = StatModifier.Default;
         MaxStage = Weight.MaxStage;
         WeightFixed = false;
+
+        if (Player.HasBuff<Stagnant>())
+            WeightFixed = true;
     }
 
     public override void PreUpdateBuffs()
