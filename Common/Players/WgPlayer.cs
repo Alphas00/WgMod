@@ -8,6 +8,7 @@ using Terraria.ModLoader;
 using WgMod.Common.Configs;
 using WgMod.Common.Systems;
 using WgMod.Content.Buffs;
+using WgMod.Content.Buffs.Debuffs;
 
 namespace WgMod.Common.Players;
 
@@ -112,15 +113,17 @@ public partial class WgPlayer : ModPlayer
 
     public override void PreUpdateBuffs()
     {
-        // Ensure fat buff
-        int type = ModContent.BuffType<FatBuff>();
-        if (!Player.HasBuff(type))
-            Player.AddBuff(type, 60);
+        EnsureBuff<FatBuff>();
+        EnsureBuff<StomachBuff>();
+        if (Weight.GetStage() >= Weight.ForcedImmobileStage)
+            Player.AddBuff(ModContent.BuffType<Tired>(), 2);
+    }
 
-        // Ensure stomach buff
-        type = ModContent.BuffType<StomachBuff>();
+    public void EnsureBuff<T>(int time = 60) where T : ModBuff
+    {
+        int type = ModContent.BuffType<T>();
         if (!Player.HasBuff(type))
-            Player.AddBuff(type, 60);
+            Player.AddBuff(type, time);
     }
 
     public override void PostUpdateRunSpeeds()
