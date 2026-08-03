@@ -651,13 +651,13 @@ Items: {
 	}
 
 	MintyTail: {
-		Tooltip: ""
 		DisplayName: Minty Tail
+		Tooltip: ""
 	}
 
 	MintyEars: {
-		Tooltip: ""
 		DisplayName: Minty Ears
+		Tooltip: ""
 	}
 
 	FollyPlush: {
@@ -697,8 +697,8 @@ Items: {
 	}
 
 	BarnSofa: {
-		Tooltip: ""
 		DisplayName: Barn Sofa
+		Tooltip: ""
 	}
 
 	BarnPiano: {
@@ -716,6 +716,16 @@ Items: {
 	BarnCandle: {
 		DisplayName: Barn Candle
 		Tooltip: ""
+	}
+
+	StagnantPotion: {
+		DisplayName: Stagnant Potion
+		Tooltip: Completely pauses weight loss and weight gain.
+	}
+
+	GreedyFlask: {
+		DisplayName: Greedy Flask
+		Tooltip: Effects scale with your obesity
 	}
 }
 
@@ -872,10 +882,15 @@ Buffs: {
 			'... I think purple is a better look on you! Ahuhuhu~'
 			'''
 	}
-
+  
 	Tired: {
 		DisplayName: Tired
 		Description: Attack speed decreased by {0}%
+  }
+  
+	Stagnant: {
+		DisplayName: Stagnant
+		Description: Completely pauses weight loss and weight gain.
 	}
 }
 
@@ -1140,7 +1155,6 @@ Dialogue: {
 		HomelessDialogue1: Mean human! Give {0} a home!
 		HomelessDialogue2: Can human make {0} really really big chest?
 		HomelessDialogue3: "{0} too fat for chest now! Oh no!"
-		PirateDialogue1: Mean and evil plunderer, tried to reach and find treasure! All plunderer found was flabby!
 		PartyDialogue1: "{0} tried to take a nap and humans put cups on top of {0}! So rude!"
 		PartyDialogue2: Woo woo woo! Dance dance!
 		StormDialogue1: Human, help! There giant loud monster outside!
@@ -1178,4 +1192,29 @@ Emotes: {
 	WeightLossEmote.Command: weightlosspotion
 	WeightGainEmote.Command: weightgainpotion
 	HellishBeeEmote.Command: hellishbee
+}
+
+Prefixes: {
+	MaxLifeTooltip: +{0} max life
+	MovePenaltyTooltip: "{0}% movement penalty"
+	DamageAttackSpeedTooltip:
+		'''
+		+{0}% damage
+		{1}% attack speed
+		'''
+
+	Padded: {
+		DisplayName: Padded
+		AdditionalTooltip: uwu
+	}
+
+	Lightweight: {
+		DisplayName: Lightweight
+		AdditionalTooltip: uwu
+	}
+
+	Rotund: {
+		DisplayName: Rotund
+		AdditionalTooltip: uwu
+	}
 }

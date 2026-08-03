@@ -61,7 +61,7 @@ public class WgPlayerDrawLayer : PlayerDrawLayer
         int direction = ((drawInfo.playerEffect & SpriteEffects.FlipHorizontally) == 0).ToDirectionInt();
         Vector2 position = new Vector2((int)(drawInfo.Position.X - Main.screenPosition.X - drawInfo.drawPlayer.bodyFrame.Width / 2 + drawInfo.drawPlayer.width / 2), (int)(drawInfo.Position.Y - Main.screenPosition.Y + drawInfo.drawPlayer.height - drawInfo.drawPlayer.bodyFrame.Height + 4f)) + drawInfo.drawPlayer.bodyPosition + new Vector2(drawInfo.drawPlayer.bodyFrame.Width / 2, drawInfo.drawPlayer.bodyFrame.Height / 2);
         position.X += stageData.OffsetX * direction;
-        position += new Vector2(set.DrawOffsetX * direction, set.DrawOffsetY);
+        position += new Vector2(set.DrawOffsetX * direction, set.DrawOffsetY * player.gravDir);
 
         float yOffset = 4f;
         Rectangle legFrame = player.legFrame;

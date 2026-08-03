@@ -46,10 +46,13 @@ public enum Contributor
     tea_kettles,
     anolivewine,
     thegungis,
+    radiantluminant,
 
     [Category("Other")]
     purple_circle,
-    bombuspyrobombus
+    bombuspyrobombus,
+    /// <summary> This sprite isn't finished and needs to be replaced at some point. </summary>
+    PLACEHOLDER,
 }
 
 [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]

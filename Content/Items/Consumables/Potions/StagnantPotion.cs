@@ -3,20 +3,21 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace WgMod.Content.Items.Consumables;
+namespace WgMod.Content.Items.Consumables.Potions;
 
 [Credit(ProjectRole.Programmer, Contributor.maimaichubs)]
-[Credit(ProjectRole.Artist, Contributor.maimaichubs)]
-public class WeightlessPotion : ModItem
+[Credit(ProjectRole.Artist, Contributor.PLACEHOLDER)]
+
+public class StagnantPotion : ModItem
 {
     public override void SetStaticDefaults()
     {
         Item.ResearchUnlockCount = 20;
         ItemID.Sets.DrinkParticleColors[Type] =
         [
-            new Color(183, 116, 255),
-            new Color(205, 159, 255),
-            new Color(145, 44, 255),
+            new Color(69, 69, 69),
+            new Color(69, 69, 69),
+            new Color(69, 69, 69),
         ];
     }
 
@@ -33,7 +34,7 @@ public class WeightlessPotion : ModItem
         Item.consumable = true;
         Item.rare = ItemRarityID.Blue;
         Item.value = Item.buyPrice(silver: 2);
-        Item.buffType = ModContent.BuffType<Buffs.Consumables.Weightless>();
+        Item.buffType = ModContent.BuffType<Buffs.Consumables.Stagnant>();
         Item.buffTime = 8 * 60 * 60;
     }
 
@@ -41,8 +42,8 @@ public class WeightlessPotion : ModItem
     {
         CreateRecipe()
             .AddIngredient(ItemID.BottledWater)
-            .AddIngredient(ItemID.Cloud)
-            .AddIngredient(ItemID.Blinkroot)
+            .AddIngredient(ItemID.StoneBlock)
+            .AddIngredient(ItemID.Shiverthorn)
             .AddTile(TileID.Bottles)
             .Register();
     }

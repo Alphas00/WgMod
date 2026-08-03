@@ -36,12 +36,16 @@ public partial class WgPlayer : ModPlayer
     /// <summary> The maximum weight stage that the player can reach </summary>
     public int MaxStage;
 
+    /// <summary> Whether the weight is currently fixed/pinned. No gain or loss. </summary>
+    public bool WeightFixed;
+
     public readonly int[] BuffDuration = new int[Player.MaxBuffs];
     internal int _ignoreWgBuffTimer = 2;
 
     internal float _finalKnockbackResistance;
     internal float _finalMovementFactor = 1f;
     internal int _finalMaxStage = Weight.MaxStage;
+    internal bool _finalWeightFixed;
 
     internal float _buffTotalGain;
     internal int _iceBreakTimer;
@@ -67,7 +71,7 @@ public partial class WgPlayer : ModPlayer
 
     public void SetWeight(Weight weight, bool effects = true)
     {
-        if (!OwnsPlayer())
+        if (!OwnsPlayer() || _finalWeightFixed)
             return;
         if (WgClientConfig.Instance.DisableWeightGain)
             weight = new Weight(MathF.Min(weight.Mass, Weight.Mass));
@@ -109,6 +113,9 @@ public partial class WgPlayer : ModPlayer
         WeightLossRate = StatModifier.Default;
         FoodAbsorption = StatModifier.Default;
         MaxStage = Weight.MaxStage;
+
+        _finalWeightFixed = WeightFixed;
+        WeightFixed = false;
     }
 
     public override void PreUpdateBuffs()
@@ -208,15 +215,22 @@ public partial class WgPlayer : ModPlayer
     {
         // None of our business
         if ((Player.width + 12) % 16 != 0 || Player.height != Player.defaultHeight)
+        {
+            if (Player.mount.Active && Player.width != Player.defaultWidth) // However... vanilla mounts don't change the width. Cater to them.
+            {
+                float targetX = Player.position.X + Player.width * 0.5f - Player.defaultWidth * 0.5f;
+                Player.width = Player.defaultWidth;
+                Player.position.X = targetX;
+            }
             return;
+        }
 
         int targetWidth = Player.defaultWidth;
         if (!WgServerConfig.Instance.DisableFatHitbox && !Player.mount.Active && !Player.isLockedToATile)
             targetWidth = WeightValues.GetHitboxWidthInTiles(stage) * 16 - 12;
         if (Player.width != targetWidth)
         {
-            float centerX = Player.position.X + Player.width * 0.5f;
-            float targetX = centerX - targetWidth * 0.5f;
+            float targetX = Player.position.X + Player.width * 0.5f - targetWidth * 0.5f;
             // Make sure we have enough space... otherwise we'd be able to walk through walls
             if (!Collision.SolidCollision(new Vector2(targetX, Player.position.Y), targetWidth, Player.height))
             {
