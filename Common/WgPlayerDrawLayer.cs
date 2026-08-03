@@ -31,7 +31,7 @@ public class WgPlayerDrawLayer : PlayerDrawLayer
     {
         if (Main.dedServ || !drawInfo.drawPlayer.TryGetModPlayer(out WgPlayer wg))
             return false;
-        return SpriteSet.Current.GetStage(wg.Weight.GetStage()).OnTop;
+        return SpriteSet.GetStage(wg.Weight.GetStage()).OnTop;
     }
 
     public override bool GetDefaultVisibility(PlayerDrawSet drawInfo) => true;
@@ -53,14 +53,14 @@ public class WgPlayerDrawLayer : PlayerDrawLayer
         if (stage <= 0)
             return;
 
-        SpriteSet set = SpriteSet.Current;
+        SpriteSet.Stage stageData = SpriteSet.GetStage(stage, out SpriteSet set);
         SpriteSet.Layer[] layers = top ? set.TopLayers : set.Layers;
         if (layers.Length <= 0)
             return;
 
         int direction = ((drawInfo.playerEffect & SpriteEffects.FlipHorizontally) == 0).ToDirectionInt();
         Vector2 position = new Vector2((int)(drawInfo.Position.X - Main.screenPosition.X - drawInfo.drawPlayer.bodyFrame.Width / 2 + drawInfo.drawPlayer.width / 2), (int)(drawInfo.Position.Y - Main.screenPosition.Y + drawInfo.drawPlayer.height - drawInfo.drawPlayer.bodyFrame.Height + 4f)) + drawInfo.drawPlayer.bodyPosition + new Vector2(drawInfo.drawPlayer.bodyFrame.Width / 2, drawInfo.drawPlayer.bodyFrame.Height / 2);
-        position.X += WeightValues.DrawOffsetX(stage) * direction;
+        position.X += stageData.OffsetX * direction;
         position += new Vector2(set.DrawOffsetX * direction, set.DrawOffsetY * player.gravDir);
 
         float yOffset = 4f;
@@ -95,7 +95,7 @@ public class WgPlayerDrawLayer : PlayerDrawLayer
         float baseSquish = (bellySquish + 1f) * 0.5f;
 
         bool drawArmor = WgArmor.ShouldDraw(drawInfo);
-        int stageFrame = set.GetStage(stage).Frame;
+        int stageFrame = stageData.Frame;
         foreach (SpriteSet.Layer layer in layers)
         {
             if (!layer.ShouldRender(player))

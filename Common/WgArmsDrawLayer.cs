@@ -25,7 +25,8 @@ public class WgArmsDrawLayer : PlayerDrawLayer
         if (!player.TryGetModPlayer(out WgPlayer wg))
             return;
         int stage = wg.Weight.GetStage();
-        int armStage = WeightValues.GetArmStage(stage);
+        SpriteSet.Stage stageData = SpriteSet.GetStage(stage, out SpriteSet set);
+        int armStage = stageData.Arm;
         if (armStage < 0)
             return;
 
@@ -45,7 +46,7 @@ public class WgArmsDrawLayer : PlayerDrawLayer
         if (drawInfo.compFrontArmFrame.X / drawInfo.compFrontArmFrame.Width >= 7)
             armPosition -= new Vector2(drawInfo.playerEffect.HasFlag(SpriteEffects.FlipHorizontally).ToDirectionInt(), drawInfo.playerEffect.HasFlag(SpriteEffects.FlipVertically).ToDirectionInt());
 
-        SpriteSet.Layer layer = SpriteSet.Current.ArmLayers[armStage];
+        SpriteSet.Layer layer = set.ArmLayers[armStage];
         bool drawArmor = WgArmor.ShouldDraw(drawInfo) && layer.UVArmor;
 
         Asset<Texture2D> texture = layer.Texture;
@@ -75,7 +76,7 @@ public class WgArmsDrawLayer : PlayerDrawLayer
                 DrawCompShoulder(ref drawInfo, shoulderPosition, bodyRotation, bodyVect);
         }
 
-        bool drawTop = frameY == 0 && (frameX == 2 || frameX == 3) || frameY == 1 && frameX == 2;
+        bool drawTop = stageData.ArmAlwaysBelow || (frameY == 0 && (frameX == 2 || frameX == 3)) || (frameY == 1 && frameX == 2);
         if (drawTop)
             WgPlayerDrawLayer.Draw(ref drawInfo, true);
     }

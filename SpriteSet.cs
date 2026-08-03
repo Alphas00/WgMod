@@ -15,8 +15,9 @@ public class SpriteSet
 {
     public const string BasePath = "SpriteSets";
     public const string JsonFileName = "Set.json";
-    public const string DefaultSet = "Folly";
+    public const string DefaultSet = "Folly2";
 
+    public static SpriteSet Fallback { get; private set; }
     public static SpriteSet Current { get; private set; }
     public static string[] FoundSets { get; private set; }
 
@@ -36,11 +37,29 @@ public class SpriteSet
     [JsonIgnore] public int ArmorAltasWidth { get; private set; }
     [JsonIgnore] public int ArmorAltasHeight { get; private set; }
 
-    public Stage GetStage(int stage)
+    public static Stage GetStage(int stage)
     {
-        if (Stages.TryGetValue(stage, out Stage result))
+        return GetStage(stage, out _);
+    }
+
+    public static Stage GetStage(int stage, out SpriteSet set)
+    {
+        if (Current.Stages.TryGetValue(stage, out Stage result))
+        {
+            set = Current;
+            return result;
+        }
+        set = Fallback;
+        if (Fallback.Stages.TryGetValue(stage, out result))
             return result;
         return Stage.Fallback;
+    }
+
+    public static SpriteSet GetSet(int stage)
+    {
+        if (Current.Stages.ContainsKey(stage))
+            return Current;
+        return Fallback;
     }
 
     public static void Initialize(Mod mod, string name)
@@ -49,7 +68,11 @@ public class SpriteSet
         FoundSets = [.. FindSets(mod)];
         if (!Exists(mod, name))
             name = DefaultSet;
-        Current = Load(mod, name);
+        Fallback = Load(mod, DefaultSet);
+        if (name == DefaultSet)
+            Current = Fallback;
+        else
+            Current = Load(mod, name);
     }
 
     public static IEnumerable<string> FindSets(Mod mod)
@@ -178,6 +201,7 @@ public class SpriteSet
         public bool OnTop;
         public float OffsetX;
         public float OffsetY;
+        public bool ArmAlwaysBelow;
 
         [JsonIgnore] public int Frame;
     }

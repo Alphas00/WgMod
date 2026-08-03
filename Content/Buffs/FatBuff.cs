@@ -13,6 +13,7 @@ namespace WgMod.Content.Buffs;
 public class FatBuff : WgBuffBase
 {
     public const float MaxLifeIncreasePercentage = 0.2f;
+    public const int MaxStageGraphic = Weight.ImmobileStage;
 
     WgStat _damageReduction = new(0f, 0.05f);
     WgStat _lifeIncrease = new(0f, 100f);
@@ -55,6 +56,8 @@ public class FatBuff : WgBuffBase
             string line = this.GetLocalization("HitboxIncrease").Format((WeightValues.GetHitboxWidthInTiles(stage) - 2).Range(0, WeightValues.GetHitboxWidthInTiles(Weight.ImmobileStage) - 2));
             tip += "\n" + line;
         }
+        if (stage >= Weight.BlobStage)
+            tip += "\n" + this.GetLocalization("CantMoveArms");
     }
 
     public override void Update(Player player, ref int buffIndex)
@@ -92,7 +95,7 @@ public class FatBuff : WgBuffBase
         if (Main.LocalPlayer.TryGetModPlayer(out WgPlayer wg))
         {
             drawParams.Texture = _stagesTexture.Value;
-            drawParams.SourceRectangle = drawParams.Texture.Frame(1, Weight.StageCount, 0, wg.Weight.GetStage());
+            drawParams.SourceRectangle = drawParams.Texture.Frame(1, MaxStageGraphic + 1, 0, Math.Clamp(wg.Weight.GetStage(), 0, MaxStageGraphic));
         }
         return base.PreDraw(spriteBatch, buffIndex, ref drawParams);
     }
@@ -100,7 +103,7 @@ public class FatBuff : WgBuffBase
     public override float GetProgress(WgPlayer wg, int buffIndex)
     {
         int stage = wg.Weight.GetStage();
-        if (stage < Weight.ImmobileStage)
+        if (stage < Weight.MaxStage)
             return wg.Weight.GetStageFactor();
         return 1f;
     }

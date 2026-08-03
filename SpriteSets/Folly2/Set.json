@@ -2,7 +2,7 @@
     "Author": "folly",
     "DrawOffsetX": 8,
     "DrawOffsetY": 16,
-    "ArmCount": 3,
+    "ArmCount": 4,
     "Layers": [
         {
             "Name": "Leg",
@@ -31,8 +31,8 @@
             "OnTop": false
         },
         "3": {
-            "OnTop": true,
-            "Arm": 0
+            "Arm": 0,
+            "OnTop": true
         },
         "4": {
             "Arm": 0,
@@ -40,7 +40,7 @@
             "OffsetY": 2
         },
         "5": {
-            "Arm": 0,
+            "Arm": 1,
             "OnTop": true,
             "OffsetY": 6
         },
@@ -50,7 +50,7 @@
             "OffsetY": 10
         },
         "7": {
-            "Arm": 1,
+            "Arm": 2,
             "OnTop": true,
             "OffsetY": 14
         },
@@ -60,9 +60,10 @@
             "OffsetY": 18
         },
         "9": {
-            "Arm": 2,
+            "Arm": 3,
             "OnTop": true,
-            "OffsetY": 24
+            "OffsetY": 24,
+            "ArmAlwaysBelow": true
         }
     }
 }
