@@ -62,7 +62,8 @@
         "9": {
             "Arm": 3,
             "OnTop": true,
-            "OffsetY": 24
+            "OffsetY": 24,
+            "ArmAlwaysBelow": true
         }
     }
 }

@@ -75,7 +75,7 @@ public class WgArmsDrawLayer : PlayerDrawLayer
                 DrawCompShoulder(ref drawInfo, shoulderPosition, bodyRotation, bodyVect);
         }
 
-        bool drawTop = frameY == 0 && (frameX == 2 || frameX == 3) || frameY == 1 && frameX == 2;
+        bool drawTop = SpriteSet.Current.GetStage(stage).ArmAlwaysBelow || (frameY == 0 && (frameX == 2 || frameX == 3)) || (frameY == 1 && frameX == 2);
         if (drawTop)
             WgPlayerDrawLayer.Draw(ref drawInfo, true);
     }
