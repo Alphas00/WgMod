@@ -15,7 +15,12 @@ public class WgItem : GlobalItem
         if (!player.TryGetModPlayer(out WgPlayer wg))
             return true;
         if (!WgServerConfig.Instance.DisableFatBuffs && wg.Weight.GetStage() >= Weight.BlobStage)
-            return (item.shoot != ProjectileID.None && ProjectileID.Sets.SingleGrappleHook[item.shoot]) || item.type == ModContent.ItemType<WeightManipulator>();
+        {
+            bool allow = item.type == ModContent.ItemType<WeightManipulator>(); // Is dev object
+            allow |= item.shoot != ProjectileID.None && ProjectileID.Sets.SingleGrappleHook[item.shoot]; // Is grappling hook
+            allow |= item.mountType != -1; // Is mount
+            return allow;
+        }
         if (WgMod._buffTable.TryGetValue(item.buffType, out GainOptions gain) && gain.IsInstant)
         {
             if (wg.Stomach + gain.TotalGain > WgPlayer.StomachCapacity)
