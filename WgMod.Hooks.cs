@@ -143,7 +143,7 @@ public partial class WgMod
         if (drawPlayer.TryGetModPlayer(out WgPlayer wg) && self.Active)
         {
             int stage = wg.Weight.GetStage();
-            Position.Y += WeightValues.DrawOffsetY(stage);
+            Position.Y += SpriteSet.GetStage(stage).OffsetY;
             scale = WeightValues.GetMountScale(stage);
         }
         int start = playerDrawData.Count;

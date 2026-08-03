@@ -33,7 +33,7 @@ public partial class WgPlayer
             Main.RunOnMainThread(() =>
             {
                 WgArmor.SetupArmorLayers(this);
-                WgArmor.Render(ref _armorTarget, _armorLayers, Player.Male);
+                WgArmor.Render(Weight.GetStage(), ref _armorTarget, _armorLayers, Player.Male);
             });
         }
     }
@@ -41,7 +41,7 @@ public partial class WgPlayer
     internal void PreUpdateVisuals()
     {
         Player.gfxOffY = _lastGfxOffY;
-        _addedGfxOffY = WeightValues.DrawOffsetY(Weight.GetStage()) * -Player.gravDir;
+        _addedGfxOffY = SpriteSet.GetStage(Weight.GetStage()).OffsetY * -Player.gravDir;
         _headOverride = null;
     }
 
@@ -56,7 +56,7 @@ public partial class WgPlayer
         if (WgArmor.Enabled)
         {
             WgArmor.SetupArmorLayers(this);
-            WgArmor.Render(ref _armorTarget, _armorLayers, Player.Male);
+            WgArmor.Render(Weight.GetStage(), ref _armorTarget, _armorLayers, Player.Male);
         }
     }
 
@@ -86,7 +86,7 @@ public partial class WgPlayer
     public override void HideDrawLayers(PlayerDrawSet drawInfo)
     {
         int stage = Weight.GetStage();
-        int armStage = WeightValues.GetArmStage(stage);
+        int armStage = SpriteSet.GetStage(stage).Arm;
         foreach (PlayerDrawLayer drawLayer in PlayerDrawLayerLoader.Layers)
         {
             if (drawLayer == PlayerDrawLayers.ArmOverItem && armStage >= 0)

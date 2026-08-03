@@ -27,12 +27,12 @@ public static class WgArmor
         SoftenShader = mod.Assets.Request<Effect>("Assets/Effects/FatArmorSoften");
     }
 
-    public static void Render(ref RenderTarget2D target, ReadOnlySpan<Layer> layers, bool male)
+    public static void Render(int stage, ref RenderTarget2D target, ReadOnlySpan<Layer> layers, bool male)
     {
         if (!UVShader.IsLoaded)
             return;
 
-        SpriteSet set = SpriteSet.Current;
+        SpriteSet set = SpriteSet.GetSet(stage);
         GraphicsDevice device = Main.graphics.GraphicsDevice;
         SpriteBatch spriteBatch = Main.spriteBatch;
         target ??= new RenderTarget2D(device, set.ArmorAltasWidth, set.ArmorAltasHeight, false, device.PresentationParameters.BackBufferFormat, DepthFormat.None);
