@@ -729,8 +729,9 @@ Buffs: {
 			Increases maximum health by {2}
 			Added {3}% knockback resistance
 			'''
-		HitboxIncrease: Increased hitbox horizontally by {0} tiles
 		DisabledBuffs: Fat buffs and debuffs disabled
+		HitboxIncrease: Increased hitbox horizontally by {0} tiles
+		CantMoveArms: You're so fat your arms are practically uselesss
 
 		Stages: {
 			Name0: Regular
@@ -741,6 +742,8 @@ Buffs: {
 			Name5: Morbidly obese
 			Name6: Barely mobile
 			Name7: Immobile
+			Name8: Encumbered
+			Name9: Blob
 		}
 	}
 

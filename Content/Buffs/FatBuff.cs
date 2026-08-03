@@ -56,6 +56,8 @@ public class FatBuff : WgBuffBase
             string line = this.GetLocalization("HitboxIncrease").Format((WeightValues.GetHitboxWidthInTiles(stage) - 2).Range(0, WeightValues.GetHitboxWidthInTiles(Weight.ImmobileStage) - 2));
             tip += "\n" + line;
         }
+        if (stage >= Weight.BlobStage)
+            tip += "\n" + this.GetLocalization("CantMoveArms");
     }
 
     public override void Update(Player player, ref int buffIndex)
