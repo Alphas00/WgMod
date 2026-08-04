@@ -141,8 +141,9 @@ public partial class WgPlayer : ModPlayer
             return;
         }
 
+        const float mountReduction = 0.8f;
         if (Player.mount.Active)
-            MovementPenalty *= 0.8f;
+            MovementPenalty *= mountReduction;
 
         int stage = Weight.GetStage();
         if (stage >= Weight.DamageReductionStage)
@@ -168,7 +169,7 @@ public partial class WgPlayer : ModPlayer
             _finalMovementFactor = Math.Clamp(1f - MovementPenalty.ApplyTo(basePenalty), 0f, 1f);
         }
         else
-            _finalMovementFactor = 0f;
+            _finalMovementFactor = Player.mount.Active ? 1f - mountReduction : 0f; // TODO: This sucks
 
         Player.runAcceleration *= _finalMovementFactor;
         Player.maxRunSpeed *= _finalMovementFactor;

@@ -16,11 +16,13 @@ public class WgItem : GlobalItem
             return true;
         if (!WgServerConfig.Instance.DisableFatBuffs && wg.Weight.GetStage() >= Weight.BlobStage)
         {
-            bool allow = item.type == ModContent.ItemType<WeightManipulator>(); // Is dev object
-            allow |= item.shoot != ProjectileID.None && ProjectileID.Sets.SingleGrappleHook[item.shoot]; // Is grappling hook
+            bool allow = item.useStyle == ItemUseStyleID.None; // Unrelated
+            allow |= item.type == ModContent.ItemType<WeightManipulator>(); // Is dev object
+            allow |= item.shoot != ProjectileID.None && Main.projHook[item.shoot]; // Is grappling hook
             allow |= item.mountType != -1; // Is mount
-            if (!allow)
-                player.PlayDroppedItemAnimation(30);
+            allow |= item.useStyle == ItemUseStyleID.DrinkLiquid || item.useStyle == ItemUseStyleID.DrinkLong || item.useStyle == ItemUseStyleID.EatFood; // Is consumable
+            //if (!allow) // TODO
+            //    player.PlayDroppedItemAnimation(30);
             return allow;
         }
         if (WgMod._buffTable.TryGetValue(item.buffType, out GainOptions gain) && gain.IsInstant)
