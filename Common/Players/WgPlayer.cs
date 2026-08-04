@@ -14,9 +14,9 @@ namespace WgMod.Common.Players;
 
 public partial class WgPlayer : ModPlayer
 {
-    public const int DigestTime = 10;
-    public const float DigestAmount = 0.5f;
-    public const float StomachCapacity = 25f;
+    public const int DigestTime = 60;
+    public const float DigestAmount = 0.25f;
+    public const float StomachCapacity = 20f;
 
     /// <summary> The player's weight </summary>
     public Weight Weight { get; private set; } = Weight.Base;
@@ -190,8 +190,8 @@ public partial class WgPlayer : ModPlayer
         if (!Player.mount.Active)
         {
             float factor = MathF.Abs(Player.velocity.X);
-            factor += MathF.Abs(acc.X) * 20f;
-            factor *= 0.0002f;
+            factor += MathF.Abs(acc.X) * 10f;
+            factor *= 0.0001f;
             SetWeight(Weight - WeightLossRate.ApplyTo(factor));
         }
 
