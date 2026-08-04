@@ -3,6 +3,9 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.GameContent;
+using Terraria.Graphics;
+using Terraria.Graphics.Renderers;
 using Terraria.ModLoader;
 using WgMod.Common.Players;
 
@@ -18,6 +21,14 @@ public class WgPlayerDrawLayer : PlayerDrawLayer
         if (Main.dedServ)
             return;
         WgArmor.Load(Mod);
+        On_LegacyPlayerRenderer.DrawPlayerStoned += DrawPlayerStoned;
+    }
+
+    public override void Unload()
+    {
+        if (Main.dedServ)
+            return;
+        On_LegacyPlayerRenderer.DrawPlayerStoned -= DrawPlayerStoned;
     }
 
     // folly: What is OffhandAcc exactly???
@@ -95,7 +106,6 @@ public class WgPlayerDrawLayer : PlayerDrawLayer
         float baseSquish = (bellySquish + 1f) * 0.5f;
 
         bool drawArmor = WgArmor.ShouldDraw(drawInfo);
-        int stageFrame = stageData.Frame;
         foreach (SpriteSet.Layer layer in layers)
         {
             if (!layer.ShouldRender(player))
@@ -117,7 +127,7 @@ public class WgPlayerDrawLayer : PlayerDrawLayer
                     scale = new Vector2(1f / bellySquish, 1f * bellySquish);
                     break;
             }
-            Rectangle layerFrame = layer.Texture.Frame(1, set.FrameCount, 0, stageFrame);
+            Rectangle layerFrame = layer.Texture.Frame(1, set.FrameCount, 0, stageData.Frame);
             DrawData drawData = new(
                 layer.Texture.Value, // The texture to render.
                 pos, // Position to render at.
@@ -139,5 +149,43 @@ public class WgPlayerDrawLayer : PlayerDrawLayer
         pos.X += xOffset;
         pos.Y += yOffset * gravDir;
         return pos.Floor();
+    }
+
+    static void DrawPlayerStoned(On_LegacyPlayerRenderer.orig_DrawPlayerStoned orig, LegacyPlayerRenderer self, Camera camera, Player drawPlayer, Vector2 position)
+    {
+        orig(self, camera, drawPlayer, position);
+        if (drawPlayer.dead || !drawPlayer.TryGetModPlayer(out WgPlayer wg))
+            return;
+        int stage = wg.Weight.GetStage();
+        if (stage <= 0)
+            return;
+
+        SpriteSet.Stage stageData = SpriteSet.GetStage(stage, out SpriteSet set);
+        SpriteEffects effects = drawPlayer.direction != 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
+        Vector2 drawPos = new Vector2((int)(position.X - camera.UnscaledPosition.X - drawPlayer.bodyFrame.Width / 2 + drawPlayer.width / 2), (int)(position.Y - camera.UnscaledPosition.Y + drawPlayer.height - drawPlayer.bodyFrame.Height + 8f)) + drawPlayer.bodyPosition + new Vector2(drawPlayer.bodyFrame.Width / 2, drawPlayer.bodyFrame.Height / 2);
+        Color drawColor = Lighting.GetColor((int)(position.X + drawPlayer.width * 0.5) / 16, (int)(position.Y + drawPlayer.height * 0.5) / 16, new Color(165, 165, 165));
+
+        int direction = drawPlayer.direction;
+        Vector2 layerPos = drawPos;
+        layerPos.X += stageData.OffsetX * direction;
+        layerPos += new Vector2(set.DrawOffsetX * direction, set.DrawOffsetY * drawPlayer.gravDir);
+
+        void DrawLayers(SpriteSet.Layer[] layers)
+        {
+            foreach (SpriteSet.Layer layer in layers)
+            {
+                Rectangle layerFrame = layer.Texture.Frame(1, set.FrameCount, 0, stageData.Frame);
+                camera.SpriteBatch.Draw(layer.Texture.Value, layerPos, layerFrame, drawColor, 0f, layerFrame.Size() * 0.5f, 1f, effects, 0f);
+            }
+        }
+
+        DrawLayers(set.Layers);
+
+        int armStage = stageData.Arm;
+        Texture2D texture = armStage >= 0 ? set.ArmLayers[armStage].Texture.Value : TextureAssets.Players[drawPlayer.skinVariant, 3].Value;
+        Rectangle frame = texture.Frame(9, 4, 2, 0);
+        camera.SpriteBatch.Draw(texture, drawPos + new Vector2(0f, -4f), frame, drawColor, 0f, frame.Size() * 0.5f, 1f, effects, 0f);
+
+        DrawLayers(set.TopLayers);
     }
 }
