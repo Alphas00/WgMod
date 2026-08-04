@@ -21,8 +21,8 @@ public class WgItem : GlobalItem
             allow |= item.shoot != ProjectileID.None && Main.projHook[item.shoot]; // Is grappling hook
             allow |= item.mountType != -1; // Is mount
             allow |= item.useStyle == ItemUseStyleID.DrinkLiquid || item.useStyle == ItemUseStyleID.DrinkLong || item.useStyle == ItemUseStyleID.EatFood; // Is consumable
-            //if (!allow) // TODO
-            //    player.PlayDroppedItemAnimation(30);
+            if (!allow)
+                wg._armSwing = true;
             return allow;
         }
         if (WgMod._buffTable.TryGetValue(item.buffType, out GainOptions gain) && gain.IsInstant)

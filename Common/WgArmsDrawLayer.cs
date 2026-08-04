@@ -49,9 +49,19 @@ public class WgArmsDrawLayer : PlayerDrawLayer
         SpriteSet.Layer layer = set.ArmLayers[armStage];
         bool drawArmor = WgArmor.ShouldDraw(drawInfo) && layer.UVArmor;
 
+        int frameX;
+        int frameY;
+        if (wg._armSwing)
+        {
+            frameX = 3 + wg._armSwingFrame;
+            frameY = 0;
+        }
+        else
+        {
+            frameX = drawInfo.compFrontArmFrame.X / drawInfo.compFrontArmFrame.Width;
+            frameY = drawInfo.compFrontArmFrame.Y / drawInfo.compFrontArmFrame.Height;
+        }
         Asset<Texture2D> texture = layer.Texture;
-        int frameX = drawInfo.compFrontArmFrame.X / drawInfo.compFrontArmFrame.Width;
-        int frameY = drawInfo.compFrontArmFrame.Y / drawInfo.compFrontArmFrame.Height;
         Rectangle frame = texture.Frame(9, 4, frameX, frameY);
 
         bodyVect -= drawInfo.compFrontArmFrame.Size() * 0.5f;

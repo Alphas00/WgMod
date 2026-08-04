@@ -16,6 +16,10 @@ public partial class WgPlayer
     internal float _squishVel;
     internal float _bellyOffset;
 
+    internal bool _armSwing;
+    internal int _armSwingFrame;
+    internal int _armSwingTimer;
+
     internal readonly WgArmor.Layer[] _armorLayers = new WgArmor.Layer[4];
     internal RenderTarget2D _armorTarget;
 
@@ -47,6 +51,22 @@ public partial class WgPlayer
 
     internal void PostUpdateVisuals()
     {
+        if (_armSwing)
+        {
+            _armSwingTimer++;
+            if (_armSwingTimer >= 10)
+            {
+                _armSwingTimer = 0;
+                _armSwingFrame++;
+            }
+            if (_armSwingFrame >= 3)
+            {
+                _armSwing = false;
+                _armSwingFrame = 0;
+                _armSwingTimer = 0;
+            }
+        }
+
         // Can't find a better way to change the draw position
         _lastGfxOffY = Player.gfxOffY;
         Player.gfxOffY += _addedGfxOffY;
