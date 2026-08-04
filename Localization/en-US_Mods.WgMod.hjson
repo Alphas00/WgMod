@@ -882,12 +882,12 @@ Buffs: {
 			'... I think purple is a better look on you! Ahuhuhu~'
 			'''
 	}
-  
+
 	Tired: {
 		DisplayName: Tired
 		Description: Attack speed decreased by {0}%
-  }
-  
+	}
+
 	Stagnant: {
 		DisplayName: Stagnant
 		Description: Completely pauses weight loss and weight gain.

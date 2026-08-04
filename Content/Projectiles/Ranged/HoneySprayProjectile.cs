@@ -1,11 +1,9 @@
+using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.DataStructures;
-using WgMod.Common.Players;
-using WgMod.Content.Buffs;
 using WgMod.Content.Buffs.Debuffs;
-using Microsoft.Xna.Framework;
 
 namespace WgMod.Content.Projectiles;
 

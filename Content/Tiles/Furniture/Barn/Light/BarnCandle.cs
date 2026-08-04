@@ -4,7 +4,6 @@ using ReLogic.Content;
 using Terraria;
 using Terraria.Enums;
 using Terraria.GameContent.Drawing;
-using Terraria.GameContent.ObjectInteractions;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;

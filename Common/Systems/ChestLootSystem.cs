@@ -6,8 +6,8 @@ using Terraria.Utilities;
 using WgMod.Content.Items.Accessories.Fat;
 using WgMod.Content.Items.Accessories.Ranged;
 using WgMod.Content.Items.Ammo;
-using WgMod.Content.Items.Consumables.Potions;
 using WgMod.Content.Items.Consumables.Baked;
+using WgMod.Content.Items.Consumables.Potions;
 using WgMod.Content.Items.Consumables.Potions.WeightGainPotions;
 using WgMod.Content.Items.Consumables.Potions.WeightLossPotions;
 

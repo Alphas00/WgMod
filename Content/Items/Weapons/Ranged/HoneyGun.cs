@@ -2,13 +2,11 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using WgMod.Content.Projectiles;
-using WgMod.Common.Players;
-using WgMod.Content.Buffs;
+
 namespace WgMod.Content.Items.Weapons.Ranged;
 
 public class HoneyGun : ModItem
 {
-
     public override void SetDefaults()
     {
         // Copies the Slime Gun's use animation, use sound,
@@ -16,16 +14,15 @@ public class HoneyGun : ModItem
         Item.CloneDefaults(ItemID.SlimeGun);
 
         // Replace the vanilla slime projectile with ours.
-        Item.shoot =
-            ModContent.ProjectileType<HoneySprayProjectile>();
+        Item.shoot = ModContent.ProjectileType<HoneySprayProjectile>();
 
         /*
-            * Give the projectile a tiny internal damage value so
-            * Terraria processes NPC collision and calls OnHitNPC.
-            *
-            * We will reduce the actual damage to zero inside
-            * the projectile.
-            */
+         * Give the projectile a tiny internal damage value so
+         * Terraria processes NPC collision and calls OnHitNPC.
+         *
+         * We will reduce the actual damage to zero inside
+         * the projectile.
+         */
         Item.damage = 0;
         Item.knockBack = 0f;
         Item.DamageType = DamageClass.Ranged;
