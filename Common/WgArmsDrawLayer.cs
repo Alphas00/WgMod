@@ -64,8 +64,9 @@ public class WgArmsDrawLayer : PlayerDrawLayer
         Asset<Texture2D> texture = layer.Texture;
         Rectangle frame = texture.Frame(9, 4, frameX, frameY);
 
-        bodyVect -= drawInfo.compFrontArmFrame.Size() * 0.5f;
-        bodyVect += frame.Size() * 0.5f;
+        Vector2 bodyVectBig = bodyVect;
+        bodyVectBig -= drawInfo.compFrontArmFrame.Size() * 0.5f;
+        bodyVectBig += frame.Size() * 0.5f;
 
         if (drawArmor && !drawInfo.compShoulderOverFrontArm)
             DrawCompShoulder(ref drawInfo, shoulderPosition, bodyRotation, bodyVect);
@@ -73,7 +74,7 @@ public class WgArmsDrawLayer : PlayerDrawLayer
         Color skinColor = drawInfo.colorBodySkin;
         if (player.isDisplayDollOrInanimate)
             skinColor = new Color(154, 115, 85).MultiplyRGB(skinColor);
-        DrawData drawData = new(texture.Value, armPosition, frame, skinColor, rotation, bodyVect, 1f, drawInfo.playerEffect)
+        DrawData drawData = new(texture.Value, armPosition, frame, skinColor, rotation, bodyVectBig, 1f, drawInfo.playerEffect)
         {
             shader = drawInfo.skinDyePacked
         };
