@@ -33,6 +33,14 @@ public class WgItem : GlobalItem
         return true;
     }
 
+    public override void UseAnimation(Item item, Player player)
+    {
+        if (!player.TryGetModPlayer(out WgPlayer wg))
+            return;
+        if (item.useStyle == ItemUseStyleID.Swing && wg.Weight.GetStage() >= 5)
+            wg.Jiggle(3f);
+    }
+
     public override void ModifyShootStats(Item item, Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
     {
         if (!player.TryGetModPlayer(out WgPlayer wg))

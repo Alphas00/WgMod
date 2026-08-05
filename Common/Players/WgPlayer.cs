@@ -86,7 +86,7 @@ public partial class WgPlayer : ModPlayer
         if (Weight.GetStage() != prevStage && effects)
         {
             SoundEngine.PlaySound(WgSounds.Belly, Player.Center);
-            _squishPos += 0.06f;
+            Jiggle(3.6f);
         }
     }
 

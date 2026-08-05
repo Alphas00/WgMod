@@ -94,13 +94,18 @@ public partial class WgPlayer
             vel.Y += _bellyOffset * 0.6f;
 
             _squishPos += MathF.Abs(vel.X) * 0.005f;
-            _squishPos += vel.Y * 0.005f;
+            _squishPos += vel.Y * 0.008f;
 
             _squishVel += (_squishRest - _squishPos) * 400f * dt;
             _squishVel = float.Lerp(_squishVel, 0f, 1f - MathF.Exp(-6f * dt));
             _squishPos += _squishVel * dt;
             _squishPos = Math.Clamp(_squishPos, 0.5f, 1.5f);
         }
+    }
+
+    public void Jiggle(float amount)
+    {
+        _squishVel += amount;
     }
 
     public override void HideDrawLayers(PlayerDrawSet drawInfo)
