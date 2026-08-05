@@ -16,6 +16,7 @@ public class Treadmill : ModTile
 {
     public const float WeightLoss = 80f;
     public const int NextStyleHeight = 38;
+    public const int InteractDistance = PlayerSittingHelper.ChairSittingMaxDistance * 2;
 
     public override void SetStaticDefaults()
     {
@@ -24,8 +25,7 @@ public class Treadmill : ModTile
         TileID.Sets.HasOutlines[Type] = true;
         TileID.Sets.CanBeSatOnForPlayers[Type] = true;
 
-        AddToArray(ref TileID.Sets.RoomNeeds.CountsAsChair);
-        AdjTiles = [TileID.Beds];
+        DustType = DustID.Lead;
 
         TileObjectData.newTile.CopyFrom(TileObjectData.Style4x2);
         TileObjectData.newTile.CoordinateHeights = [16, 18];
@@ -37,7 +37,7 @@ public class Treadmill : ModTile
 
     public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings)
     {
-        return settings.player.IsWithinSnappngRangeToTile(i, j, PlayerSittingHelper.ChairSittingMaxDistance * 2);
+        return settings.player.IsWithinSnappngRangeToTile(i, j, InteractDistance);
     }
 
     public override void ModifySittingTargetInfo(int i, int j, ref TileRestingInfo info)
@@ -69,7 +69,7 @@ public class Treadmill : ModTile
     public override bool RightClick(int i, int j)
     {
         Player player = Main.LocalPlayer;
-        if (player.IsWithinSnappngRangeToTile(i, j, PlayerSittingHelper.ChairSittingMaxDistance * 2))
+        if (player.IsWithinSnappngRangeToTile(i, j, InteractDistance))
         {
             if (!player.TryGetModPlayer(out TreadmillPlayer tp))
                 return false;
@@ -89,7 +89,7 @@ public class Treadmill : ModTile
     public override void MouseOver(int i, int j)
     {
         Player player = Main.LocalPlayer;
-        if (!player.IsWithinSnappngRangeToTile(i, j, PlayerSittingHelper.ChairSittingMaxDistance * 2))
+        if (!player.IsWithinSnappngRangeToTile(i, j, InteractDistance))
             return;
         player.noThrow = 2;
         player.cursorItemIconEnabled = true;
