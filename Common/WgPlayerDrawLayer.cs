@@ -18,16 +18,11 @@ public class WgPlayerDrawLayer : PlayerDrawLayer
 
     public override void Load()
     {
-        if (Main.dedServ)
-            return;
-        WgArmor.Load(Mod);
         On_LegacyPlayerRenderer.DrawPlayerStoned += DrawPlayerStoned;
     }
 
     public override void Unload()
     {
-        if (Main.dedServ)
-            return;
         On_LegacyPlayerRenderer.DrawPlayerStoned -= DrawPlayerStoned;
     }
 
@@ -163,7 +158,7 @@ public class WgPlayerDrawLayer : PlayerDrawLayer
         SpriteSet.Stage stageData = SpriteSet.GetStage(stage, out SpriteSet set);
         SpriteEffects effects = drawPlayer.direction != 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
         Vector2 drawPos = new Vector2((int)(position.X - camera.UnscaledPosition.X - drawPlayer.bodyFrame.Width / 2 + drawPlayer.width / 2), (int)(position.Y - camera.UnscaledPosition.Y + drawPlayer.height - drawPlayer.bodyFrame.Height + 8f)) + drawPlayer.bodyPosition + new Vector2(drawPlayer.bodyFrame.Width / 2, drawPlayer.bodyFrame.Height / 2);
-        Color drawColor = Lighting.GetColor((int)(position.X + drawPlayer.width * 0.5) / 16, (int)(position.Y + drawPlayer.height * 0.5) / 16, new Color(165, 165, 165));
+        Color drawColor = Lighting.GetColor((int)(position.X + drawPlayer.width * 0.5) / 16, (int)(position.Y + drawPlayer.height * 0.5) / 16, Color.White);
 
         int direction = drawPlayer.direction;
         Vector2 layerPos = drawPos;
@@ -179,6 +174,7 @@ public class WgPlayerDrawLayer : PlayerDrawLayer
             }
         }
 
+        Shaders.ApplyStone(camera);
         DrawLayers(set.Layers);
 
         int armStage = stageData.Arm;

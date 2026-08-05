@@ -6,7 +6,6 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
-using Terraria.ModLoader;
 using WgMod.Common.Configs;
 using WgMod.Common.Players;
 
@@ -17,19 +16,11 @@ public static class WgArmor
     public record struct Layer(Asset<Texture2D> ArmorTexture, Color Color);
 
     public static bool Enabled => !WgClientConfig.Instance.DisableUVClothes && SpriteSet.Current.UVArmor;
-    public static Asset<Effect> UVShader { get; private set; }
-    public static Asset<Effect> SoftenShader { get; private set; }
     static BlendState _multiplyBlend;
-
-    public static void Load(Mod mod)
-    {
-        UVShader = mod.Assets.Request<Effect>("Assets/Effects/FatArmor");
-        SoftenShader = mod.Assets.Request<Effect>("Assets/Effects/FatArmorSoften");
-    }
 
     public static void Render(int stage, ref RenderTarget2D target, ReadOnlySpan<Layer> layers, bool male)
     {
-        if (!UVShader.IsLoaded)
+        if (!Shaders.FatArmor.IsLoaded)
             return;
 
         SpriteSet set = SpriteSet.GetSet(stage);
@@ -46,7 +37,7 @@ public static class WgArmor
             SamplerState.PointClamp,
             DepthStencilState.None,
             RasterizerState.CullCounterClockwise,
-            UVShader.Value
+            Shaders.FatArmor.Value
         );
         Vector2 baseOffset = male ? new Vector2(0f, -0.5f) : Vector2.Zero;
         foreach (Layer layer in layers)
@@ -55,11 +46,11 @@ public static class WgArmor
                 continue;
 
             device.Textures[1] = layer.ArmorTexture.Value;
-            UVShader.Value.Parameters["uImageSize1"].SetValue(layer.ArmorTexture.Size());
+            Shaders.FatArmor.Value.Parameters["uImageSize1"].SetValue(layer.ArmorTexture.Size());
 
             foreach (SpriteSet.Layer spriteLayer in set.ArmorLayers)
             {
-                UVShader.Value.Parameters["uOffset"].SetValue(spriteLayer.Type == SpriteSet.LayerType.Arms ? Vector2.Zero : baseOffset);
+                Shaders.FatArmor.Value.Parameters["uOffset"].SetValue(spriteLayer.Type == SpriteSet.LayerType.Arms ? Vector2.Zero : baseOffset);
                 spriteBatch.Draw(spriteLayer.ArmorTexture, new Vector2(spriteLayer.ArmorAtlasX, 0f), layer.Color);
             }
         }
@@ -81,7 +72,7 @@ public static class WgArmor
             SamplerState.PointClamp,
             DepthStencilState.None,
             RasterizerState.CullCounterClockwise,
-            SoftenShader.Value
+            Shaders.FatArmorSoften.Value
         );
         foreach (SpriteSet.Layer layer in set.ArmorLayers)
             spriteBatch.Draw(layer.Texture.Value, new Vector2(layer.ArmorAtlasX, 0f), Color.White);
