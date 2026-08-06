@@ -917,6 +917,11 @@ Buffs: {
 		DisplayName: Stagnant
 		Description: Completely pauses weight loss and weight gain.
 	}
+
+	PrismaticStuffing: {
+		DisplayName: Prismatic Stuffing
+		Description: You are being forced to eat against your will!
+	}
 }
 
 Configs: {

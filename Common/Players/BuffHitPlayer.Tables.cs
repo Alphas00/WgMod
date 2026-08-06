@@ -127,6 +127,14 @@ public partial class BuffHitPlayer
         NPCID.PresentMimic,
     ];
 
+    readonly HashSet<int> _empressOfLight =
+    [
+        ProjectileID.HallowBossRainbowStreak,
+        ProjectileID.HallowBossLastingRainbow,
+        ProjectileID.FairyQueenLance,
+        ProjectileID.FairyQueenSunDance
+    ];
+
     void AddModNPCs()
     {
         AddNPCs(_slimes, "Consolaria", "ShadowSlime");

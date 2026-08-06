@@ -48,5 +48,12 @@ public partial class BuffHitPlayer : ModPlayer
             AddBuff(BuffID.Slimed, 10 * hurtInfo.Damage, hurtInfo.Damage / 8);
         if (_feeders.Contains(npc.type))
             AddBuff(ModContent.BuffType<ForceFed>(), 10 * hurtInfo.Damage, hurtInfo.Damage / 6);
+        if (npc.type == NPCID.HallowBoss && hurtInfo.Damage < 1250)
+            AddBuff(ModContent.BuffType<PrismaticStuffing>(), 4 * hurtInfo.Damage, hurtInfo.Damage / 6);
+    }
+    public override void OnHitByProjectile(Projectile proj, Player.HurtInfo hurtInfo)
+    {
+        if (_empressOfLight.Contains(proj.type) && hurtInfo.Damage < 1250)
+            AddBuff(ModContent.BuffType<PrismaticStuffing>(), 3 * hurtInfo.Damage, hurtInfo.Damage / 7);
     }
 }
