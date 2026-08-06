@@ -97,7 +97,7 @@ public class FatPushPlayer : ModPlayer
 {
     public override void PostUpdateMiscEffects()
     {
-        if (Player.Wg().Weight.GetStage() > 4)
+        if (Player.Wg().Weight.GetStage() >= WeightStage.MorbidlyObese)
             Player.PushAwayFromMe();
     }
 }

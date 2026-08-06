@@ -13,7 +13,7 @@ namespace WgMod.Content.Buffs;
 public class FatBuff : WgBuffBase
 {
     public const float MaxLifeIncreasePercentage = 0.2f;
-    public const int MaxStageGraphic = Weight.ImmobileStage;
+    public const int MaxStageGraphic = WeightStage.Immobile;
 
     WgStat _damageReduction = new(0f, 0.05f);
     WgStat _lifeIncrease = new(0f, 100f);
@@ -53,10 +53,10 @@ public class FatBuff : WgBuffBase
         );
         if (!WgServerConfig.Instance.DisableFatHitbox)
         {
-            string line = this.GetLocalization("HitboxIncrease").Format((WeightValues.GetHitboxWidthInTiles(stage) - 2).Range(0, WeightValues.GetHitboxWidthInTiles(Weight.MaxStage) - 2));
+            string line = this.GetLocalization("HitboxIncrease").Format((WeightValues.GetHitboxWidthInTiles(stage) - 2).Range(0, WeightValues.GetHitboxWidthInTiles(WeightStage.Max) - 2));
             tip += "\n" + line;
         }
-        if (stage >= Weight.BlobStage)
+        if (stage >= WeightStage.Blob)
             tip += "\n" + this.GetLocalization("CantMoveArms");
     }
 
@@ -71,14 +71,14 @@ public class FatBuff : WgBuffBase
 
         // Calculate factors
         int stage = wg.Weight.GetStage();
-        if (stage >= Weight.DamageReductionStage)
-            _damageReduction.Lerp(wg.Weight.GetClampedFactor(Weight.FromStage(Weight.DamageReductionStage), Weight.Immobile));
+        if (stage >= WeightStage.DamageReduction)
+            _damageReduction.Lerp(wg.Weight.GetClampedFactor(Weight.FromStage(WeightStage.DamageReduction), Weight.Immobile));
         else
             _damageReduction.Reset();
 
-        if (stage >= Weight.HeavyStage)
+        if (stage >= WeightStage.Heavy)
         {
-            float t = wg.Weight.GetClampedFactor(Weight.FromStage(Weight.HeavyStage), Weight.Immobile) * MaxLifeIncreasePercentage;
+            float t = wg.Weight.GetClampedFactor(Weight.FromStage(WeightStage.Heavy), Weight.Immobile) * MaxLifeIncreasePercentage;
             _lifeIncrease.Value = MathF.Floor(player.statLifeMax * t / 5f) * 5f;
             _lifeIncrease.Clamp();
         }
@@ -103,7 +103,7 @@ public class FatBuff : WgBuffBase
     public override float GetProgress(WgPlayer wg, int buffIndex)
     {
         int stage = wg.Weight.GetStage();
-        if (stage < Weight.MaxStage)
+        if (stage < WeightStage.Max)
             return wg.Weight.GetStageFactor();
         return 1f;
     }

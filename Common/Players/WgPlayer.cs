@@ -44,7 +44,7 @@ public partial class WgPlayer : ModPlayer
 
     internal float _finalKnockbackResistance;
     internal float _finalMovementFactor = 1f;
-    internal int _finalMaxStage = Weight.MaxStage;
+    internal int _finalMaxStage = WeightStage.Max;
     internal bool _finalWeightFixed;
 
     internal float _buffTotalGain;
@@ -112,7 +112,7 @@ public partial class WgPlayer : ModPlayer
         MovementPenalty = StatModifier.Default;
         WeightLossRate = StatModifier.Default;
         FoodAbsorption = StatModifier.Default;
-        MaxStage = Weight.MaxStage;
+        MaxStage = WeightStage.Max;
 
         _finalWeightFixed = WeightFixed;
         WeightFixed = false;
@@ -122,7 +122,7 @@ public partial class WgPlayer : ModPlayer
     {
         EnsureBuff<FatBuff>();
         EnsureBuff<StomachBuff>();
-        if (Weight.GetStage() >= Weight.ForcedImmobileStage)
+        if (Weight.GetStage() >= WeightStage.ForcedImmobile)
             Player.AddBuff(ModContent.BuffType<Tired>(), 2);
     }
 
@@ -146,20 +146,20 @@ public partial class WgPlayer : ModPlayer
             MovementPenalty *= mountReduction;
 
         int stage = Weight.GetStage();
-        if (stage >= Weight.DamageReductionStage)
+        if (stage >= WeightStage.DamageReduction)
         {
-            if (stage < Weight.ImmobileStage)
-                _finalKnockbackResistance = float.Lerp(0f, 0.6f, Weight.GetClampedFactor(Weight.FromStage(Weight.DamageReductionStage), Weight.Immobile));
+            if (stage < WeightStage.Immobile)
+                _finalKnockbackResistance = float.Lerp(0f, 0.6f, Weight.GetClampedFactor(Weight.FromStage(WeightStage.DamageReduction), Weight.Immobile));
             else
                 _finalKnockbackResistance = 1f;
         }
         else
             _finalKnockbackResistance = 0f;
 
-        if (stage < Weight.ForcedImmobileStage)
+        if (stage < WeightStage.ForcedImmobile)
         {
             float basePenalty;
-            if (stage < Weight.ImmobileStage)
+            if (stage < WeightStage.Immobile)
             {
                 float immobility = Weight.ClampedImmobility;
                 basePenalty = float.Lerp(0f, 0.7f, immobility * immobility);
@@ -196,7 +196,7 @@ public partial class WgPlayer : ModPlayer
         }
 
         // Ice break
-        if (stage >= Weight.HeavyStage)
+        if (stage >= WeightStage.Heavy)
         {
             const int iceBreakTime = 60;
             if (Player.velocity.Y > -0.01f && HasIceBelow())
@@ -273,18 +273,18 @@ public partial class WgPlayer : ModPlayer
         UpdateJiggle();
         PostUpdateVisuals();
 
-        _finalMaxStage = Math.Clamp(MaxStage, 0, Weight.MaxStage);
+        _finalMaxStage = Math.Clamp(MaxStage, 0, WeightStage.Max);
         if (_ignoreWgBuffTimer > 0)
             _ignoreWgBuffTimer--;
 
         int stage = Weight.GetStage();
-        if (Player.sleeping.isSleeping && stage >= 4)
+        if (Player.sleeping.isSleeping && stage >= WeightStage.Obese)
         {
             Player.fullRotation = 0;
             Player.gfxOffY -= 16;
         }
 
-        if (stage >= 3)
+        if (stage >= WeightStage.Fat)
             TownNPCRespawnSystem.unlockMilkmaid = true;
     }
 

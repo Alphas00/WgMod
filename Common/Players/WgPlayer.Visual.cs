@@ -116,7 +116,7 @@ public partial class WgPlayer
         {
             if (drawLayer == PlayerDrawLayers.ArmOverItem && armStage >= 0)
                 drawLayer.Hide();
-            else if ((drawLayer == PlayerDrawLayers.Skin || drawLayer == PlayerDrawLayers.Torso || drawLayer == PlayerDrawLayers.Leggings) && stage >= 5)
+            else if ((drawLayer == PlayerDrawLayers.Skin || drawLayer == PlayerDrawLayers.Torso || drawLayer == PlayerDrawLayers.Leggings) && stage >= WeightStage.MorbidlyObese)
                 drawLayer.Hide();
         }
     }

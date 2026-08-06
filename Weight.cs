@@ -7,21 +7,11 @@ public readonly record struct Weight(Mass Mass)
     public static readonly Weight Base = new(70f);
     public static readonly Weight Immobile = new(400f);
 
-    public const int StageCount = 10; // The total amount of stages and player sprites
-    public const int MaxStage = StageCount - 1; // The last weight stage
-
-    public const int ImmobileStage = 7; // Stage at which the player would be considered immobile under normal conditions
-    public const int ForcedImmobileStage = 8; // Stage at which the player will no longer move, at all
-    public const int BlobStage = 9; // Stage at which the player can no longer move their arms
-
-    public const int DamageReductionStage = 2; // Stage at which damage reduction starts being applied
-    public const int HeavyStage = 3; // Stage at which thin ice breaks, max life starts being increased
-
     public readonly float Immobility => GetFactor(Base, Immobile);
     public readonly float ClampedImmobility => GetClampedFactor(Base, Immobile);
 
     public override readonly string ToString() => Mass.Display();
-    public readonly int GetStage() => (int)MathF.Floor(Immobility * ImmobileStage);
+    public readonly int GetStage() => (int)MathF.Floor(Immobility * WeightStage.Immobile);
 
     public readonly float GetStageFactor()
     {
@@ -34,10 +24,10 @@ public readonly record struct Weight(Mass Mass)
     public readonly float GetFactor(Weight start, Weight end) => (Mass - start.Mass) / (end.Mass - start.Mass); // Inverese lerp
     public readonly float GetClampedFactor(Weight start, Weight end) => Math.Clamp(GetFactor(start, end), 0f, 1f);
 
-    public static Weight FromStage(int stage) => FromImmobility(stage / (float)ImmobileStage);
+    public static Weight FromStage(int stage) => FromImmobility(stage / (float)WeightStage.Immobile);
     public static Weight FromImmobility(float factor) => new(float.Lerp(Base.Mass, Immobile.Mass, factor));
 
-    public static Weight Clamp(Weight weight) => Clamp(weight, MaxStage);
+    public static Weight Clamp(Weight weight) => Clamp(weight, WeightStage.Max);
     public static Weight Clamp(Weight weight, int maxStage) => new(Math.Clamp(weight.Mass, Base.Mass, FromStage(maxStage).Mass + 10f));
 
     public static Weight operator +(Weight w, Mass mass) => new(w.Mass + mass);

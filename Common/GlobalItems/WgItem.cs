@@ -14,7 +14,7 @@ public class WgItem : GlobalItem
     {
         if (!player.TryGetModPlayer(out WgPlayer wg))
             return true;
-        if (!WgServerConfig.Instance.DisableFatBuffs && wg.Weight.GetStage() >= Weight.BlobStage)
+        if (!WgServerConfig.Instance.DisableFatBuffs && wg.Weight.GetStage() >= WeightStage.Blob)
         {
             bool allow = item.useStyle == ItemUseStyleID.None; // Unrelated
             allow |= item.type == ModContent.ItemType<WeightManipulator>(); // Is dev object
@@ -37,7 +37,7 @@ public class WgItem : GlobalItem
     {
         if (!player.TryGetModPlayer(out WgPlayer wg))
             return;
-        if (item.useStyle == ItemUseStyleID.Swing && wg.Weight.GetStage() >= 5)
+        if (item.useStyle == ItemUseStyleID.Swing && wg.Weight.GetStage() >= WeightStage.MorbidlyObese)
             wg.Jiggle(3f);
     }
 
