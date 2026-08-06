@@ -739,8 +739,6 @@ Items: {
 			'''
 			Left Click to increase weight gain rate.
 			Right Click to decrease.
-			Currently does not affect every source of weight gain
-			Text indicating gained weight will not be accurate
 			'''
 	}
 }

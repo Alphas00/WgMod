@@ -27,7 +27,6 @@ public abstract class WeightPotion : ModItem
     {
         if (!player.TryGetModPlayer(out WgPlayer wg))
             return false;
-
         float weightChange;
         if (player.HasBuff<MilkshakeSickness>())
             weightChange = WeightEffect * 0.1f;
@@ -36,8 +35,7 @@ public abstract class WeightPotion : ModItem
             weightChange = WeightEffect;
             player.AddBuff(ModContent.BuffType<MilkshakeSickness>(), 1 * 60 * 30);
         }
-        wg.AddWeight(weightChange);
-        wg.CombatWeightText(weightChange, false);
+        wg.CombatWeightText(wg.AddWeight(weightChange), false);
         return true;
     }
 

@@ -29,12 +29,12 @@ public partial class BuffHitPlayer : ModPlayer
         AddModNPCs();
     }
 
-    void AddBuff(int type, int timeToAdd, float weightGain)
+    void AddBuff(int type, int timeToAdd, Mass weightGain)
     {
         if (!Player.TryGetModPlayer(out WgPlayer wg))
             return;
         Player.AddBuff(type, timeToAdd);
-        wg.AddWeight(weightGain);
+        weightGain = wg.AddWeight(weightGain);
         SoundEngine.PlaySound(WgSounds.Gulp, Player.Center);
         if (weightGain > 0f)
             wg.CombatWeightText(weightGain, true);
