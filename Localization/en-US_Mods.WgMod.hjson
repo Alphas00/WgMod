@@ -235,7 +235,12 @@ Items: {
 
 	GuideToLiftingYourFatAss: {
 		DisplayName: Guide to Lifting Your Fat Ass
-		Tooltip: Reduces movement penalty by 50% in exchange for mana
+		Tooltip:
+			'''
+			Reduces movement penalty by 50% in exchange for mana
+			Mana drains faster the heavier you are
+			Mana usage is reduced from magic damage bonuses
+			'''
 	}
 
 	CrispyDiscipline: {
@@ -726,6 +731,17 @@ Items: {
 	GreedyFlask: {
 		DisplayName: Greedy Flask
 		Tooltip: Effects scale with your obesity
+	}
+
+	WeightGainAdjuster: {
+		DisplayName: Weight Gain Adjuster
+		Tooltip:
+			'''
+			Left Click to increase weight gain rate.
+			Right Click to decrease.
+			Currently does not affect every source of weight gain
+			Text indicating gained weight will not be accurate
+			'''
 	}
 }
 

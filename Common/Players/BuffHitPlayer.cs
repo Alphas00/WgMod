@@ -34,7 +34,8 @@ public partial class BuffHitPlayer : ModPlayer
         if (!Player.TryGetModPlayer(out WgPlayer wg))
             return;
         Player.AddBuff(type, timeToAdd);
-        wg.SetWeight(wg.Weight + weightGain);
+        //wg.SetWeight(wg.Weight + weightGain);
+        wg.AddWeight(weightGain);
         SoundEngine.PlaySound(WgSounds.Gulp, Player.Center);
         if (weightGain > 0f)
             wg.CombatWeightText(weightGain, true);

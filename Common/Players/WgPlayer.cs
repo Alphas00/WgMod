@@ -30,6 +30,9 @@ public partial class WgPlayer : ModPlayer
     /// <summary> How fast the player will lose weight due to movement, add or subtract to this </summary>
     public StatModifier WeightLossRate;
 
+    /// <summary> How fast the player will gain weight from most sources, add or subtract to this </summary>
+    public StatModifier WeightGainRate;
+
     /// <summary> How much weight the player will gain due to food, multiply this </summary>
     public StatModifier FoodAbsorption;
 
@@ -77,6 +80,20 @@ public partial class WgPlayer : ModPlayer
             weight = new Weight(MathF.Min(weight.Mass, Weight.Mass));
         SetWeightForced(weight, effects);
     }
+    public void AddWeight(float weight, bool effects = true)
+    {
+        if (!OwnsPlayer() || _finalWeightFixed)
+            return;
+        if (WgClientConfig.Instance.DisableWeightGain)
+            return;
+
+        if (weight > 0)
+            weight = WeightGainRate.ApplyTo(weight);
+
+        Weight actualWeight = new Weight(Weight.Mass + weight);
+        SetWeightForced(actualWeight, effects);
+    }
+
 
     /// <summary> Do not use this unless you know what you're doing </summary>
     internal void SetWeightForced(Weight weight, bool effects = true)
@@ -111,6 +128,7 @@ public partial class WgPlayer : ModPlayer
         // Custom stats
         MovementPenalty = StatModifier.Default;
         WeightLossRate = StatModifier.Default;
+        WeightGainRate = StatModifier.Default;
         FoodAbsorption = StatModifier.Default;
         MaxStage = WeightStage.Max;
 
@@ -258,7 +276,8 @@ public partial class WgPlayer : ModPlayer
                 {
                     float delta = Stomach - MathF.Max(Stomach - Main.rand.NextFloat(DigestAmount * 0.5f, DigestAmount), 0f);
                     SetStomach(Stomach - delta);
-                    SetWeight(Weight + delta);
+                    // SetWeight(Weight + delta);
+                    AddWeight(delta);
                     if (Main.rand.NextBool(75))
                         Gurgle(true);
                     _digestTimer = Main.rand.Next(DigestTime, DigestTime * 2);
