@@ -5,13 +5,11 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
-using Terraria.GameContent;
 using Terraria.Graphics;
 using Terraria.Graphics.Renderers;
 using Terraria.ID;
 using Terraria.ModLoader;
 using WgMod.Content.TileEntities;
-using WgMod.Content.Tiles;
 
 namespace WgMod.Common.Players;
 

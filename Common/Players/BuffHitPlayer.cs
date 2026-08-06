@@ -51,6 +51,7 @@ public partial class BuffHitPlayer : ModPlayer
         if (npc.type == NPCID.HallowBoss && hurtInfo.Damage < 1250)
             AddBuff(ModContent.BuffType<PrismaticStuffing>(), 4 * hurtInfo.Damage, hurtInfo.Damage / 6);
     }
+
     public override void OnHitByProjectile(Projectile proj, Player.HurtInfo hurtInfo)
     {
         if (_empressOfLight.Contains(proj.type) && hurtInfo.Damage < 1250)

@@ -744,7 +744,7 @@ Items: {
 
 	FeedingTube: {
 		DisplayName: Feeding Tube
-		Tooltip: 
+		Tooltip:
 			'''
 			I think we all know where this is going...
 			Right click with a bucket to add liquid.
