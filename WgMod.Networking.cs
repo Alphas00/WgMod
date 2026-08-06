@@ -6,6 +6,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using WgMod.Common.Players;
 using WgMod.Common.Systems;
+using WgMod.Content.TileEntities;
 
 namespace WgMod;
 
@@ -17,7 +18,9 @@ partial class WgMod
         WgPlayerSync,
         WgPlayerGurgle,
         WgPlayerCombatWeightText,
-        MannequinSetStage
+        MannequinSetStage,
+        FeedingTubeSetLiquid,
+        FeedingTubePlayerSync
     }
 
     public override void HandlePacket(BinaryReader reader, int whoAmI)
@@ -63,6 +66,18 @@ partial class WgMod
                     packet.Write(stage);
                     packet.Send();
                 }
+                break;
+            case MessageType.FeedingTubeSetLiquid:
+                id = reader.ReadInt32();
+                sbyte liquidType = reader.ReadSByte();
+                byte liquidAmount = reader.ReadByte();
+                ((TEFeedingTube)TileEntity.ByID[id]).SetLiquid(liquidType, liquidAmount, Main.netMode == NetmodeID.Server);
+                break;
+            case MessageType.FeedingTubePlayerSync:
+                FeedingTubePlayer fp = Main.player[reader.ReadByte()].GetModPlayer<FeedingTubePlayer>();
+                fp.ReceivePlayerSync(reader);
+                if (Main.netMode == NetmodeID.Server)
+                    fp.SyncPlayer(-1, whoAmI, false);
                 break;
             default:
                 Logger.WarnFormat("WgMod: Unknown Message type: {0}", type);

@@ -741,6 +741,11 @@ Items: {
 			Right Click to decrease.
 			'''
 	}
+
+	FeedingTube: {
+		DisplayName: Feeding Tube
+		Tooltip: I think we all know where this is going...
+	}
 }
 
 Buffs: {
