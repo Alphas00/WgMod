@@ -9,6 +9,7 @@ namespace WgMod.Content.Items;
 public class WeightGainAdjuster : ModItem
 {
     public override string Texture => "WgMod/Content/Items/WeightManipulator";
+
     public override void SetStaticDefaults()
     {
         Item.ResearchUnlockCount = 10;
@@ -51,17 +52,18 @@ public class WeightGainAdjuster : ModItem
             if (wga._multiplier == 0)
                 Main.NewText("Weight gain rate is set to default.", 255, 255, 0);
             else if (wga._multiplier > 0)
-                Main.NewText($"Weight gain rate is increased by {(25f * wga._multiplier)}%.", 255, 255, 0);
+                Main.NewText($"Weight gain rate is increased by {25f * wga._multiplier}%.", 255, 255, 0);
             else
-                Main.NewText($"Weight gain rate is decreased by {(25f * wga._multiplier * -1)}%.", 255, 255, 0);
+                Main.NewText($"Weight gain rate is decreased by {25f * wga._multiplier * -1}%.", 255, 255, 0);
             return true;
         }
         return null;
     }
 }
-public partial class WGAPlayer : ModPlayer
+
+public class WGAPlayer : ModPlayer
 {
-    public int _multiplier = 0;
+    internal int _multiplier = 0;
 
     public override void PostUpdateEquips()
     {

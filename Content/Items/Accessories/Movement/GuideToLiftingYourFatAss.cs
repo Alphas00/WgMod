@@ -25,6 +25,7 @@ public class GuideToLiftingYourFatAss : ModItem
         if (player.TryGetModPlayer(out GuideToLiftingPlayer lp))
             lp._enabledGuideToLifting = true;
     }
+
     public override void AddRecipes()
     {
         CreateRecipe()

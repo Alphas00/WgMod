@@ -34,8 +34,7 @@ public class FullOfSpider : ModBuff
         else
         {
             _cooldown = 0;
-
-            wg.SetWeight(wg.Weight + FatPerCycle);
+            wg.AddWeight(FatPerCycle);
             wg.CombatWeightText(FatPerCycle, false);
             SoundEngine.PlaySound(WgSounds.Gulp, player.Center);
         }

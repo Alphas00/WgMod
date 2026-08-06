@@ -67,7 +67,7 @@ public partial class WgMod
             if (gain.IsInstant)
             {
                 if (previousTime < timeToAdd - 2) // Apply once (2 ticks of leeway)
-                    wg.SetStomach(wg.Stomach + gain.TotalGain);
+                    wg.AddStomach(gain.TotalGain);
             }
             else if (!self.HasBuff<GainingBuff>())
                 GainingBuff.AddBuff(wg, gain);

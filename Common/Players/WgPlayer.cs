@@ -24,16 +24,16 @@ public partial class WgPlayer : ModPlayer
     // <summary> The to be digested mass inside the player's stomach. Only relevant for the local client. </summary>
     public Mass Stomach { get; private set; }
 
-    /// <summary> How much movement will be reduced because of the player's weight, multiply this </summary>
+    /// <summary> How much movement will be reduced because of the player's weight. Multiply this. </summary>
     public StatModifier MovementPenalty;
 
-    /// <summary> How fast the player will lose weight due to movement, add or subtract to this </summary>
+    /// <summary> How fast the player will lose weight due to movement. Add or subtract to this. </summary>
     public StatModifier WeightLossRate;
 
-    /// <summary> How fast the player will gain weight from most sources, add or subtract to this </summary>
+    /// <summary> How fast the player will gain weight from most sources. Add or subtract to this. </summary>
     public StatModifier WeightGainRate;
 
-    /// <summary> How much weight the player will gain due to food, multiply this </summary>
+    /// <summary> How much weight the player will gain due to food. Multiply this. </summary>
     public StatModifier FoodAbsorption;
 
     /// <summary> The maximum weight stage that the player can reach </summary>
@@ -80,20 +80,13 @@ public partial class WgPlayer : ModPlayer
             weight = new Weight(MathF.Min(weight.Mass, Weight.Mass));
         SetWeightForced(weight, effects);
     }
-    public void AddWeight(float weight, bool effects = true)
+
+    public void AddWeight(Mass mass, bool effects = true)
     {
-        if (!OwnsPlayer() || _finalWeightFixed)
-            return;
-        if (WgClientConfig.Instance.DisableWeightGain)
-            return;
-
-        if (weight > 0)
-            weight = WeightGainRate.ApplyTo(weight);
-
-        Weight actualWeight = new Weight(Weight.Mass + weight);
-        SetWeightForced(actualWeight, effects);
+        if (mass > 0f)
+            mass = WeightGainRate.ApplyTo(mass);
+        SetWeight(Weight + mass, effects);
     }
-
 
     /// <summary> Do not use this unless you know what you're doing </summary>
     internal void SetWeightForced(Weight weight, bool effects = true)
@@ -116,11 +109,16 @@ public partial class WgPlayer : ModPlayer
         SetStomachForced(mass, effects);
     }
 
+    public void AddStomach(Mass mass, bool effects = true)
+    {
+        SetStomach(Stomach + mass, effects);
+    }
+
     internal void SetStomachForced(Mass mass, bool effects = true)
     {
         Stomach = Math.Clamp(mass, 0f, StomachCapacity);
         if (mass > StomachCapacity)
-            SetWeight(Weight + (mass - StomachCapacity), effects);
+            AddWeight(mass - StomachCapacity, effects);
     }
 
     public override void ResetEffects()
@@ -276,7 +274,6 @@ public partial class WgPlayer : ModPlayer
                 {
                     float delta = Stomach - MathF.Max(Stomach - Main.rand.NextFloat(DigestAmount * 0.5f, DigestAmount), 0f);
                     SetStomach(Stomach - delta);
-                    // SetWeight(Weight + delta);
                     AddWeight(delta);
                     if (Main.rand.NextBool(75))
                         Gurgle(true);
