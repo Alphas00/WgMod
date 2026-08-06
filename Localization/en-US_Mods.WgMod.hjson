@@ -744,7 +744,13 @@ Items: {
 
 	FeedingTube: {
 		DisplayName: Feeding Tube
-		Tooltip: I think we all know where this is going...
+		Tooltip: 
+			'''
+			I think we all know where this is going...
+			Right click with a bucket to add liquid.
+			Right click without a bucket to attach a hose to your mouth.
+			Left click to remove liquid.
+			'''
 	}
 }
 
