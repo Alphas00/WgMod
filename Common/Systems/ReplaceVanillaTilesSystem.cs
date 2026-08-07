@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Terraria;
-using Terraria.DataStructures;
+﻿using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using WgMod.Content.Tiles;
 
 namespace WgMod.Common.Systems;
+
 public class ReplaceVanillaTilesSystem : ModSystem
 {
     public override void PostWorldGen()
@@ -22,9 +17,7 @@ public class ReplaceVanillaTilesSystem : ModSystem
             {
                 Tile tile = Main.tile[x, y];
                 if (tile.TileType == TileID.Traps && tile.TileFrameY == 0 && Main.rand.NextBool(4))
-                {
                     tile.TileType = (ushort)ModContent.TileType<FatteningDartTrap>();
-                }
             }
         }
     }

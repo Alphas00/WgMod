@@ -1,5 +1,4 @@
 ﻿using Microsoft.Xna.Framework;
-using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
@@ -40,17 +39,14 @@ public class FatteningDartTrap : ModTile
     {
         Tile tile = Main.tile[i, j];
         if (Main.LocalPlayer.direction == 1)
-        {
             tile.TileFrameX += 18;
-        }
         if (Main.netMode == NetmodeID.MultiplayerClient)
-        {
             NetMessage.SendTileSquare(-1, Player.tileTargetX, Player.tileTargetY, 1, TileChangeType.None);
-        }
     }
 
     // This progression matches vanilla tiles, you don't have to follow it if you don't want. Some vanilla traps don't have 6 states, only 4. This can be implemented with different logic in Slope. Making 8 directions is also easily done in a similar manner.
-    private static int[] _frameXCycle = [2, 3, 4, 5, 1, 0];
+    static readonly int[] _frameXCycle = [2, 3, 4, 5, 1, 0];
+
     // We can use the Slope method to override what happens when this tile is hammered.
     public override bool Slope(int i, int j)
     {
@@ -58,16 +54,13 @@ public class FatteningDartTrap : ModTile
         int nextFrameX = _frameXCycle[tile.TileFrameX / 18];
         tile.TileFrameX = (short)(nextFrameX * 18);
         if (Main.netMode == NetmodeID.MultiplayerClient)
-        {
             NetMessage.SendTileSquare(-1, Player.tileTargetX, Player.tileTargetY, 1, TileChangeType.None);
-        }
         return false;
     }
 
     public override void HitWire(int i, int j)
     {
         Tile tile = Main.tile[i, j];
-        int style = tile.TileFrameY / 18;
         Vector2 spawnPosition;
         // This logic here corresponds to the orientation of the sprites in the spritesheet, change it if your tile is different in design.
         int horizontalDirection = (tile.TileFrameX == 0) ? -1 : ((tile.TileFrameX == 18) ? 1 : 0);

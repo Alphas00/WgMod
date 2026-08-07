@@ -1,13 +1,13 @@
-﻿using System;
-using Terraria;
+﻿using Terraria;
 using Terraria.ID;
-using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace WgMod.Content.Items.Placeable;
+
 public class FatteningDartTrap : ModItem
 {
-	public override void SetDefaults() {
+	public override void SetDefaults()
+	{
 		Item.DefaultToPlaceableTile(ModContent.TileType<Tiles.FatteningDartTrap>());
 
 		Item.width = 12;
@@ -16,15 +16,15 @@ public class FatteningDartTrap : ModItem
 		Item.mech = true; // lets you see wires while holding.
 	}
 
-	public override void AddRecipes() {
+	public override void AddRecipes()
+	{
 		CreateRecipe()
 			.AddIngredient(ItemID.DartTrap)
-            .AddIngredient(ItemID.BottledHoney)
-            .Register();
-
-        CreateRecipe()
-            .AddIngredient(ItemID.DartTrap)
-            .AddCondition(Condition.NearHoney)
-            .Register();
-    }
+			.AddIngredient(ItemID.BottledHoney)
+			.Register();
+		CreateRecipe()
+			.AddIngredient(ItemID.DartTrap)
+			.AddCondition(Condition.NearHoney)
+			.Register();
+	}
 }

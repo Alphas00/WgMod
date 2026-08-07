@@ -5,7 +5,6 @@ using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 using WgMod.Content.Buffs.Debuffs;
-using WgMod.Content.Items.Accessories.Fat;
 
 namespace WgMod.Content.Projectiles;
 
@@ -16,6 +15,7 @@ public class FatteningDart : ModProjectile
         Projectile.CloneDefaults(ProjectileID.PoisonDartTrap);
         Projectile.aiStyle = 0;
     }
+
     public override void AI()
     {
         if (Projectile.ai[0] == 0)
@@ -24,10 +24,12 @@ public class FatteningDart : ModProjectile
             Projectile.ai[0] = 1;
         }
     }
+
     public override void PostAI()
     {
         Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.PiOver2;
     }
+
     public override void OnHitPlayer(Player target, Player.HurtInfo info)
     {
         target.Wg().AddWeight(Math.Clamp(info.Damage / 4f, 1, 10));
