@@ -298,7 +298,7 @@ public class OverflowingMimicNPC : ModNPC
             .Add(ItemMult(ItemID.DartPistol), Condition.CrimsonWorld, Condition.DownedMechBossAll)
             .Add(ItemMult(ItemID.FetidBaghnakhs), Condition.CrimsonWorld, Condition.DownedMechBossAll)
             .Add(ItemMult(ItemID.FleshKnuckles), Condition.CrimsonWorld, Condition.DownedMechBossAll)
-            .Add(ItemMult(ItemID.TendonHook), Condition.CorruptWorld, Condition.DownedMechBossAll)
+            .Add(ItemMult(ItemID.TendonHook), Condition.CrimsonWorld, Condition.DownedMechBossAll)
             // After every mech boss
             .Add(ItemMult(ItemID.DaedalusStormbow), Condition.DownedMechBossAll)
             .Add(ItemMult(ItemID.FlyingKnife), Condition.DownedMechBossAll)
