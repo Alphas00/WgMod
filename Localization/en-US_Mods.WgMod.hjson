@@ -922,6 +922,11 @@ Buffs: {
 		DisplayName: Prismatic Stuffing
 		Description: You are being forced to eat against your will!
 	}
+
+	Bloated: {
+		Description: Mods.WgMod.Buffs.Bloated.Description
+		DisplayName: Bloated
+	}
 }
 
 Configs: {
