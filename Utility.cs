@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.ID;
 using Terraria.ModLoader;
 using WgMod.Common.Players;
 
@@ -136,5 +137,48 @@ public static class Utility
     public static bool ShouldHidePlayer(this PlayerDrawSet drawInfo)
     {
         return drawInfo.drawPlayer.invis || drawInfo.drawPlayer.dead || drawInfo.hideEntirePlayer;
+    }
+
+    public static void TouchLava(this Player player)
+    {
+        if (player.lavaWet)
+            return;
+        if (player.lavaTime > 0)
+            player.lavaTime--; // Account for the lavaTime increase when not touching lava
+        if (!player.lavaImmune && player.whoAmI == Main.myPlayer && player.hurtCooldowns[4] <= 0)
+        {
+            if (player.lavaTime > 0)
+                player.lavaTime--;
+            else
+            {
+                int num87 = 80;
+                int num88 = 420;
+                if (Main.remixWorld)
+                {
+                    num87 = 200;
+                    num88 = 630;
+                }
+                if (!player.ashWoodBonus || !player.lavaRose)
+                {
+                    if (player.ashWoodBonus)
+                    {
+                        if (Main.remixWorld)
+                            num87 = 145;
+                        num87 /= 2;
+                        num88 -= 210;
+                    }
+                    if (player.lavaRose)
+                    {
+                        num87 -= 45;
+                        num88 -= 210;
+                    }
+                    if (num87 > 0)
+                        player.Hurt(PlayerDeathReason.ByOther(2), num87, 0, pvp: false, quiet: false, 4);
+                    if (num88 > 0)
+                        player.AddBuff(BuffID.OnFire, num88);
+                }
+            }
+            player.lavaWet = true;
+        }
     }
 }

@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using ReLogic.Content;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -43,9 +44,13 @@ public class FeedingTubePlayer : ModPlayer
     TEFeedingTube _tube;
     HosePoint[] _points;
     int _gulpTimer;
+    bool _gulpLava;
+
+    static Asset<Texture2D> _hoseTexture;
 
     public override void Load()
     {
+        _hoseTexture = Mod.Assets.Request<Texture2D>("Assets/Textures/Hose");
         On_LegacyPlayerRenderer.DrawPlayerFull += DrawPlayerFull;
     }
 
@@ -70,6 +75,7 @@ public class FeedingTubePlayer : ModPlayer
         if (Main.netMode != NetmodeID.MultiplayerClient)
             _tube.SetFeedeeServer(this);
         _gulpTimer = 0;
+        _gulpLava = false;
         _points ??= new HosePoint[HoseRenderer.PointCount];
 
         Vector2 mouthPosition = GetMouthPosition();
@@ -89,6 +95,9 @@ public class FeedingTubePlayer : ModPlayer
             return;
         }
 
+        if (_gulpLava)
+            Player.TouchLava();
+
         Vector2 mouthPosition = GetMouthPosition();
         Vector2 tubePosition = GetTubePosition();
 
@@ -96,6 +105,7 @@ public class FeedingTubePlayer : ModPlayer
         if (_tube.IsEmpty)
         {
             _gulpTimer = 0;
+            _gulpLava = false;
             gulpPos = -10f;
         }
         else
@@ -113,6 +123,8 @@ public class FeedingTubePlayer : ModPlayer
                     {
                         TEFeedingTube.FluidInfo fluidInfo = TEFeedingTube.FluidTable[_tube.LiquidType];
                         Player.Wg().AddStomach(fluidInfo.Gain);
+                        if (_tube.LiquidType == LiquidID.Lava)
+                            _gulpLava = true;
                     }
                 }
             }
@@ -149,7 +161,7 @@ public class FeedingTubePlayer : ModPlayer
             _points[^1].Teleport(tubePosition);
         }
 
-        if (tubePosition.DistanceSQ(mouthPosition) > MaxDistance * MaxDistance * 4f)
+        if (Player.dead || tubePosition.DistanceSQ(mouthPosition) > MaxDistance * MaxDistance * 4f)
             Connect(null);
     }
 
@@ -159,10 +171,11 @@ public class FeedingTubePlayer : ModPlayer
         if (drawPlayer.TryGetModPlayer(out FeedingTubePlayer fp) && fp.Connected)
         {
             camera.SpriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, camera.Sampler, DepthStencilState.None, camera.Rasterizer, null, camera.GameViewMatrix.TransformationMatrix);
-            HoseRenderer.SetPoints(fp._points, -Main.screenPosition, 2f, Color.Black);
+            float r = _hoseTexture.Height() * 0.5f;
+            HoseRenderer.SetPoints(fp._points, -Main.screenPosition, r + 2f, new Color(45, 46, 77));
             HoseRenderer.Draw(camera.SpriteBatch.GraphicsDevice);
-            HoseRenderer.SetPoints(fp._points, -Main.screenPosition, 0f, Color.DimGray);
-            HoseRenderer.Draw(camera.SpriteBatch.GraphicsDevice);
+            HoseRenderer.SetPoints(fp._points, -Main.screenPosition, r, Color.White);
+            HoseRenderer.Draw(camera.SpriteBatch.GraphicsDevice, _hoseTexture.Value);
             camera.SpriteBatch.End();
         }
     }

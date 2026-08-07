@@ -17,13 +17,13 @@ public class HoseRenderer : ILoadable
     public const float BaseRadius = 1.5f;
 
     static Asset<Texture2D> _white;
-    static VertexPositionColor[] _vertexData;
+    static VertexPositionColorTexture[] _vertexData;
     static short[] _indexData;
 
     public void Load(Mod mod)
     {
         _white = mod.Assets.Request<Texture2D>("Assets/Textures/White");
-        _vertexData = new VertexPositionColor[VertexCount];
+        _vertexData = new VertexPositionColorTexture[VertexCount];
         _indexData = new short[IndexCount];
         int j = 0;
         for (int i = 0; i < PointCount - 1; i++)
@@ -44,7 +44,7 @@ public class HoseRenderer : ILoadable
         _indexData = null;
     }
 
-    public static void SetPoints(ReadOnlySpan<HosePoint> points, Vector2 offset, float radiusOffset, Color color)
+    public static void SetPoints(ReadOnlySpan<HosePoint> points, Vector2 offset, float radius, Color color)
     {
         if (points.Length != PointCount)
             throw new Exception("Invalid point count");
@@ -72,15 +72,15 @@ public class HoseRenderer : ILoadable
                 dir = prev.Position.DirectionTo(next.Position);
             }
             Vector2 up = new(dir.Y, -dir.X);
-            float radius = i == 0 ? 0f : BaseRadius + point.Thickness + radiusOffset;
-            _vertexData[i] = new VertexPositionColor(new Vector3(point.Position + up * radius * sign + offset, 0f), color);
-            _vertexData[i + PointCount] = new VertexPositionColor(new Vector3(point.Position - up * radius * sign + offset, 0f), color);
+            float r = i == 0 ? 0f : radius + point.Thickness;
+            _vertexData[i] = new VertexPositionColorTexture(new Vector3(point.Position + up * r * sign + offset, 0f), color, Vector2.Zero);
+            _vertexData[i + PointCount] = new VertexPositionColorTexture(new Vector3(point.Position - up * r * sign + offset, 0f), color, Vector2.UnitY);
         }
     }
 
-    public static void Draw(GraphicsDevice device)
+    public static void Draw(GraphicsDevice device, Texture2D texture = null)
     {
-        device.Textures[0] = _white.Value;
+        device.Textures[0] = texture ?? _white.Value;
         device.DrawUserIndexedPrimitives(PrimitiveType.TriangleList, _vertexData, 0, VertexCount, _indexData, 0, TriangleCount);
     }
 }
