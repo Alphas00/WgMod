@@ -43,6 +43,7 @@ public class FeedingTubePlayer : ModPlayer
     TEFeedingTube _tube;
     HosePoint[] _points;
     int _gulpTimer;
+    bool _gulpLava;
 
     public override void Load()
     {
@@ -70,6 +71,7 @@ public class FeedingTubePlayer : ModPlayer
         if (Main.netMode != NetmodeID.MultiplayerClient)
             _tube.SetFeedeeServer(this);
         _gulpTimer = 0;
+        _gulpLava = false;
         _points ??= new HosePoint[HoseRenderer.PointCount];
 
         Vector2 mouthPosition = GetMouthPosition();
@@ -89,6 +91,9 @@ public class FeedingTubePlayer : ModPlayer
             return;
         }
 
+        if (_gulpLava)
+            Player.TouchLava();
+
         Vector2 mouthPosition = GetMouthPosition();
         Vector2 tubePosition = GetTubePosition();
 
@@ -96,6 +101,7 @@ public class FeedingTubePlayer : ModPlayer
         if (_tube.IsEmpty)
         {
             _gulpTimer = 0;
+            _gulpLava = false;
             gulpPos = -10f;
         }
         else
@@ -113,6 +119,8 @@ public class FeedingTubePlayer : ModPlayer
                     {
                         TEFeedingTube.FluidInfo fluidInfo = TEFeedingTube.FluidTable[_tube.LiquidType];
                         Player.Wg().AddStomach(fluidInfo.Gain);
+                        if (_tube.LiquidType == LiquidID.Lava)
+                            _gulpLava = true;
                     }
                 }
             }
@@ -149,8 +157,15 @@ public class FeedingTubePlayer : ModPlayer
             _points[^1].Teleport(tubePosition);
         }
 
-        if (tubePosition.DistanceSQ(mouthPosition) > MaxDistance * MaxDistance * 4f)
+        if (Player.dead || tubePosition.DistanceSQ(mouthPosition) > MaxDistance * MaxDistance * 4f)
             Connect(null);
+    }
+
+    bool LavaCollision(On_Collision.orig_LavaCollision orig, Vector2 Position, int Width, int Height)
+    {
+        if (_gulpLava && Position == Player.position && Width == Player.width && Height == Player.height)
+            return true;
+        return orig(Position, Width, Height);
     }
 
     static void DrawPlayerFull(On_LegacyPlayerRenderer.orig_DrawPlayerFull orig, LegacyPlayerRenderer self, Camera camera, Player drawPlayer)

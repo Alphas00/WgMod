@@ -32,7 +32,7 @@ public class TEFeedingTube : ModTileEntity
     {
         [-1] = new(-1, 0f),
         [LiquidID.Water] = new(ItemID.WaterBucket, 0.1f),
-        [LiquidID.Lava] = new(ItemID.LavaBucket, 0.2f),
+        [LiquidID.Lava] = new(ItemID.LavaBucket, 0.5f),
         [LiquidID.Honey] = new(ItemID.HoneyBucket, 2f),
         [LiquidID.Shimmer] = new(-1, 4f)
     };
