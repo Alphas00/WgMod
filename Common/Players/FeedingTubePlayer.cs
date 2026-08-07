@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using ReLogic.Content;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -45,8 +46,11 @@ public class FeedingTubePlayer : ModPlayer
     int _gulpTimer;
     bool _gulpLava;
 
+    static Asset<Texture2D> _hoseTexture;
+
     public override void Load()
     {
+        _hoseTexture = Mod.Assets.Request<Texture2D>("Assets/Textures/Hose");
         On_LegacyPlayerRenderer.DrawPlayerFull += DrawPlayerFull;
     }
 
@@ -174,10 +178,11 @@ public class FeedingTubePlayer : ModPlayer
         if (drawPlayer.TryGetModPlayer(out FeedingTubePlayer fp) && fp.Connected)
         {
             camera.SpriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, camera.Sampler, DepthStencilState.None, camera.Rasterizer, null, camera.GameViewMatrix.TransformationMatrix);
-            HoseRenderer.SetPoints(fp._points, -Main.screenPosition, 2f, Color.Black);
+            float r = _hoseTexture.Height() * 0.5f;
+            HoseRenderer.SetPoints(fp._points, -Main.screenPosition, r + 2f, new Color(45, 46, 77));
             HoseRenderer.Draw(camera.SpriteBatch.GraphicsDevice);
-            HoseRenderer.SetPoints(fp._points, -Main.screenPosition, 0f, Color.DimGray);
-            HoseRenderer.Draw(camera.SpriteBatch.GraphicsDevice);
+            HoseRenderer.SetPoints(fp._points, -Main.screenPosition, r, Color.White);
+            HoseRenderer.Draw(camera.SpriteBatch.GraphicsDevice, _hoseTexture.Value);
             camera.SpriteBatch.End();
         }
     }
