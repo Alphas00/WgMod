@@ -165,13 +165,6 @@ public class FeedingTubePlayer : ModPlayer
             Connect(null);
     }
 
-    bool LavaCollision(On_Collision.orig_LavaCollision orig, Vector2 Position, int Width, int Height)
-    {
-        if (_gulpLava && Position == Player.position && Width == Player.width && Height == Player.height)
-            return true;
-        return orig(Position, Width, Height);
-    }
-
     static void DrawPlayerFull(On_LegacyPlayerRenderer.orig_DrawPlayerFull orig, LegacyPlayerRenderer self, Camera camera, Player drawPlayer)
     {
         orig(self, camera, drawPlayer);
