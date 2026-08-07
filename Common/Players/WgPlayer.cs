@@ -83,10 +83,11 @@ public partial class WgPlayer : ModPlayer
 
     public Mass AddWeight(Mass mass, bool effects = true)
     {
+        Weight start = Weight;
         if (mass > 0f)
             mass = WeightGainRate.ApplyTo(mass);
         SetWeight(Weight + mass, effects);
-        return mass;
+        return Weight.Mass - start.Mass;
     }
 
     /// <summary> Do not use this unless you know what you're doing </summary>
@@ -112,8 +113,9 @@ public partial class WgPlayer : ModPlayer
 
     public Mass AddStomach(Mass mass, bool effects = true)
     {
+        Mass start = Stomach;
         SetStomach(Stomach + mass, effects);
-        return mass;
+        return Stomach - start;
     }
 
     internal void SetStomachForced(Mass mass, bool effects = true)
