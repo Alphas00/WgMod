@@ -18,6 +18,7 @@ public class WgItem : GlobalItem
         {
             bool allow = item.useStyle == ItemUseStyleID.None; // Unrelated
             allow |= item.type == ModContent.ItemType<WeightManipulator>(); // Is dev object
+            allow |= item.type == ModContent.ItemType<WeightGainAdjuster>(); // Is (also) dev object
             allow |= item.shoot != ProjectileID.None && Main.projHook[item.shoot]; // Is grappling hook
             allow |= item.mountType != -1; // Is mount
             allow |= item.useStyle == ItemUseStyleID.DrinkLiquid || item.useStyle == ItemUseStyleID.DrinkLong || item.useStyle == ItemUseStyleID.EatFood; // Is consumable

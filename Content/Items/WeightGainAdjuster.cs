@@ -65,7 +65,7 @@ public class WGAPlayer : ModPlayer
 {
     internal int _multiplier = 0;
 
-    public override void PostUpdateEquips()
+    public override void PreUpdateBuffs()
     {
         Player.Wg().WeightGainRate += 0.25f * _multiplier;
     }

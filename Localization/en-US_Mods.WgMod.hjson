@@ -752,6 +752,11 @@ Items: {
 			Left click to remove liquid.
 			'''
 	}
+
+	FatteningDartTrap: {
+		DisplayName: Fattening Dart Trap
+		Tooltip: Activates when signalled
+	}
 }
 
 Buffs: {
@@ -1016,6 +1021,7 @@ Projectiles: {
 	SporeCloud.DisplayName: Spore Cloud
 	Plate.DisplayName: Plate
 	HoneySprayProjectile.DisplayName: Honey Spray Projectile
+	FatteningDart.DisplayName: Fattening Dart
 }
 
 NPCs: {
