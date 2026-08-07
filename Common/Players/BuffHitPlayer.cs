@@ -43,11 +43,11 @@ public partial class BuffHitPlayer : ModPlayer
     public override void OnHitByNPC(NPC npc, Player.HurtInfo hurtInfo)
     {
         if (_slimes.Contains(npc.type))
-            AddBuff(BuffID.Slimed, 10 * hurtInfo.Damage, hurtInfo.Damage / 10);
+            AddBuff(BuffID.Slimed, 20 * hurtInfo.Damage, hurtInfo.Damage / 10);
         if (_bees.Contains(npc.type))
-            AddBuff(BuffID.Slimed, 10 * hurtInfo.Damage, hurtInfo.Damage / 8);
+            AddBuff(BuffID.Honey, 20 * hurtInfo.Damage, hurtInfo.Damage / 8);
         if (_feeders.Contains(npc.type))
-            AddBuff(ModContent.BuffType<ForceFed>(), 10 * hurtInfo.Damage, hurtInfo.Damage / 6);
+            AddBuff(ModContent.BuffType<ForceFed>(), 20 * hurtInfo.Damage, hurtInfo.Damage / 6);
         if (npc.type == NPCID.HallowBoss && hurtInfo.Damage < 1250)
             AddBuff(ModContent.BuffType<PrismaticStuffing>(), 4 * hurtInfo.Damage, hurtInfo.Damage / 6);
     }
