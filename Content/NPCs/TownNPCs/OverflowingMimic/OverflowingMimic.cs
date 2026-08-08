@@ -18,6 +18,7 @@ namespace WgMod.Content.NPCs.TownNPCs.OverflowingMimic;
 [AutoloadHead]
 
 [Credit(ProjectRole.Programmer, Contributor.maimaichubs)]
+[Credit(ProjectRole.Artist, Contributor.follycake)]
 public class OverflowingMimicNPC : ModNPC
 {
     public static int _headIndexGold;
@@ -84,8 +85,8 @@ public class OverflowingMimicNPC : ModNPC
     {
         NPC.townNPC = true;
         NPC.friendly = true;
-        NPC.width = 18;
-        NPC.height = 28;
+        NPC.width = 38;
+        NPC.height = 48;
         NPC.aiStyle = NPCAIStyleID.Passive;
         NPC.damage = 30;
         NPC.defense = 12;
