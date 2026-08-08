@@ -995,6 +995,32 @@ Configs: {
 			Tooltip: Use imperial (lbs) units instead of metric (kg)
 		}
 	}
+
+	WorkshopIconsConfig: {
+		DisplayName: Past Workshop Icons
+		Headers.WorkshopIcons: Past Workshop Icons
+
+		WorkshopIcons: {
+			Label: Select Version
+			Tooltip:
+				'''
+				This config doesn't actually change anything in the game!
+				It exists exclusively to look at the old workshop icons after they've changed!
+
+				Select the version icon you want to see!
+				'''
+		}
+
+		CurrentIcon: {
+			Label: ""
+			Tooltip: ""
+		}
+
+		Description: {
+			Label: CurrentIcon
+			Tooltip: ""
+		}
+	}
 }
 
 Tiles: {
