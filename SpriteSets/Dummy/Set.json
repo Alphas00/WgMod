@@ -1,5 +1,6 @@
 {
     "Author": "dummy",
+    "DrawOffsetY": 4,
     "ArmCount": 4,
     "Layers": [
         {

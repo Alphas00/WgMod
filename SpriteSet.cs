@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Newtonsoft.Json;
 using ReLogic.Content;
@@ -157,7 +158,8 @@ public class SpriteSet
 
     public enum LayerType
     {
-        Belly = 0,
+        Fixed = 0,
+        Belly,
         Legs,
         Breasts,
         Arms
@@ -182,6 +184,11 @@ public class SpriteSet
         [JsonIgnore] public int ArmorAtlasX;
 
         [JsonIgnore] public bool UVArmor => ArmorTexture != null;
+
+        public Rectangle Frame(SpriteSet set, Stage stage)
+        {
+            return Texture.Frame(1, set.FrameCount, 0, stage.Frame);
+        }
 
         public bool ShouldRender(Player player) => Render switch
         {

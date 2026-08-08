@@ -69,7 +69,6 @@ public class WgPlayerDrawLayer : PlayerDrawLayer
         position.X += stageData.OffsetX * direction;
         position += new Vector2(set.DrawOffsetX * direction, set.DrawOffsetY * player.gravDir);
 
-        float yOffset = 4f;
         Rectangle legFrame = player.legFrame;
         int frame = legFrame.Y / legFrame.Height;
         // Frame [0] - Idle
@@ -109,20 +108,24 @@ public class WgPlayerDrawLayer : PlayerDrawLayer
             Vector2 scale;
             switch (layer.Type)
             {
+                case SpriteSet.LayerType.Belly:
+                    pos = PrepPos(position, 0f, MathF.Round(bellyOffset / 2f) * 2f, player.gravDir);
+                    scale = new Vector2(1f / bellySquish, 1f * bellySquish);
+                    break;
                 case SpriteSet.LayerType.Legs:
-                    pos = PrepPos(position, MathF.Round(legOffsetX / 2f) * 2f, yOffset + MathF.Round(legOffsetY / 2f) * 2f, player.gravDir);
+                    pos = PrepPos(position, MathF.Round(legOffsetX / 2f) * 2f, MathF.Round(legOffsetY / 2f) * 2f, player.gravDir);
                     scale = new Vector2(1f * baseSquish, 1f / baseSquish);
                     break;
                 case SpriteSet.LayerType.Breasts:
-                    pos = PrepPos(position, 0f, yOffset + MathF.Round(bellyOffset / 2f) * 2f, player.gravDir);
+                    pos = PrepPos(position, 0f, MathF.Round(bellyOffset / 2f) * 2f, player.gravDir);
                     scale = new Vector2(1f * baseSquish, 1f / baseSquish);
                     break;
                 default:
-                    pos = PrepPos(position, 0f, yOffset + MathF.Round(bellyOffset / 2f) * 2f, player.gravDir);
-                    scale = new Vector2(1f / bellySquish, 1f * bellySquish);
+                    pos = PrepPos(position, 0f, 0f, player.gravDir);
+                    scale = Vector2.One;
                     break;
             }
-            Rectangle layerFrame = layer.Texture.Frame(1, set.FrameCount, 0, stageData.Frame);
+            Rectangle layerFrame = layer.Frame(set, stageData);
             DrawData drawData = new(
                 layer.Texture.Value, // The texture to render.
                 pos, // Position to render at.

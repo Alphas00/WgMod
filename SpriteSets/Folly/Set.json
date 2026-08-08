@@ -1,5 +1,6 @@
 {
     "Author": "folly",
+    "DrawOffsetY": 4,
     "ArmCount": 3,
     "Layers": [
         {

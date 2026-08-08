@@ -1,7 +1,7 @@
 {
     "Author": "folly",
     "DrawOffsetX": 8,
-    "DrawOffsetY": 16,
+    "DrawOffsetY": 20,
     "ArmCount": 4,
     "Layers": [
         {
