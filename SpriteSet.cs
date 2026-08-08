@@ -28,6 +28,7 @@ public class SpriteSet
     public int ArmCount;
     public Layer[] Layers = [];
     public Layer[] TopLayers = [];
+    public Layer[] HeadLayers = [];
     public Dictionary<int, Stage> Stages = [];
 
     [JsonIgnore] public int FrameCount { get; private set; }
@@ -130,6 +131,9 @@ public class SpriteSet
             LoadTextures(layer);
 
         foreach (Layer layer in set.TopLayers)
+            LoadTextures(layer);
+
+        foreach (Layer layer in set.HeadLayers)
             LoadTextures(layer);
 
         set.ArmLayers = new Layer[set.ArmCount];

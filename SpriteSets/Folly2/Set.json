@@ -23,6 +23,11 @@
             "Type": "Breasts"
         }
     ],
+    "HeadLayers": [
+        {
+            "Name": "Cheeks"
+        }
+    ],
     "Stages": {
         "1": {
             "OnTop": false

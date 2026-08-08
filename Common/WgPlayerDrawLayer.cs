@@ -26,7 +26,6 @@ public class WgPlayerDrawLayer : PlayerDrawLayer
         On_LegacyPlayerRenderer.DrawPlayerStoned -= DrawPlayerStoned;
     }
 
-    // folly: What is OffhandAcc exactly???
     public override Position GetDefaultPosition() => new Multiple()
     {
         { new Between(PlayerDrawLayers.Torso, PlayerDrawLayers.OffhandAcc), drawInfo => !CheckTop(drawInfo) },
