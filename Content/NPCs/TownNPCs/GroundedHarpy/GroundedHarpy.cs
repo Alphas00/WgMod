@@ -68,18 +68,6 @@ public class GroundedHarpyNPC : ModNPC
 
         AnimationType = NPCID.Guide;
 
-        if (Main.expertMode)
-        {
-            NPC.damage = 50;
-            NPC.lifeMax = 200;
-            NPC.knockBackResist = 0.46f;
-
-            if (Main.hardMode)
-            {
-                NPC.damage = 44;
-                NPC.lifeMax = 220;
-            }
-        }
 
         if (Main.masterMode)
         {
@@ -91,6 +79,18 @@ public class GroundedHarpyNPC : ModNPC
             {
                 NPC.damage = 66;
                 NPC.lifeMax = 330;
+            }
+        }
+        else if (Main.expertMode)
+        {
+            NPC.damage = 50;
+            NPC.lifeMax = 200;
+            NPC.knockBackResist = 0.46f;
+
+            if (Main.hardMode)
+            {
+                NPC.damage = 44;
+                NPC.lifeMax = 220;
             }
         }
 
