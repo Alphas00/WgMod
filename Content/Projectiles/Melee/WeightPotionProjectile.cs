@@ -7,6 +7,8 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using WgMod.Common.Players;
 using WgMod.Content.Buffs.Debuffs;
+using WgMod.Content.Items.Consumables.Potions.WeightGainPotions;
+using WgMod.Content.Items.Consumables.Potions.WeightLossPotions;
 
 namespace WgMod.Content.Projectiles.Melee;
 
@@ -26,9 +28,9 @@ public abstract class WeightPotionProjectile : ModProjectile
 
     public override void SetDefaults()
     {
-        //Projectile size is half the sprite's to avoid problems such as too big a sprite touching the ground immediately on launch and breaking
-        Projectile.width = (SpriteWidth / 5) * 3;
-        Projectile.height = (SpriteHeight / 5) * 3;
+        // Projectile size is half the sprite's to avoid problems such as too big a sprite touching the ground immediately on launch and breaking
+        Projectile.width = SpriteWidth / 5 * 3;
+        Projectile.height = SpriteHeight / 5 * 3;
         Projectile.friendly = true;
         Projectile.penetrate = 1;
 
@@ -93,7 +95,6 @@ public abstract class WeightPotionProjectile : ModProjectile
         }
 
         float goreMultiplayer = PotionExplosionRadius / 2;
-
         for (int g = 0; g < 2; g++)
         {
             var goreSpawnPosition = new Vector2(Projectile.position.X + Projectile.width / 2 - 24f, Projectile.position.Y + Projectile.height / 2 - 24f);
@@ -117,7 +118,7 @@ public abstract class WeightPotionProjectile : ModProjectile
 
         int explosionRadius = PotionExplosionRadius;
 
-        //Go through active players and see who is in the range of the explosion then make them gain
+        // Go through active players and see who is in the range of the explosion then make them gain
         foreach (Player activePlayer in Main.ActivePlayers)
         {
             if (activePlayer.Center.Distance(Projectile.Center) < explosionRadius * 16)
@@ -128,7 +129,7 @@ public abstract class WeightPotionProjectile : ModProjectile
             }
         }
 
-        //Actual explosion effect that hurts mobs
+        // Actual explosion effect that hurts mobs
         foreach (NPC activeMob in Main.ActiveNPCs)
         {
             if (!activeMob.friendly && activeMob.Center.Distance(Projectile.Center) < explosionRadius * 16)
@@ -149,6 +150,7 @@ public abstract class WeightPotionProjectile : ModProjectile
 
     public class LesserWeightGainPotionProjectile : WeightPotionProjectile
     {
+        public override string Texture => ModContent.GetInstance<LesserWeightGainPotion>().Texture;
         public override int PotionDamageModifier => 1;
         public override float PotionWeightModifier => 1f;
         public override int PotionExplosionRadius => 7;
@@ -158,6 +160,7 @@ public abstract class WeightPotionProjectile : ModProjectile
 
     public class WeightGainPotionProjectile : WeightPotionProjectile
     {
+        public override string Texture => ModContent.GetInstance<WeightGainPotion>().Texture;
         public override int PotionDamageModifier => 3;
         public override float PotionWeightModifier => 2f;
         public override int PotionExplosionRadius => 8;
@@ -167,6 +170,7 @@ public abstract class WeightPotionProjectile : ModProjectile
 
     public class GreaterWeightGainPotionProjectile : WeightPotionProjectile
     {
+        public override string Texture => ModContent.GetInstance<GreaterWeightGainPotion>().Texture;
         public override int PotionDamageModifier => 6;
         public override float PotionWeightModifier => 3f;
         public override int PotionExplosionRadius => 9;
@@ -176,6 +180,7 @@ public abstract class WeightPotionProjectile : ModProjectile
 
     public class SuperWeightGainPotionProjectile : WeightPotionProjectile
     {
+        public override string Texture => ModContent.GetInstance<SuperWeightGainPotion>().Texture;
         public override int PotionDamageModifier => 11;
         public override float PotionWeightModifier => 4f;
         public override int PotionExplosionRadius => 10;
@@ -185,6 +190,7 @@ public abstract class WeightPotionProjectile : ModProjectile
 
     public class LesserWeightLossPotionProjectile : WeightPotionProjectile
     {
+        public override string Texture => ModContent.GetInstance<LesserWeightLossPotion>().Texture;
         public override int PotionDamageModifier => 1;
         public override float PotionWeightModifier => -1f;
         public override int PotionExplosionRadius => 7;
@@ -194,6 +200,7 @@ public abstract class WeightPotionProjectile : ModProjectile
 
     public class WeightLossPotionProjectile : WeightPotionProjectile
     {
+        public override string Texture => ModContent.GetInstance<WeightLossPotion>().Texture;
         public override int PotionDamageModifier => 3;
         public override float PotionWeightModifier => -2f;
         public override int PotionExplosionRadius => 8;
@@ -203,6 +210,7 @@ public abstract class WeightPotionProjectile : ModProjectile
 
     public class GreaterWeightLossPotionProjectile : WeightPotionProjectile
     {
+        public override string Texture => ModContent.GetInstance<GreaterWeightLossPotion>().Texture;
         public override int PotionDamageModifier => 6;
         public override float PotionWeightModifier => -3f;
         public override int PotionExplosionRadius => 9;
@@ -212,6 +220,7 @@ public abstract class WeightPotionProjectile : ModProjectile
 
     public class SuperWeightLossPotionProjectile : WeightPotionProjectile
     {
+        public override string Texture => ModContent.GetInstance<SuperWeightLossPotion>().Texture;
         public override int PotionDamageModifier => 11;
         public override float PotionWeightModifier => -4f;
         public override int PotionExplosionRadius => 10;
