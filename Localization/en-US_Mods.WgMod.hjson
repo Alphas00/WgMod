@@ -1209,7 +1209,7 @@ Dialogue: {
 		StandardDialogue4: Your name {1}? That name silly! {0} name better!
 		StandardDialogue5: "{0} chest is getting so heavy to bounce around in... human fault!"
 		StandardDialogue6: Hungry... {1}! Give {0} food! Now!
-		StandardDialogue7: Bouncy bouncy bouncy! Yay!
+		StandardDialogue7: Could {1} uhmm... teach {0} how doors work again?
 		StandardDialogue8: Uuurrp... {0} found a little bunny... so yummy!
 		BloodMoonDialogue1: GRAHAHA! THE MOON HUNGRY TONIGHT!
 		BloodMoonDialogue2: EAT EVERYTHING! EAT EVERYONE!
@@ -1229,6 +1229,7 @@ Dialogue: {
 		DayDialogue1: Pretty day! Full of play!
 		NightDialogue1: "{0} love nighttime, so many friends out to play!"
 		LoveStruckDialogue1: "{1}... {0} kinda wants to... bite {1} face..."
+		PostMechDialogue1: "{0} ate the flesh of big robots... {0} feels so powerful..."
 	}
 }
 

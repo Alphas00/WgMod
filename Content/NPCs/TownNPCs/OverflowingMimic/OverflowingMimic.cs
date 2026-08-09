@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using Terraria;
@@ -85,8 +86,8 @@ public class OverflowingMimicNPC : ModNPC
     {
         NPC.townNPC = true;
         NPC.friendly = true;
-        NPC.width = 38;
-        NPC.height = 48;
+        NPC.width = 28;
+        NPC.height = 28;
         NPC.aiStyle = NPCAIStyleID.Passive;
         NPC.damage = 30;
         NPC.defense = 12;
@@ -98,34 +99,56 @@ public class OverflowingMimicNPC : ModNPC
 
         AnimationType = NPCID.Guide;
 
-        if (Main.expertMode)
-        {
-            NPC.damage = 60;
-            NPC.lifeMax = 600;
-            NPC.knockBackResist = 0.73f;
-
-            if (Main.hardMode)
-            {
-                NPC.damage = 160;
-                NPC.lifeMax = 1000;
-            }
-        }
-        else if (Main.masterMode)
+        if (Main.masterMode)
         {
             NPC.damage = 90;
             NPC.lifeMax = 900;
             NPC.knockBackResist = 0.76f;
 
-            if (Main.hardMode)
+            if (NPC.downedMechBoss1 && NPC.downedMechBoss2 && NPC.downedMechBoss3)
+            {
+                NPC.damage = 270;
+                NPC.defense = 34;
+                NPC.lifeMax = 10500;
+                NPC.knockBackResist = 0.92f;
+            }
+            else if (Main.hardMode)
             {
                 NPC.damage = 240;
                 NPC.lifeMax = 1500;
+            }
+        }
+        else if (Main.expertMode)
+        {
+            NPC.damage = 60;
+            NPC.lifeMax = 600;
+            NPC.knockBackResist = 0.73f;
+
+            if (NPC.downedMechBoss1 && NPC.downedMechBoss2 && NPC.downedMechBoss3)
+            {
+                NPC.damage = 180;
+                NPC.defense = 34;
+                NPC.lifeMax = 7000;
+                NPC.knockBackResist = 0.91f;
+            }
+            else if (Main.hardMode)
+            {
+                NPC.damage = 160;
+                NPC.lifeMax = 1000;
             }
         }
         else if (Main.hardMode)
         {
             NPC.damage = 80;
             NPC.lifeMax = 500;
+
+            if (NPC.downedMechBoss1 && NPC.downedMechBoss2 && NPC.downedMechBoss3)
+            {
+                NPC.damage = 90;
+                NPC.defense = 34;
+                NPC.lifeMax = 3500;
+                NPC.knockBackResist = 0.9f;
+            }
         }
 
         NPC.ApplyTownNPCModifiers();
@@ -225,17 +248,25 @@ public class OverflowingMimicNPC : ModNPC
                 chat.Add(Language.GetTextValue("Mods.WgMod.Dialogue.OverflowingMimic.PartyDialogue2", overflowingMimic), 2); // "Woo woo woo! Dance dance!"
             }
 
+            if (NPC.downedMechBoss1 && NPC.downedMechBoss2 && NPC.downedMechBoss3)
+                chat.Add(Language.GetTextValue("Mods.WgMod.Dialogue.OverflowingMimic.PostMechDialogue1", overflowingMimic));
+
             chat.Add(Language.GetTextValue("Mods.WgMod.Dialogue.OverflowingMimic.StandardDialogue1", overflowingMimic)); // "Why make {0} big, human? Mean human! Bad!"
-            chat.Add(Language.GetTextValue("Mods.WgMod.Dialogue.OverflowingMimic.StandardDialogue2", overflowingMimic)); // "{0} is big for real! {0} is just... shy!"
+            chat.Add(Language.GetTextValue("Mods.WgMod.Dialogue.OverflowingMimic.StandardDialogue2", overflowingMimic)); // "Bwah! Don't look at {0}'s belly!"
             chat.Add(Language.GetTextValue("Mods.WgMod.Dialogue.OverflowingMimic.StandardDialogue3", overflowingMimic)); // "{Slime like {0} can ride chest! Look like loot!"
             chat.Add(Language.GetTextValue("Mods.WgMod.Dialogue.OverflowingMimic.StandardDialogue4", overflowingMimic, player)); // "Your name {1}? That name silly! {0} name better!"
             chat.Add(Language.GetTextValue("Mods.WgMod.Dialogue.OverflowingMimic.StandardDialogue5", overflowingMimic)); // "{0} chest is getting so heavy to bounce around in... human fault!"
             chat.Add(Language.GetTextValue("Mods.WgMod.Dialogue.OverflowingMimic.StandardDialogue6", overflowingMimic, player)); // "Hungry... {1}! Give {0} food! Now!"
-            chat.Add(Language.GetTextValue("Mods.WgMod.Dialogue.OverflowingMimic.StandardDialogue7", overflowingMimic)); // "Bouncy bouncy bouncy! Yay!"
+            chat.Add(Language.GetTextValue("Mods.WgMod.Dialogue.OverflowingMimic.StandardDialogue7", overflowingMimic, player)); // "Could {1} uhmm... teach {0} how doors work again?"
             chat.Add(Language.GetTextValue("Mods.WgMod.Dialogue.OverflowingMimic.StandardDialogue8", overflowingMimic)); // "Uuurrp... {0} found a little bunny... so yummy!"
         }
 
         return chat;
+    }
+
+    public override void ChatBubblePosition(ref Vector2 position, ref SpriteEffects spriteEffects)
+    {
+        position.Y -= 18f;
     }
 
     public override void SetChatButtons(ref string button, ref string button2)
@@ -248,7 +279,7 @@ public class OverflowingMimicNPC : ModNPC
         if (firstButton)
             shop = MimicShop;
     }
-    static Item ItemMult(int type, int times = 4)
+    static Item ItemMult(int type, int times = 2)
     {
         Item item = new(type);
         item.shopCustomPrice = item.value * times;
@@ -316,14 +347,15 @@ public class OverflowingMimicNPC : ModNPC
         //NPC.AI_007_FindGoodRestingSpot((int)NPC.position.X / 16, (int)NPC.position.Y / 16, out int floorX, out int floorY);
         //NPC.AI_007_TownEntities_GetWalkPrediction((int)NPC.position.X / 16, floorX, false, false, (int)(NPC.position.X + NPC.width / 2) / 16, (int)(NPC.position.Y + NPC.height + 1) / 16, out bool keepWalking, out bool avoidFalling);
 
+        ///*
         if (_jumpCooldown < _jumpCooldownMax)
             _jumpCooldown++;
         else if (NPC.velocity.X != 0 && NPC.velocity.Y == 0)
         {
-            NPC.velocity.Y = -4f;
-            NPC.velocity.X = NPC.direction * _jumpSpeed;
+            NPC.velocity.Y = -4f * Main.rand.NextFloat(0.85f, 1.15f);
+            NPC.velocity.X = NPC.direction * _jumpSpeed * Main.rand.NextFloat(0.5f, 2f);
 
-            _jumpCooldown = 0;
+            _jumpCooldown = Main.rand.Next(0, 21);
         }
 
         if (NPC.velocity.Y != 0)
@@ -339,7 +371,7 @@ public class OverflowingMimicNPC : ModNPC
         }
 
         if (NPC.velocity.Y == 0 && NPC.velocity.X != 0)
-            NPC.velocity.X = 0.1f * NPC.direction;
+            NPC.velocity.X = 0.1f * NPC.direction;  //*/
     }
 }
 
