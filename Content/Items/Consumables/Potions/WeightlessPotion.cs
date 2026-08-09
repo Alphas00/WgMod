@@ -6,7 +6,7 @@ using Terraria.ModLoader;
 namespace WgMod.Content.Items.Consumables.Potions;
 
 [Credit(ProjectRole.Programmer, Contributor.maimaichubs)]
-[Credit(ProjectRole.Artist, Contributor.PLACEHOLDER)]
+[Credit(ProjectRole.Artist, Contributor.magicalmoondust_)]
 public class WeightlessPotion : ModItem
 {
     public override void SetStaticDefaults()
@@ -22,8 +22,8 @@ public class WeightlessPotion : ModItem
 
     public override void SetDefaults()
     {
-        Item.width = 20;
-        Item.height = 26;
+        Item.width = 28;
+        Item.height = 30;
         Item.useStyle = ItemUseStyleID.DrinkLiquid;
         Item.useAnimation = 15;
         Item.useTime = 15;
