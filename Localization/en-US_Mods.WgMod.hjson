@@ -1087,6 +1087,7 @@ Projectiles: {
 	SuperWeightGainPotionProjectile.DisplayName: Super Weight Gain Potion Projectile
 	SuperWeightLossPotionProjectile.DisplayName: Super Weight Loss Potion Projectile
 	WeightLossPotionProjectile.DisplayName: Weight Loss Potion Projectile
+	FatTombstone.DisplayName: Fat Tombstone
 }
 
 NPCs: {
