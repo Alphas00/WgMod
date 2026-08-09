@@ -19,6 +19,12 @@ public class TwinEyesRet : ModProjectile
 
 	static Asset<Texture2D> _chainTexture;
 
+	public int _fireCooldown;
+
+	public bool _missFire = false;
+
+	public const int FireCooldownMax = 20;
+
 	enum AIState
 	{
 		Spinning,
@@ -55,13 +61,16 @@ public class TwinEyesRet : ModProjectile
 	public override void SetDefaults()
 	{
 		Projectile.netImportant = true; // This ensures that the projectile is synced when other players join the world.
-		Projectile.width = 24; // The width of your projectile
-		Projectile.height = 24; // The height of your projectile
+		Projectile.width = 22; // The width of your projectile
+		Projectile.height = 22; // The height of your projectile
 		Projectile.friendly = true; // Deals damage to enemies
 		Projectile.penetrate = -1; // Infinite pierce
 		Projectile.DamageType = DamageClass.Melee; // Deals melee damage
 		Projectile.usesLocalNPCImmunity = true; // Used for hit cooldown changes in the ai hook
 		Projectile.localNPCHitCooldown = 10; // This facilitates custom hit cooldown logic
+
+		DrawOffsetX = -8;
+		DrawOriginOffsetY = -8;
 
 		Projectile.ai[2] = 0;
 	}
@@ -70,6 +79,12 @@ public class TwinEyesRet : ModProjectile
 	{
 		if (Projectile.ai[2] == 0)
 			Projectile.NewProjectile(source, Projectile.position, Projectile.velocity, ModContent.ProjectileType<TwinEyesSpazm>(), Projectile.damage, Projectile.knockBack, default, default, default, 1);
+	}
+
+	public void FireProjectile(int type)
+	{
+		if (Main.myPlayer == Projectile.owner && _fireCooldown == FireCooldownMax && !_missFire)
+			Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Projectile.velocity * 2, type, Projectile.damage, Projectile.knockBack, Main.myPlayer);
 	}
 
 	public override void AI()
@@ -122,6 +137,9 @@ public class TwinEyesRet : ModProjectile
 		int projectile;
 		int dust;
 
+		if (_fireCooldown < FireCooldownMax && !_missFire)
+			_fireCooldown++;
+
 		if (Projectile.ai[2] == 1)
 		{
 			projectile = ModContent.ProjectileType<CursedFlameFriendly>();
@@ -131,6 +149,16 @@ public class TwinEyesRet : ModProjectile
 		{
 			projectile = ModContent.ProjectileType<DeathLaserFriendly>();
 			dust = DustID.RedTorch;
+		}
+
+		if (_fireCooldown == FireCooldownMax - 1 && !_missFire)
+		{
+			SoundEngine.PlaySound(SoundID.MaxMana, Projectile.position);
+
+			for (int i = 0; i < 5; i++)
+			{
+				Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, dust, 0f, 0f, 150, default, 3f);
+			}
 		}
 
 		switch (CurrentAIState)
@@ -189,8 +217,7 @@ public class TwinEyesRet : ModProjectile
 						StateTimer = 0f;
 						Projectile.netUpdate = true;
 						Projectile.velocity *= 0.2f;
-						if (Main.myPlayer == Projectile.owner)
-							Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Projectile.velocity * 2, projectile, Projectile.damage, Projectile.knockBack, Main.myPlayer);
+						FireProjectile(projectile);
 						break;
 					}
 					if (shouldSwitchToRetracting)
@@ -199,8 +226,7 @@ public class TwinEyesRet : ModProjectile
 						StateTimer = 0f;
 						Projectile.netUpdate = true;
 						Projectile.velocity *= 0.3f;
-						if (Main.myPlayer == Projectile.owner)
-							Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Projectile.velocity * 2, projectile, Projectile.damage, Projectile.knockBack, Main.myPlayer);
+						FireProjectile(projectile);
 					}
 					player.ChangeDir((player.Center.X < Projectile.Center.X).ToDirectionInt());
 					Projectile.localNPCHitCooldown = movingHitCooldown;
@@ -227,6 +253,8 @@ public class TwinEyesRet : ModProjectile
 						Projectile.velocity = Projectile.velocity.MoveTowards(unitVectorTowardsPlayer * maxRetractSpeed, retractAcceleration);
 						player.ChangeDir((player.Center.X < Projectile.Center.X).ToDirectionInt());
 					}
+
+					_missFire = true;
 					break;
 				}
 			// Projectile.ai[0] == 3; This case is actually unused, but maybe a Terraria update will add it back in, or maybe it is useless, so I left it here.
@@ -293,6 +321,8 @@ public class TwinEyesRet : ModProjectile
 						return;
 					}
 					player.ChangeDir((player.Center.X < Projectile.Center.X).ToDirectionInt());
+
+					_missFire = true;
 					break;
 				}
 			case AIState.Ricochet:
@@ -309,6 +339,8 @@ public class TwinEyesRet : ModProjectile
 					Projectile.velocity.X *= 0.95f;
 					player.ChangeDir((player.Center.X < Projectile.Center.X).ToDirectionInt());
 				}
+
+				_missFire = true;
 				break;
 			case AIState.Dropping:
 				if (!player.controlUseItem || Projectile.Distance(mountedCenter) > maxDroppedRange)
@@ -323,6 +355,8 @@ public class TwinEyesRet : ModProjectile
 					Projectile.velocity.X *= 0.95f;
 					player.ChangeDir((player.Center.X < Projectile.Center.X).ToDirectionInt());
 				}
+
+				_missFire = true;
 				break;
 		}
 
