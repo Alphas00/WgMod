@@ -38,5 +38,8 @@ For playtesting the latest versions and development, you can download the source
 The [.editorconfig](.editorconfig) has some explicit rules about the naming of variables and such.
 Remember to run `dotnet format WgMod.csproj` on the root folder every once in a while.
 
+# Automatic wiki
+[Automatically generated wiki](https://follycake.github.io/) hosted on GitHub Pages and powered by [WikiGen](https://github.com/follycake/WikiGen).
+
 # Credits
 See [description.txt](description.txt) and [Credits.cs](Credits.cs)

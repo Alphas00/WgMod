@@ -18,6 +18,12 @@ Discord tags of the people that helped make this possible
 - @divine_lumine (Armor sprites)
 - @the_trueterrafox (Item idea and sprites)
 - @tea_kettles (i-frames visual bugfix)
+- @anolivewine (Fat mannquins idea)
+- @thegungis (Shoddy scale idea)
+- @radiantluminant (Greedy Flask idea)
+- @robinn9283 (Item sprites)
+- @magicalmoondust_ (Item sprites)
+- @alphas0 (Code for Gain Tosser)
 
 [c/EFBF00:Full credits]
 [wgmodcred:0]
