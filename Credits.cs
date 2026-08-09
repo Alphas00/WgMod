@@ -49,6 +49,7 @@ public enum Contributor
     radiantluminant,
     robinn9283,
     magicalmoondust_,
+    alphas0,
 
     [Category("Other")]
     purple_circle,

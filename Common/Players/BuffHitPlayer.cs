@@ -3,7 +3,6 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
-using WgMod.Content.Buffs.Debuffs;
 
 namespace WgMod.Common.Players;
 

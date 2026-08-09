@@ -1,5 +1,3 @@
-using System.Drawing;
-using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ModLoader;
 using WgMod.Common.Players;
