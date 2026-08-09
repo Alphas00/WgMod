@@ -4,6 +4,8 @@ using Terraria.ModLoader;
 
 namespace WgMod.Content.Items.Placeable;
 
+[Credit(ProjectRole.Programmer, Contributor.jumpsu2)]
+[Credit(ProjectRole.Artist, Contributor.jumpsu2)]
 public class FatteningDartTrap : ModItem
 {
 	public override void SetDefaults()

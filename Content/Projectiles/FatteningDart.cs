@@ -8,6 +8,8 @@ using WgMod.Content.Buffs.Debuffs;
 
 namespace WgMod.Content.Projectiles;
 
+[Credit(ProjectRole.Programmer, Contributor.jumpsu2)]
+[Credit(ProjectRole.Artist, Contributor.jumpsu2)]
 public class FatteningDart : ModProjectile
 {
     public override void SetDefaults()
