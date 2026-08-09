@@ -766,6 +766,19 @@ Items: {
 			Stats scale with your obesity
 			'''
 	}
+
+	GainTosser: {
+		DisplayName: Gain Tosser
+		Tooltip:
+			'''
+			Throw weight potions at friends and foes alike!
+			Enemies take damage, allies will have their weight changed
+			Damage, radius and effect change based on the potion
+			Damage and projectile speed scale with obesity
+			Increased damage by {0}%
+			Increased projectile speed by {1}%
+			'''
+	}
 }
 
 Buffs: {
@@ -1061,6 +1074,14 @@ Projectiles: {
 	DeathLaserFriendly.DisplayName: Death Laser
 	TwinEyesSpazm.DisplayName: Eye of Spazmatism
 	TwinEyesRet.DisplayName: Eye of Retinazer
+	WeightGainPotionProjectile.DisplayName: Weight Gain Potion Projectile
+	GreaterWeightGainPotionProjectile.DisplayName: Greater Weight Gain Potion Projectile
+	GreaterWeightLossPotionProjectile.DisplayName: Greater Weight Loss Potion Projectile
+	LesserWeightGainPotionProjectile.DisplayName: Lesser Weight Gain Potion Projectile
+	LesserWeightLossPotionProjectile.DisplayName: Lesser Weight Loss Potion Projectile
+	SuperWeightGainPotionProjectile.DisplayName: Super Weight Gain Potion Projectile
+	SuperWeightLossPotionProjectile.DisplayName: Super Weight Loss Potion Projectile
+	WeightLossPotionProjectile.DisplayName: Weight Loss Potion Projectile
 }
 
 NPCs: {

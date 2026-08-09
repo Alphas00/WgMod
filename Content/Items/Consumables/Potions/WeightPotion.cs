@@ -5,6 +5,9 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using WgMod.Common.Players;
 using WgMod.Content.Buffs.Debuffs;
+using WgMod.Content.Items.Consumables.Potions.WeightGainPotions;
+using WgMod.Content.Projectiles.Melee;
+using static WgMod.Content.Projectiles.Melee.WeightPotionProjectile;
 
 namespace WgMod.Content.Items.Consumables.Potions;
 
@@ -21,6 +24,10 @@ public abstract class WeightPotion : ModItem
         Item.UseSound = SoundID.Item3;
         Item.maxStack = Item.CommonMaxStack;
         Item.consumable = true;
+
+        Item.ammo = ModContent.ItemType<LesserWeightGainPotion>();
+        Item.shoot = ModContent.ProjectileType<LesserWeightGainPotionProjectile>();
+        Item.notAmmo = true;
     }
 
     public override bool? UseItem(Player player)
