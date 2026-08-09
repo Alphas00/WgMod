@@ -1,12 +1,10 @@
 ﻿using System;
-using JetBrains.Annotations;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 using WgMod.Common.Players;
-using WgMod.Content.Buffs.Debuffs;
 using WgMod.Content.Items.Consumables.Potions.WeightGainPotions;
 using WgMod.Content.Items.Consumables.Potions.WeightLossPotions;
 

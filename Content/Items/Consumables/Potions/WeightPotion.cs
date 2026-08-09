@@ -6,7 +6,6 @@ using Terraria.ModLoader;
 using WgMod.Common.Players;
 using WgMod.Content.Buffs.Debuffs;
 using WgMod.Content.Items.Consumables.Potions.WeightGainPotions;
-using WgMod.Content.Projectiles.Melee;
 using static WgMod.Content.Projectiles.Melee.WeightPotionProjectile;
 
 namespace WgMod.Content.Items.Consumables.Potions;

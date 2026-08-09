@@ -1,15 +1,10 @@
-using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Terraria;
-using Terraria.Enums;
 using Terraria.ID;
 using Terraria.ModLoader;
 using WgMod.Common.Players;
-using WgMod.Content.Items.Consumables;
-using WgMod.Content.Items.Consumables.Potions;
 using WgMod.Content.Items.Consumables.Potions.WeightGainPotions;
-using WgMod.Content.Projectiles.Melee;
 
 namespace WgMod.Content.Items.Weapons.Melee;
 

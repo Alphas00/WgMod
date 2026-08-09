@@ -2,7 +2,6 @@
 using Terraria.ID;
 using Terraria.ModLoader;
 using WgMod.Content.Items.Consumables.Potions.WeightLossPotions;
-using WgMod.Content.Projectiles.Melee;
 using static WgMod.Content.Projectiles.Melee.WeightPotionProjectile;
 
 namespace WgMod.Content.Items.Consumables.Potions.WeightGainPotions;
