@@ -169,7 +169,7 @@ public class TwinEyesRet : ModProjectile
 					if (Projectile.ai[2] == 1)
 						offsetFromPlayer = new Vector2(player.direction).RotatedBy((float)Math.PI * 10f * (SpinningStateTimer / 60f) * -player.direction);
 					else
-						offsetFromPlayer = new Vector2(player.direction).RotatedBy((float)Math.PI * 10f * (SpinningStateTimer / 60f) * player.direction);
+						offsetFromPlayer = new Vector2(player.direction).RotatedBy((float)Math.PI * 8f * (SpinningStateTimer / 60f) * player.direction);
 
 					offsetFromPlayer.Y *= 0.8f;
 					if (offsetFromPlayer.Y * player.gravDir > 0f)
