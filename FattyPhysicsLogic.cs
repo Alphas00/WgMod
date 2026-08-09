@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using WgMod.Common.Configs;
 
 namespace WgMod;
 
@@ -97,6 +98,8 @@ public class FatPushPlayer : ModPlayer
 {
     public override void PostUpdateMiscEffects()
     {
+        if (WgServerConfig.Instance.DisablePlayerPushing)
+            return;
         if (Player.Wg().Weight.GetStage() >= WeightStage.MorbidlyObese)
             Player.PushAwayFromMe();
     }

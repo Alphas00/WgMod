@@ -60,7 +60,7 @@ public class FatTombstones : ModTile
     {
         if (!Main.rand.NextBool())
             return false;
-        if (!player.TryGetModPlayer(out WgPlayer wg) || wg.Weight.GetStage() <= 0)
+        if (!player.TryGetModPlayer(out WgPlayer wg) || wg.Weight.GetStage() <= WeightStage.Regular)
             return false;
         type = ModContent.TileType<FatTombstones>();
         if (style >= 6) // Gold

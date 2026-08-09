@@ -970,6 +970,11 @@ Configs: {
 			Label: Disable Fat Hitbox
 			Tooltip: Disables player hitbox size changes
 		}
+
+		DisablePlayerPushing: {
+			Label: Disable Player Pushing
+			Tooltip: Disables players pushing around other players and NPCs with their fat
+		}
 	}
 
 	WgClientConfig: {
