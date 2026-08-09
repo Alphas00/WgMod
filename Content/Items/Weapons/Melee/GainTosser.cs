@@ -19,6 +19,9 @@ public class GainTosser : ModItem
     {
         Item.CloneDefaults(ItemID.AleThrowingGlove);
 
+        Item.width = 30;
+        Item.height = 28;
+
         Item.damage = 25;
         Item.shootSpeed = 13f;
         Item.useTime = 26;

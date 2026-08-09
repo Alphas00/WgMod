@@ -29,6 +29,11 @@ public abstract class WeightPotion : ModItem
         Item.notAmmo = true;
     }
 
+    public override bool CanShoot(Player player)
+    {
+        return false;
+    }
+
     public override bool? UseItem(Player player)
     {
         if (!player.TryGetModPlayer(out WgPlayer wg))
