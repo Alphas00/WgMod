@@ -23,7 +23,7 @@ public class TwinEyesRet : ModProjectile
 
 	public bool _missFire = false;
 
-	public const int FireCooldownMax = 20;
+	public const int FireCooldownMax = 18;
 
 	enum AIState
 	{
@@ -157,7 +157,7 @@ public class TwinEyesRet : ModProjectile
 
 			for (int i = 0; i < 5; i++)
 			{
-				Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, dust, 0f, 0f, 150, default, 3f);
+				Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, dust, 0f, 0f, 150, default, 2.3f);
 			}
 		}
 
@@ -366,9 +366,9 @@ public class TwinEyesRet : ModProjectile
 		Projectile.spriteDirection = Projectile.direction;
 		Projectile.ownerHitCheck = shouldOwnerHitCheck; // This prevents attempting to damage enemies without line of sight to the player. The custom Colliding code for spinning makes this necessary.
 
-        // This rotation code is unique to this flail, since the sprite isn't rotationally symmetric and has tip.
+		// This rotation code is unique to this flail, since the sprite isn't rotationally symmetric and has tip.
 
-        /*
+		/*
 		bool freeRotation = CurrentAIState == AIState.Ricochet || CurrentAIState == AIState.Dropping;
 		if (freeRotation)
 		{
@@ -383,34 +383,34 @@ public class TwinEyesRet : ModProjectile
 			Projectile.rotation = vectorTowardsPlayer.ToRotation() + MathHelper.PiOver2;
 		}
         */
-        switch (CurrentAIState)
-        {
-            case AIState.Dropping:
-                Projectile.rotation += Projectile.velocity.X * 0.1f;
-                break;
-            case AIState.Spinning:
-                Vector2 vectorTowardsPlayer = Projectile.DirectionTo(mountedCenter).SafeNormalize(Vector2.Zero);
-                Projectile.rotation = vectorTowardsPlayer.ToRotation() + MathHelper.Pi;
-                break;
-            case AIState.Retracting or AIState.ForcedRetracting:
-                Projectile.rotation = Projectile.velocity.ToRotation();
-                Projectile.spriteDirection = 1;
-                break;
-            default:
-                Projectile.rotation = Projectile.velocity.ToRotation();
-                Projectile.spriteDirection = -1;
-                break;
-        }
+		switch (CurrentAIState)
+		{
+			case AIState.Dropping:
+				Projectile.rotation += Projectile.velocity.X * 0.1f;
+				break;
+			case AIState.Spinning:
+				Vector2 vectorTowardsPlayer = Projectile.DirectionTo(mountedCenter).SafeNormalize(Vector2.Zero);
+				Projectile.rotation = vectorTowardsPlayer.ToRotation() + MathHelper.Pi;
+				break;
+			case AIState.Retracting or AIState.ForcedRetracting:
+				Projectile.rotation = Projectile.velocity.ToRotation();
+				Projectile.spriteDirection = 1;
+				break;
+			default:
+				Projectile.rotation = Projectile.velocity.ToRotation();
+				Projectile.spriteDirection = -1;
+				break;
+		}
 
-        // If you have a ball shaped flail, you can use this simplified rotation code instead
-        /*
+		// If you have a ball shaped flail, you can use this simplified rotation code instead
+		/*
 		if (Projectile.velocity.Length() > 1f)
 			Projectile.rotation = Projectile.velocity.ToRotation() + Projectile.velocity.X * 0.1f; // skid
 		else
 			Projectile.rotation += Projectile.velocity.X * 0.1f; // roll
 		*/
 
-        Projectile.timeLeft = 2; // Makes sure the flail doesn't die (good when the flail is resting on the ground)
+		Projectile.timeLeft = 2; // Makes sure the flail doesn't die (good when the flail is resting on the ground)
 		player.heldProj = Projectile.whoAmI;
 		player.SetDummyItemTime(2); // Add a delay so the player can't button mash the flail
 		player.itemRotation = Projectile.DirectionFrom(mountedCenter).ToRotation();
@@ -636,13 +636,13 @@ public class TwinEyesRet : ModProjectile
 			chainLengthRemainingToDraw -= chainSegmentLength;
 		}
 
-        // Add a motion trail when moving forward, like most flails do (don't add trail if already hit a tile)
+		// Add a motion trail when moving forward, like most flails do (don't add trail if already hit a tile)
 
-        Texture2D projectileTexture = TextureAssets.Projectile[Type].Value;
-        Vector2 drawOrigin = new(projectileTexture.Width * 0.5f, projectileTexture.Height * 0.5f);
-        SpriteEffects spriteEffects = Projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+		Texture2D projectileTexture = TextureAssets.Projectile[Type].Value;
+		Vector2 drawOrigin = new(projectileTexture.Width * 0.5f, projectileTexture.Height * 0.5f);
+		SpriteEffects spriteEffects = Projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 
-        if (CurrentAIState == AIState.LaunchingForward)
+		if (CurrentAIState == AIState.LaunchingForward)
 		{
 			int afterimageCount = Math.Min(Projectile.oldPos.Length - 1, (int)StateTimer);
 			for (int k = afterimageCount; k > 0; k--)
@@ -653,10 +653,10 @@ public class TwinEyesRet : ModProjectile
 			}
 		}
 
-        Vector2 drawPos = Projectile.position - Main.screenPosition + new Vector2(Projectile.width / 2, Projectile.height / 2) + new Vector2(0f, Projectile.gfxOffY);
+		Vector2 drawPos = Projectile.position - Main.screenPosition + new Vector2(Projectile.width / 2, Projectile.height / 2) + new Vector2(0f, Projectile.gfxOffY);
 
-        Main.spriteBatch.Draw(projectileTexture, drawPos, null, lightColor, Projectile.rotation, drawOrigin, Projectile.scale, spriteEffects, 0f);
+		Main.spriteBatch.Draw(projectileTexture, drawPos, null, lightColor, Projectile.rotation, drawOrigin, Projectile.scale, spriteEffects, 0f);
 
-        return false;
+		return false;
 	}
 }

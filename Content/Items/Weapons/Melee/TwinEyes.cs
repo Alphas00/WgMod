@@ -26,7 +26,7 @@ public class TwinEyes : ModItem
 		Item.knockBack = 7.5f;
 		Item.width = 42;
 		Item.height = 44;
-		Item.damage = 54;
+		Item.damage = 64;
 		Item.noUseGraphic = true;
 		Item.shoot = ModContent.ProjectileType<TwinEyesRet>();
 		Item.shootSpeed = 12f;
