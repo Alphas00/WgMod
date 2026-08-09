@@ -48,6 +48,7 @@ public enum Contributor
     thegungis,
     radiantluminant,
     robinn9283,
+    alphas0,
 
     [Category("Other")]
     purple_circle,

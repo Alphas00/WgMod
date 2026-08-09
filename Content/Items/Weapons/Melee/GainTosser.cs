@@ -13,8 +13,8 @@ using WgMod.Content.Projectiles.Melee;
 
 namespace WgMod.Content.Items.Weapons.Melee;
 
-[Credit(ProjectRole.Programmer, Contributor.PLACEHOLDER)]
-[Credit(ProjectRole.Artist, Contributor.PLACEHOLDER)]
+[Credit(ProjectRole.Programmer, Contributor.alphas0)]
+[Credit(ProjectRole.Artist, Contributor.alphas0)]
 public class GainTosser : ModItem
 {
     WgStat _damage = new(1f, 2f);
@@ -40,7 +40,6 @@ public class GainTosser : ModItem
         if (!player.TryGetModPlayer(out WgPlayer wg))
             return;
         float immobility = wg.Weight.ClampedImmobility;
-
         _damage.Lerp(immobility);
         _velocity.Lerp(immobility);
     }

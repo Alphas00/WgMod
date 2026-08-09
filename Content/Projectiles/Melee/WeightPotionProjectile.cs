@@ -9,6 +9,8 @@ using WgMod.Common.Players;
 using WgMod.Content.Buffs.Debuffs;
 
 namespace WgMod.Content.Projectiles.Melee;
+
+[Credit(ProjectRole.Programmer, Contributor.alphas0)]
 public abstract class WeightPotionProjectile : ModProjectile
 {
     public abstract int PotionDamageModifier { get; }
@@ -24,7 +26,6 @@ public abstract class WeightPotionProjectile : ModProjectile
 
     public override void SetDefaults()
     {
-
         //Projectile size is half the sprite's to avoid problems such as too big a sprite touching the ground immediately on launch and breaking
         Projectile.width = (SpriteWidth / 5) * 3;
         Projectile.height = (SpriteHeight / 5) * 3;
@@ -33,7 +34,7 @@ public abstract class WeightPotionProjectile : ModProjectile
 
         // These help the projectile hitbox be centered on the projectile sprite.
         //DrawOffsetX = -SpriteWidth/2;
-        DrawOriginOffsetY = -(SpriteHeight/5)*2;
+        DrawOriginOffsetY = -(SpriteHeight / 5) * 2;
     }
 
     public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
@@ -42,9 +43,7 @@ public abstract class WeightPotionProjectile : ModProjectile
         if (Main.expertMode)
         {
             if (target.type >= NPCID.EaterofWorldsHead && target.type <= NPCID.EaterofWorldsTail)
-            {
                 modifiers.FinalDamage /= 5;
-            }
         }
     }
 
@@ -52,9 +51,7 @@ public abstract class WeightPotionProjectile : ModProjectile
     {
         // The projectile is in the midst of exploding during the last 3 updates.
         if (Projectile.owner == Main.myPlayer && Projectile.timeLeft <= 3)
-        {
             Projectile.PrepareBombToBlow();
-        }
 
         Projectile.ai[0] += 1f;
         if (Projectile.ai[0] > 10f)
@@ -63,7 +60,6 @@ public abstract class WeightPotionProjectile : ModProjectile
             if (Projectile.velocity.Y == 0f && Projectile.velocity.X != 0f)
             {
                 Projectile.velocity.X = Projectile.velocity.X * 0.96f;
-
                 if (Projectile.velocity.X > -0.01 && Projectile.velocity.X < 0.01)
                 {
                     Projectile.velocity.X = 0f;
@@ -88,7 +84,6 @@ public abstract class WeightPotionProjectile : ModProjectile
 
     public override void OnKill(int timeLeft)
     {
-
         SoundEngine.PlaySound(SoundID.Shatter, Projectile.position);
 
         for (int i = 0; i < 50; i++)
@@ -97,7 +92,7 @@ public abstract class WeightPotionProjectile : ModProjectile
             dust.velocity *= 1.4f;
         }
 
-        float goreMultiplayer = PotionExplosionRadius/2;
+        float goreMultiplayer = PotionExplosionRadius / 2;
 
         for (int g = 0; g < 2; g++)
         {
@@ -140,14 +135,13 @@ public abstract class WeightPotionProjectile : ModProjectile
             {
                 int dir = 1;
                 if (activeMob.Center.X < Projectile.Center.X)
-                { dir = -1; }
+                    dir = -1;
 
                 bool crit = false;
                 if (Main.rand.Next(1, 100) < Projectile.CritChance)
-                { crit = true; }
+                    crit = true;
 
                 int damageDealt = (int)((float)Projectile.damage * Math.Abs(PotionDamageModifier));
-
                 activeMob.StrikeNPC(activeMob.CalculateHitInfo(damageDealt, dir, crit, Projectile.knockBack, DamageClass.Melee, true, 0));
             }
         }
@@ -161,6 +155,7 @@ public abstract class WeightPotionProjectile : ModProjectile
         public override int SpriteWidth => 20;
         public override int SpriteHeight => 24;
     }
+
     public class WeightGainPotionProjectile : WeightPotionProjectile
     {
         public override int PotionDamageModifier => 3;
@@ -169,6 +164,7 @@ public abstract class WeightPotionProjectile : ModProjectile
         public override int SpriteWidth => 30;
         public override int SpriteHeight => 24;
     }
+
     public class GreaterWeightGainPotionProjectile : WeightPotionProjectile
     {
         public override int PotionDamageModifier => 6;
@@ -177,6 +173,7 @@ public abstract class WeightPotionProjectile : ModProjectile
         public override int SpriteWidth => 32;
         public override int SpriteHeight => 32;
     }
+
     public class SuperWeightGainPotionProjectile : WeightPotionProjectile
     {
         public override int PotionDamageModifier => 11;
@@ -185,6 +182,7 @@ public abstract class WeightPotionProjectile : ModProjectile
         public override int SpriteWidth => 64;
         public override int SpriteHeight => 58;
     }
+
     public class LesserWeightLossPotionProjectile : WeightPotionProjectile
     {
         public override int PotionDamageModifier => 1;
@@ -193,6 +191,7 @@ public abstract class WeightPotionProjectile : ModProjectile
         public override int SpriteWidth => 16;
         public override int SpriteHeight => 26;
     }
+
     public class WeightLossPotionProjectile : WeightPotionProjectile
     {
         public override int PotionDamageModifier => 3;
@@ -201,6 +200,7 @@ public abstract class WeightPotionProjectile : ModProjectile
         public override int SpriteWidth => 16;
         public override int SpriteHeight => 24;
     }
+
     public class GreaterWeightLossPotionProjectile : WeightPotionProjectile
     {
         public override int PotionDamageModifier => 6;
@@ -209,6 +209,7 @@ public abstract class WeightPotionProjectile : ModProjectile
         public override int SpriteWidth => 18;
         public override int SpriteHeight => 30;
     }
+
     public class SuperWeightLossPotionProjectile : WeightPotionProjectile
     {
         public override int PotionDamageModifier => 11;
