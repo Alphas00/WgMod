@@ -7,7 +7,7 @@ using WgMod.Common.Players;
 namespace WgMod.Content.Items.Weapons.Melee;
 
 [Credit(ProjectRole.Programmer, Contributor.maimaichubs)]
-[Credit(ProjectRole.Artist, Contributor.PLACEHOLDER)]
+[Credit(ProjectRole.Artist, Contributor.jumpsu2)]
 public class TwinEyes : ModItem
 {
 	WgStat _damage = new(1f, 1.25f);
@@ -24,8 +24,8 @@ public class TwinEyes : ModItem
 		Item.useAnimation = 45;
 		Item.useTime = 45;
 		Item.knockBack = 7.5f;
-		Item.width = 32;
-		Item.height = 32;
+		Item.width = 42;
+		Item.height = 44;
 		Item.damage = 54;
 		Item.noUseGraphic = true;
 		Item.shoot = ModContent.ProjectileType<TwinEyesRet>();

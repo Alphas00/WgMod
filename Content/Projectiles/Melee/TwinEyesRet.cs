@@ -12,14 +12,12 @@ using Terraria.DataStructures;
 namespace WgMod.Content.Projectiles.Melee;
 
 [Credit(ProjectRole.Programmer, Contributor.maimaichubs)]
-[Credit(ProjectRole.Artist, Contributor.PLACEHOLDER)]
+[Credit(ProjectRole.Artist, Contributor.jumpsu2)]
 public class TwinEyesRet : ModProjectile
 {
-	const string RetChainTexturePath = "WgMod/Content/Projectiles/Melee/TwinEyesRetChain";
-	const string SpazmChainTexturePath = "WgMod/Content/Projectiles/Melee/TwinEyesSpazmChain";
+	const string ChainTexturePath = "WgMod/Content/Projectiles/Melee/TwinEyesChain";
 
-	static Asset<Texture2D> _retChainTexture;
-	static Asset<Texture2D> _spazmChainTexture;
+	static Asset<Texture2D> _chainTexture;
 
 	enum AIState
 	{
@@ -44,8 +42,7 @@ public class TwinEyesRet : ModProjectile
 
 	public override void Load()
 	{
-		_retChainTexture = ModContent.Request<Texture2D>(RetChainTexturePath);
-		_spazmChainTexture = ModContent.Request<Texture2D>(SpazmChainTexturePath);
+		_chainTexture = ModContent.Request<Texture2D>(ChainTexturePath);
 	}
 
 	public override void SetStaticDefaults()
@@ -335,7 +332,9 @@ public class TwinEyesRet : ModProjectile
 		Projectile.spriteDirection = Projectile.direction;
 		Projectile.ownerHitCheck = shouldOwnerHitCheck; // This prevents attempting to damage enemies without line of sight to the player. The custom Colliding code for spinning makes this necessary.
 
-		// This rotation code is unique to this flail, since the sprite isn't rotationally symmetric and has tip.
+        // This rotation code is unique to this flail, since the sprite isn't rotationally symmetric and has tip.
+
+        /*
 		bool freeRotation = CurrentAIState == AIState.Ricochet || CurrentAIState == AIState.Dropping;
 		if (freeRotation)
 		{
@@ -349,16 +348,35 @@ public class TwinEyesRet : ModProjectile
 			Vector2 vectorTowardsPlayer = Projectile.DirectionTo(mountedCenter).SafeNormalize(Vector2.Zero);
 			Projectile.rotation = vectorTowardsPlayer.ToRotation() + MathHelper.PiOver2;
 		}
+        */
+        switch (CurrentAIState)
+        {
+            case AIState.Dropping:
+                Projectile.rotation += Projectile.velocity.X * 0.1f;
+                break;
+            case AIState.Spinning:
+                Vector2 vectorTowardsPlayer = Projectile.DirectionTo(mountedCenter).SafeNormalize(Vector2.Zero);
+                Projectile.rotation = vectorTowardsPlayer.ToRotation() + MathHelper.Pi;
+                break;
+            case AIState.Retracting or AIState.ForcedRetracting:
+                Projectile.rotation = Projectile.velocity.ToRotation();
+                Projectile.spriteDirection = 1;
+                break;
+            default:
+                Projectile.rotation = Projectile.velocity.ToRotation();
+                Projectile.spriteDirection = -1;
+                break;
+        }
 
-		// If you have a ball shaped flail, you can use this simplified rotation code instead
-		/*
+        // If you have a ball shaped flail, you can use this simplified rotation code instead
+        /*
 		if (Projectile.velocity.Length() > 1f)
 			Projectile.rotation = Projectile.velocity.ToRotation() + Projectile.velocity.X * 0.1f; // skid
 		else
 			Projectile.rotation += Projectile.velocity.X * 0.1f; // roll
 		*/
 
-		Projectile.timeLeft = 2; // Makes sure the flail doesn't die (good when the flail is resting on the ground)
+        Projectile.timeLeft = 2; // Makes sure the flail doesn't die (good when the flail is resting on the ground)
 		player.heldProj = Projectile.whoAmI;
 		player.SetDummyItemTime(2); // Add a delay so the player can't button mash the flail
 		player.itemRotation = Projectile.DirectionFrom(mountedCenter).ToRotation();
@@ -530,11 +548,11 @@ public class TwinEyesRet : ModProjectile
 		// Drippler Crippler customizes sourceRectangle to cycle through sprite frames: sourceRectangle = asset.Frame(1, 6);
 		float chainHeightAdjustment = 0f; // Use this to adjust the chain overlap.
 
-		Vector2 chainOrigin = chainSourceRectangle.HasValue ? (chainSourceRectangle.Value.Size() / 2f) : (_retChainTexture.Size() / 2f);
+		Vector2 chainOrigin = chainSourceRectangle.HasValue ? (chainSourceRectangle.Value.Size() / 2f) : (_chainTexture.Size() / 2f);
 		Vector2 chainDrawPosition = Projectile.Center;
 		Vector2 vectorFromProjectileToPlayerArms = playerArmPosition.MoveTowards(chainDrawPosition, 4f) - chainDrawPosition;
 		Vector2 unitVectorFromProjectileToPlayerArms = vectorFromProjectileToPlayerArms.SafeNormalize(Vector2.Zero);
-		float chainSegmentLength = (chainSourceRectangle.HasValue ? chainSourceRectangle.Value.Height : _retChainTexture.Height()) + chainHeightAdjustment;
+		float chainSegmentLength = (chainSourceRectangle.HasValue ? chainSourceRectangle.Value.Height : _chainTexture.Height()) + chainHeightAdjustment;
 		if (chainSegmentLength == 0)
 		{
 			chainSegmentLength = 10; // When the chain texture is being loaded, the height is 0 which would cause infinite loops.
@@ -553,10 +571,7 @@ public class TwinEyesRet : ModProjectile
 			// Cycling through frames: sourceRectangle = asset.Frame(1, 6, 0, chainCount % 6);
 			// This example shows how Flaming Mace works. It checks chainCount and changes chainTexture and draw color at different values
 
-			var chainTextureToDraw = _retChainTexture;
-
-			if (Projectile.ai[2] == 1)
-				chainTextureToDraw = _spazmChainTexture;
+			var chainTextureToDraw = _chainTexture;
 
 			if (chainCount >= 4)
 			{
@@ -587,20 +602,27 @@ public class TwinEyesRet : ModProjectile
 			chainLengthRemainingToDraw -= chainSegmentLength;
 		}
 
-		// Add a motion trail when moving forward, like most flails do (don't add trail if already hit a tile)
-		if (CurrentAIState == AIState.LaunchingForward)
+        // Add a motion trail when moving forward, like most flails do (don't add trail if already hit a tile)
+
+        Texture2D projectileTexture = TextureAssets.Projectile[Type].Value;
+        Vector2 drawOrigin = new(projectileTexture.Width * 0.5f, projectileTexture.Height * 0.5f);
+        SpriteEffects spriteEffects = Projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+
+        if (CurrentAIState == AIState.LaunchingForward)
 		{
-			Texture2D projectileTexture = TextureAssets.Projectile[Type].Value;
-			Vector2 drawOrigin = new(projectileTexture.Width * 0.5f, Projectile.height * 0.5f);
-			SpriteEffects spriteEffects = Projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 			int afterimageCount = Math.Min(Projectile.oldPos.Length - 1, (int)StateTimer);
 			for (int k = afterimageCount; k > 0; k--)
 			{
-				Vector2 drawPos = Projectile.oldPos[k] - Main.screenPosition + drawOrigin + new Vector2(0f, Projectile.gfxOffY);
+				Vector2 trailDrawPos = Projectile.oldPos[k] - Main.screenPosition + new Vector2(Projectile.width / 2, Projectile.height / 2) + new Vector2(0f, Projectile.gfxOffY);
 				Color color = Projectile.GetAlpha(lightColor) * ((float)(Projectile.oldPos.Length - k) / Projectile.oldPos.Length);
-				Main.spriteBatch.Draw(projectileTexture, drawPos, null, color, Projectile.rotation, drawOrigin, Projectile.scale - k / (float)Projectile.oldPos.Length / 3, spriteEffects, 0f);
+				Main.spriteBatch.Draw(projectileTexture, trailDrawPos, null, color, Projectile.rotation, drawOrigin, Projectile.scale - k / (float)Projectile.oldPos.Length / 3, spriteEffects, 0f);
 			}
 		}
-		return true;
+
+        Vector2 drawPos = Projectile.position - Main.screenPosition + new Vector2(Projectile.width / 2, Projectile.height / 2) + new Vector2(0f, Projectile.gfxOffY);
+
+        Main.spriteBatch.Draw(projectileTexture, drawPos, null, lightColor, Projectile.rotation, drawOrigin, Projectile.scale, spriteEffects, 0f);
+
+        return false;
 	}
 }
