@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 using Microsoft.Xna.Framework;
 using Terraria;
@@ -15,7 +16,7 @@ namespace WgMod.Content.NPCs.Caverns;
 public class SweetSpirit : ModNPC
 {
     public const int FrameCount = 20;
-    public const int WanderTime = 6 * 60;
+    public const int WanderTime = 8 * 60;
 
     enum State : byte
     {
@@ -105,6 +106,8 @@ public class SweetSpirit : ModNPC
                     {
                         if (Vector2.DistanceSquared(NPC.Center, Main.player[NPC.target].Center) < 100f * 100f)
                             SetState(State.Positioning);
+                        else
+                            Timer = WanderTime / 4;
                     }
                 }
                 else
@@ -146,7 +149,11 @@ public class SweetSpirit : ModNPC
                 break;
             case State.Possess:
                 if (NPC.HasPlayerTarget && Main.player[NPC.target].TryGetModPlayer(out WgPlayer wg))
-                    wg.SetWeight(Weight.FromStage(wg.Weight.GetStage() + 1) + 10f);
+                {
+                    int stage = wg.Weight.GetStage();
+                    Mass mass = (Weight.FromStage(stage + 1).Mass - Weight.FromStage(stage).Mass) * 0.5f + 10f;
+                    wg.CombatWeightText(wg.AddWeight(mass), false); // Add around half a stage worth of weight
+                }
                 NPC.life = 0;
                 break;
         }
