@@ -5,7 +5,7 @@ namespace WgMod;
 public readonly record struct Weight(Mass Mass)
 {
     public static readonly Weight Base = new(70f);
-    public static readonly Weight Immobile = new(400f);
+    public static readonly Weight Immobile = new(600f);
 
     public readonly float Immobility => GetFactor(Base, Immobile);
     public readonly float ClampedImmobility => GetClampedFactor(Base, Immobile);
@@ -21,14 +21,17 @@ public readonly record struct Weight(Mass Mass)
         return (Mass - a) / (b - a);
     }
 
-    public readonly float GetFactor(Weight start, Weight end) => (Mass - start.Mass) / (end.Mass - start.Mass); // Inverese lerp
+    public readonly float GetFactor(Weight start, Weight end) => Curve((Mass - start.Mass) / (end.Mass - start.Mass)); // Inverese lerp
     public readonly float GetClampedFactor(Weight start, Weight end) => Math.Clamp(GetFactor(start, end), 0f, 1f);
 
     public static Weight FromStage(int stage) => FromImmobility(stage / (float)WeightStage.Immobile);
-    public static Weight FromImmobility(float factor) => new(float.Lerp(Base.Mass, Immobile.Mass, factor));
+    public static Weight FromImmobility(float factor) => new(float.Lerp(Base.Mass, Immobile.Mass, InverseCurve(factor)));
 
     public static Weight Clamp(Weight weight) => Clamp(weight, WeightStage.Max);
     public static Weight Clamp(Weight weight, int maxStage) => new(Math.Clamp(weight.Mass, Base.Mass, FromStage(maxStage).Mass + 10f));
+
+    public static float Curve(float x) => MathF.Pow(x, 2f / 3f);
+    public static float InverseCurve(float x) => MathF.Pow(x, 3f / 2f);
 
     public static Weight operator +(Weight w, Mass mass) => new(w.Mass + mass);
     public static Weight operator -(Weight w, Mass mass) => new(w.Mass - mass);
