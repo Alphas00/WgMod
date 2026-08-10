@@ -20,6 +20,8 @@ public class TwinEyesRet : ModProjectile
 	static Asset<Texture2D> _chainTexture;
 
 	public int _fireCooldown;
+	public int projectile;
+	public int dust;
 
 	public bool _missFire = false;
 
@@ -79,6 +81,17 @@ public class TwinEyesRet : ModProjectile
 	{
 		if (Projectile.ai[2] == 0)
 			Projectile.NewProjectile(source, Projectile.position, Projectile.velocity, ModContent.ProjectileType<TwinEyesSpazm>(), Projectile.damage, Projectile.knockBack, default, default, default, 1);
+
+		if (Projectile.ai[2] == 1)
+		{
+			projectile = ModContent.ProjectileType<CursedFlameFriendly>();
+			dust = DustID.CursedTorch;
+		}
+		else
+		{
+			projectile = ModContent.ProjectileType<DeathLaserFriendly>();
+			dust = DustID.RedTorch;
+		}
 	}
 
 	public void FireProjectile(int type)
@@ -106,7 +119,9 @@ public class TwinEyesRet : ModProjectile
 		Vector2 mountedCenter = player.MountedCenter;
 		bool doFastThrowDust = false;
 		bool shouldOwnerHitCheck = false;
+
 		int launchTimeLimit = 15;  // How much time the projectile can go before retracting (speed and shootTimer will set the flail's range)
+
 		float launchSpeed = 24f; // How fast the projectile can move
 		float maxLaunchLength = 1400f; // How far the projectile's chain can stretch before being forced to retract when in launched state
 		float retractAcceleration = 8f; // How quickly the projectile will accelerate back towards the player while retracting
@@ -115,6 +130,7 @@ public class TwinEyesRet : ModProjectile
 		float maxForcedRetractSpeed = 32f; // The max speed the projectile will have while being forced to retract
 		float unusedRetractAcceleration = 1f;
 		float unusedMaxRetractSpeed = 14f;
+
 		int unusedChainLength = 80;
 		int defaultHitCooldown = 5; // How often your flail hits when resting on the ground, or retracting
 		int spinHitCooldown = 15; // How often your flail hits when spinning
@@ -123,6 +139,7 @@ public class TwinEyesRet : ModProjectile
 
 		// Scaling these speeds and accelerations by the players melee speed makes the weapon more responsive if the player boosts it or general weapon speed
 		float meleeSpeedMultiplier = player.GetTotalAttackSpeed(DamageClass.Melee);
+
 		launchSpeed *= meleeSpeedMultiplier;
 		unusedRetractAcceleration *= meleeSpeedMultiplier;
 		unusedMaxRetractSpeed *= meleeSpeedMultiplier;
@@ -130,26 +147,14 @@ public class TwinEyesRet : ModProjectile
 		maxRetractSpeed *= meleeSpeedMultiplier;
 		forcedRetractAcceleration *= meleeSpeedMultiplier;
 		maxForcedRetractSpeed *= meleeSpeedMultiplier;
+
 		float launchRange = launchSpeed * launchTimeLimit;
 		float maxDroppedRange = launchRange + 160f;
-		Projectile.localNPCHitCooldown = defaultHitCooldown;
 
-		int projectile;
-		int dust;
+		Projectile.localNPCHitCooldown = defaultHitCooldown;
 
 		if (_fireCooldown < FireCooldownMax && !_missFire)
 			_fireCooldown++;
-
-		if (Projectile.ai[2] == 1)
-		{
-			projectile = ModContent.ProjectileType<CursedFlameFriendly>();
-			dust = DustID.CursedTorch;
-		}
-		else
-		{
-			projectile = ModContent.ProjectileType<DeathLaserFriendly>();
-			dust = DustID.RedTorch;
-		}
 
 		if (_fireCooldown == FireCooldownMax - 1 && !_missFire)
 		{
@@ -433,24 +438,21 @@ public class TwinEyesRet : ModProjectile
 	{
 		int defaultLocalNPCHitCooldown = 10;
 		int impactIntensity = 0;
+
 		Vector2 velocity = Projectile.velocity;
+
 		float bounceFactor = 0.2f;
+
 		if (CurrentAIState == AIState.LaunchingForward || CurrentAIState == AIState.Ricochet)
-		{
 			bounceFactor = 0.4f;
-		}
 
 		if (CurrentAIState == AIState.Dropping)
-		{
 			bounceFactor = 0f;
-		}
 
 		if (oldVelocity.X != Projectile.velocity.X)
 		{
 			if (Math.Abs(oldVelocity.X) > 4f)
-			{
 				impactIntensity = 1;
-			}
 
 			Projectile.velocity.X = (0f - oldVelocity.X) * bounceFactor;
 			CollisionCounter += 1f;
@@ -459,9 +461,7 @@ public class TwinEyesRet : ModProjectile
 		if (oldVelocity.Y != Projectile.velocity.Y)
 		{
 			if (Math.Abs(oldVelocity.Y) > 4f)
-			{
 				impactIntensity = 1;
-			}
 
 			Projectile.velocity.Y = (0f - oldVelocity.Y) * bounceFactor;
 			CollisionCounter += 1f;
@@ -471,13 +471,18 @@ public class TwinEyesRet : ModProjectile
 		if (CurrentAIState == AIState.LaunchingForward)
 		{
 			CurrentAIState = AIState.Ricochet;
+
 			Projectile.localNPCHitCooldown = defaultLocalNPCHitCooldown;
 			Projectile.netUpdate = true;
+
 			Point scanAreaStart = Projectile.TopLeft.ToTileCoordinates();
 			Point scanAreaEnd = Projectile.BottomRight.ToTileCoordinates();
+
 			impactIntensity = 2;
+
 			Projectile.CreateImpactExplosion(2, Projectile.Center, ref scanAreaStart, ref scanAreaEnd, Projectile.width, out bool causedShockwaves);
 			Projectile.CreateImpactExplosion2_FlailTileCollision(Projectile.Center, causedShockwaves, velocity);
+
 			Projectile.position -= velocity;
 		}
 
@@ -486,9 +491,7 @@ public class TwinEyesRet : ModProjectile
 		{
 			Projectile.netUpdate = true;
 			for (int i = 0; i < impactIntensity; i++)
-			{
 				Collision.HitTiles(Projectile.position, velocity, Projectile.width, Projectile.height);
-			}
 
 			SoundEngine.PlaySound(SoundID.Dig, Projectile.position);
 		}
@@ -506,26 +509,21 @@ public class TwinEyesRet : ModProjectile
 	public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
 	{
 		if (Projectile.ai[2] == 1 && Main.rand.NextBool(2))
-		{
 			target.AddBuff(BuffID.CursedInferno, 5 * 60);
-		}
 	}
 
 	public override void OnHitPlayer(Player target, Player.HurtInfo info)
 	{
 		if (Projectile.ai[2] == 1 && Main.rand.NextBool(4))
-		{
 			target.AddBuff(BuffID.CursedInferno, 3 * 60);
-		}
 	}
 
 	public override bool? CanDamage()
 	{
 		// Flails in spin mode won't damage enemies within the first 12 ticks. Visually this delays the first hit until the player swings the flail around for a full spin before damaging anything.
 		if (CurrentAIState == AIState.Spinning && SpinningStateTimer <= 12f)
-		{
 			return false;
-		}
+
 		return base.CanDamage();
 	}
 
@@ -550,28 +548,20 @@ public class TwinEyesRet : ModProjectile
 
 		// Flails do 20% more damage while spinning
 		if (CurrentAIState == AIState.Spinning)
-		{
 			modifiers.SourceDamage *= 1.2f;
-		}
 		// Flails do 100% more damage while launched or retracting. This is the damage the item tooltip for flails aim to match, as this is the most common mode of attack. This is why the item has ItemID.Sets.ToolTipDamageMultiplier[Type] = 2f;
 		else if (CurrentAIState == AIState.LaunchingForward || CurrentAIState == AIState.Retracting)
-		{
 			modifiers.SourceDamage *= 2f;
-		}
 
 		// The hitDirection is always set to hit away from the player, even if the flail damages the npc while returning
 		modifiers.HitDirectionOverride = (Main.player[Projectile.owner].Center.X < target.Center.X).ToDirectionInt();
 
 		// Knockback is only 25% as powerful when in spin mode
 		if (CurrentAIState == AIState.Spinning)
-		{
 			modifiers.Knockback *= 0.25f;
-		}
 		// Knockback is only 50% as powerful when in drop down mode
 		else if (CurrentAIState == AIState.Dropping)
-		{
 			modifiers.Knockback *= 0.5f;
-		}
 	}
 
 	// PreDraw is used to draw a chain and trail before the projectile is drawn normally.
@@ -587,10 +577,10 @@ public class TwinEyesRet : ModProjectile
 		Vector2 vectorFromProjectileToPlayerArms = playerArmPosition.MoveTowards(chainDrawPosition, 4f) - chainDrawPosition;
 		Vector2 unitVectorFromProjectileToPlayerArms = vectorFromProjectileToPlayerArms.SafeNormalize(Vector2.Zero);
 		float chainSegmentLength = (chainSourceRectangle.HasValue ? chainSourceRectangle.Value.Height : _chainTexture.Height()) + chainHeightAdjustment;
+
 		if (chainSegmentLength == 0)
-		{
 			chainSegmentLength = 10; // When the chain texture is being loaded, the height is 0 which would cause infinite loops.
-		}
+
 		float chainRotation = unitVectorFromProjectileToPlayerArms.ToRotation() + MathHelper.PiOver2;
 		int chainCount = 0;
 		float chainLengthRemainingToDraw = vectorFromProjectileToPlayerArms.Length() + chainSegmentLength / 2f;
@@ -608,8 +598,7 @@ public class TwinEyesRet : ModProjectile
 			var chainTextureToDraw = _chainTexture;
 
 			if (chainCount >= 4)
-			{
-			}
+			{ }
 			else if (chainCount >= 2)
 			{
 				byte minValue = 140;
@@ -623,9 +612,7 @@ public class TwinEyesRet : ModProjectile
 					chainDrawColor.B = minValue;
 			}
 			else
-			{
 				chainDrawColor = Color.White;
-			}
 
 			// Here, we draw the chain texture at the coordinates
 			Main.spriteBatch.Draw(chainTextureToDraw.Value, chainDrawPosition - Main.screenPosition, chainSourceRectangle, chainDrawColor, chainRotation, chainOrigin, 1f, SpriteEffects.None, 0f);
