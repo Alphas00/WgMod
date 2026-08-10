@@ -123,6 +123,7 @@ public class FeedingTubePlayer : ModPlayer
                     {
                         TEFeedingTube.FluidInfo fluidInfo = TEFeedingTube.FluidTable[_tube.LiquidType];
                         Player.Wg().AddStomach(fluidInfo.Gain);
+                        Player.PutItemInInventoryFromItemUsage(ItemID.EmptyBucket);
                         if (_tube.LiquidType == LiquidID.Lava)
                             _gulpLava = true;
                     }
