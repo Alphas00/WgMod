@@ -239,6 +239,7 @@ public class GroundedHarpyNPC : ModNPC
             .Add(new Item(ItemID.Cloud) { shopCustomPrice = Item.buyPrice(copper: 50) })
             .Add(new Item(ItemID.RainCloud) { shopCustomPrice = Item.buyPrice(copper: 50) })
             .Add(ItemID.Feather)
+            .Add(ItemID.ChickenNugget)
             .Add(ItemID.RainbowBrick, Condition.Hardmode)
             .Add(ItemID.GiantHarpyFeather, Condition.Hardmode)
             .Add(ItemID.SoulofFlight, Condition.DownedMechBossAll)
