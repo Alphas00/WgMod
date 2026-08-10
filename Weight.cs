@@ -4,7 +4,7 @@ namespace WgMod;
 
 public readonly record struct Weight(Mass Mass)
 {
-    public static readonly Weight Base = new(70f);
+    public static readonly Weight Base = new(60f);
     public static readonly Weight Immobile = new(600f);
 
     public readonly float Immobility => GetFactor(Base, Immobile);
