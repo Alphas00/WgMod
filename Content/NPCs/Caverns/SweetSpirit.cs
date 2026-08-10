@@ -1,8 +1,10 @@
 using System;
 using System.IO;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -158,6 +160,13 @@ public class SweetSpirit : ModNPC
                 break;
         }
         NPC.spriteDirection = NPC.direction;
+    }
+
+    public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+    {
+        Vector2 offset = new(0f, -22f);
+        spriteBatch.Draw(TextureAssets.Npc[Type].Value, NPC.Center + offset - screenPos, NPC.frame, Color.White, NPC.rotation, NPC.frame.Size() * 0.5f, NPC.scale, NPC.spriteDirection > 0 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
+        return false;
     }
 
     void SetState(State state)
