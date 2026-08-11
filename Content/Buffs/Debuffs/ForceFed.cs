@@ -10,7 +10,7 @@ namespace WgMod.Content.Buffs.Debuffs;
 public class ForceFed : ModBuff
 {
     public const int TicksPerCycle = 30;
-    public const int FatPerCycle = 3;
+    public const int FatPerCycle = 2;
     int _cooldown;
 
     public override void SetStaticDefaults()
@@ -36,7 +36,7 @@ public class ForceFed : ModBuff
         else
         {
             _cooldown = 0;
-            wg.CombatWeightText(wg.AddWeight(FatPerCycle), false);
+            wg.CombatWeightText(wg.AddStomach(FatPerCycle), false);
             SoundEngine.PlaySound(WgSounds.Gulp, player.Center);
         }
     }
