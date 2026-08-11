@@ -25,6 +25,7 @@ public partial class WgPlayer
 
     internal Asset<Texture2D> _headOverride;
 
+    internal float _mountOffY;
     internal float _addedGfxOffY;
     float _lastGfxOffY;
 
@@ -45,7 +46,9 @@ public partial class WgPlayer
     internal void PreUpdateVisuals()
     {
         Player.gfxOffY = _lastGfxOffY;
-        _addedGfxOffY = SpriteSet.GetStage(Weight.GetStage()).OffsetY * -Player.gravDir;
+        if (!Player.mount.Active)
+            _mountOffY = 0f;
+        _addedGfxOffY = SpriteSet.GetStage(Weight.GetStage()).OffsetY * -Player.gravDir + _mountOffY;
         _headOverride = null;
     }
 

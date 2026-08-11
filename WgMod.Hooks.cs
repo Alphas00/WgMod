@@ -136,24 +136,37 @@ public partial class WgMod
 
     static void Mount_Draw(On_Mount.orig_Draw orig, Mount self, List<DrawData> playerDrawData, int drawType, Player drawPlayer, Vector2 Position, Color drawColor, SpriteEffects playerEffect, float shadow)
     {
-        float scale = 1f;
-        if (drawPlayer.TryGetModPlayer(out WgPlayer wg) && self.Active)
+        if (!drawPlayer.TryGetModPlayer(out WgPlayer wg) || !self.Active)
         {
-            int stage = wg.Weight.GetStage();
-            Position.Y += SpriteSet.GetStage(stage).OffsetY;
-            scale = WeightValues.GetMountScale(stage);
+            orig(self, playerDrawData, drawType, drawPlayer, Position, drawColor, playerEffect, shadow);
+            return;
         }
+
+        int stage = wg.Weight.GetStage();
+        float scale = WeightValues.GetMountScale(stage);
+        Position.Y += SpriteSet.GetStage(stage).OffsetY - wg._mountOffY;
+
         int start = playerDrawData.Count;
         orig(self, playerDrawData, drawType, drawPlayer, Position, drawColor, playerEffect, shadow);
+
         if (scale > 1f)
         {
+            float averageOffset = 0f;
             Span<DrawData> span = CollectionsMarshal.AsSpan(playerDrawData);
             for (int i = start; i < playerDrawData.Count; i++)
             {
                 ref DrawData data = ref span[i];
+                Rectangle rect = data.sourceRect ?? data.texture.Frame();
+                float offset = -(rect.Height - data.origin.Y) * (scale - 1f);
+                averageOffset += offset;
+                data.position.Y += offset;
                 data.scale *= scale;
             }
+            averageOffset /= playerDrawData.Count - start;
+            wg._mountOffY = averageOffset;
         }
+        else
+            wg._mountOffY = 0f;
     }
 
     static void Main_DrawProj_DrawExtras(On_Main.orig_DrawProj_DrawExtras orig, Main self, Projectile proj, Vector2 mountedCenter, ref float polePosX, ref float polePosY)

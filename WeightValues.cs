@@ -7,7 +7,7 @@ public static class WeightValues
 {
     public static float GetMountScale(int stage)
     {
-        return float.Lerp(1f, 1.5f, Math.Clamp(stage / (float)WeightStage.Immobile, 0f, 1f));
+        return float.Lerp(1f, 1.5f, stage / (float)WeightStage.Immobile);
     }
 
     public static float GetDeathPenalty(int difficulty) => difficulty switch
