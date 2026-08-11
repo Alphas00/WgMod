@@ -36,7 +36,8 @@ public class ForceFed : ModBuff
         else
         {
             _cooldown = 0;
-            wg.CombatWeightText(wg.AddStomach(FatPerCycle), false);
+            wg.CombatWeightText(FatPerCycle, false);
+            wg.AddStomach(FatPerCycle);
             SoundEngine.PlaySound(WgSounds.Gulp, player.Center);
         }
     }
