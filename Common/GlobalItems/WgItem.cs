@@ -10,6 +10,19 @@ namespace WgMod.Common.GlobalItems;
 
 public class WgItem : GlobalItem
 {
+    public override void OnConsumeItem(Item item, Player player)
+    {
+        if (!player.TryGetModPlayer(out WgPlayer wg))
+            return;
+        switch (item.type)
+        {
+            case ItemID.LifeCrystal:
+            case ItemID.LifeFruit:
+                wg.AddStomach(WgPlayer.StomachCapacity);
+                break;
+        }
+    }
+
     public override bool CanUseItem(Item item, Player player)
     {
         if (!player.TryGetModPlayer(out WgPlayer wg))
