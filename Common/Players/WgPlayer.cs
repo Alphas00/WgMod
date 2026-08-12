@@ -27,7 +27,7 @@ public partial class WgPlayer : ModPlayer
     /// <summary> How much movement will be reduced because of the player's weight. Multiply this. </summary>
     public StatModifier MovementPenalty;
 
-    /// <summary> How fast the player will lose weight due to movement. Add or subtract to this. </summary>
+    /// <summary> How fast the player will lose weight from most sources. Add or subtract to this. </summary>
     public StatModifier WeightLossRate;
 
     /// <summary> How fast the player will gain weight from most sources. Add or subtract to this. </summary>
@@ -56,6 +56,7 @@ public partial class WgPlayer : ModPlayer
 
     Vector2 _prevVel;
     int _digestTimer;
+    bool _hasJumped;
 
     public override void Initialize()
     {
@@ -86,6 +87,8 @@ public partial class WgPlayer : ModPlayer
         Weight start = Weight;
         if (mass > 0f)
             mass = WeightGainRate.ApplyTo(mass);
+        else
+            mass = WeightLossRate.ApplyTo(mass);
         SetWeight(Weight + mass, effects);
         return Weight.Mass - start.Mass;
     }
@@ -136,6 +139,9 @@ public partial class WgPlayer : ModPlayer
 
         _finalWeightFixed = WeightFixed;
         WeightFixed = false;
+
+        if (Player.jump <= 0)
+            _hasJumped = false;
     }
 
     public override void PreUpdateBuffs()
@@ -209,10 +215,15 @@ public partial class WgPlayer : ModPlayer
         // Weight loss
         if (!Player.mount.Active)
         {
-            float factor = MathF.Abs(Player.velocity.X);
-            factor += MathF.Abs(acc.X) * 10f;
-            factor *= 0.0001f;
-            SetWeight(Weight - WeightLossRate.ApplyTo(factor));
+            float factor = MathF.Abs(Player.velocity.X) * 0.5f;
+            factor += MathF.Abs(acc.X) * 5f;
+            if (!_hasJumped && Player.jump > 0)
+            {
+                _hasJumped = true;
+                factor += 5f;
+            }
+            factor /= 60f * 60f; // ticks to minutes
+            AddWeight(-factor);
         }
 
         // Ice break
