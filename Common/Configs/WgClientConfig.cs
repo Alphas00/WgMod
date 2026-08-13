@@ -35,6 +35,11 @@ public class WgClientConfig : ModConfig
 
     [Header("Sprites")]
     [CustomModConfigItem(typeof(SpriteSetElement))]
-    [DefaultValue(SpriteSet.DefaultSet), ReloadRequired]
+    [DefaultValue(SpriteSet.DefaultSet)]
     public string PlayerSpriteSet;
+
+    public override void OnChanged()
+    {
+        SpriteSet.SetCurrent(Mod, PlayerSpriteSet);
+    }
 }
