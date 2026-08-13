@@ -64,7 +64,7 @@ public class SweetSpirit : ModNPC
 
     public override float SpawnChance(NPCSpawnInfo spawnInfo)
     {
-        return SpawnCondition.Cavern.Chance * 0.05f;
+        return SpawnCondition.Cavern.Chance * 0.02f;
     }
 
     public override void DrawBehind(int index)

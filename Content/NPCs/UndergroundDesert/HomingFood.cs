@@ -68,7 +68,7 @@ public class HomingFood : ModNPC
 
     public override float SpawnChance(NPCSpawnInfo spawnInfo)
     {
-        return SpawnCondition.DesertCave.Chance * 0.1f;
+        return SpawnCondition.DesertCave.Chance * 0.05f;
     }
 
     public override void OnSpawn(IEntitySource source)
