@@ -70,13 +70,13 @@ public class FatBuff : WgBuffBase
         // Calculate factors
         int stage = wg.Weight.GetStage();
         if (stage >= WeightStage.DamageReduction)
-            _damageReduction.Lerp(wg.Weight.GetClampedFactor(Weight.FromStage(WeightStage.DamageReduction), Weight.Immobile));
+            _damageReduction.Lerp(wg.Weight.GetClampedFactor(Weight.FromStage(WeightStage.DamageReduction), Weight.SoftImmobile));
         else
             _damageReduction.Reset();
 
         if (stage >= WeightStage.Heavy)
         {
-            float t = wg.Weight.GetClampedFactor(Weight.FromStage(WeightStage.Heavy), Weight.Immobile) * MaxLifeIncreasePercentage;
+            float t = wg.Weight.GetClampedFactor(Weight.FromStage(WeightStage.Heavy), Weight.SoftImmobile) * MaxLifeIncreasePercentage;
             _lifeIncrease.Value = MathF.Floor(player.statLifeMax * t / 5f) * 5f;
             _lifeIncrease.Clamp();
         }

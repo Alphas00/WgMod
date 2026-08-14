@@ -183,7 +183,7 @@ public partial class WgPlayer : ModPlayer
         if (stage >= WeightStage.DamageReduction)
         {
             if (stage < WeightStage.SoftImmobile)
-                _finalKnockbackResistance = float.Lerp(0f, 0.6f, Weight.GetClampedFactor(Weight.FromStage(WeightStage.DamageReduction), Weight.Immobile));
+                _finalKnockbackResistance = float.Lerp(0f, 0.6f, Weight.GetClampedFactor(Weight.FromStage(WeightStage.DamageReduction), Weight.SoftImmobile));
             else
                 _finalKnockbackResistance = 1f;
         }

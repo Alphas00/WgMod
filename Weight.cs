@@ -5,10 +5,10 @@ namespace WgMod;
 public readonly record struct Weight(Mass Mass)
 {
     public static readonly Weight Base = new(60f);
-    public static readonly Weight Immobile = new(600f);
+    public static readonly Weight SoftImmobile = new(600f);
 
-    public readonly float Immobility => GetFactor(Base, Immobile);
-    public readonly float ClampedImmobility => GetClampedFactor(Base, Immobile);
+    public readonly float Immobility => GetFactor(Base, SoftImmobile);
+    public readonly float ClampedImmobility => GetClampedFactor(Base, SoftImmobile);
 
     public override readonly string ToString() => Mass.Display();
     public readonly int GetStage() => (int)MathF.Floor(Immobility * WeightStage.SoftImmobile);
@@ -25,7 +25,7 @@ public readonly record struct Weight(Mass Mass)
     public readonly float GetClampedFactor(Weight start, Weight end) => Math.Clamp(GetFactor(start, end), 0f, 1f);
 
     public static Weight FromStage(int stage) => FromImmobility(stage / (float)WeightStage.SoftImmobile);
-    public static Weight FromImmobility(float factor) => new(float.Lerp(Base.Mass, Immobile.Mass, InverseCurve(factor)));
+    public static Weight FromImmobility(float factor) => new(float.Lerp(Base.Mass, SoftImmobile.Mass, InverseCurve(factor)));
 
     public static Weight Clamp(Weight weight) => Clamp(weight, WeightStage.Max);
     public static Weight Clamp(Weight weight, int maxStage) => new(Math.Clamp(weight.Mass, Base.Mass, FromStage(maxStage).Mass + 10f));
