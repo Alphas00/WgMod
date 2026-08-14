@@ -1,4 +1,5 @@
-﻿using Terraria;
+﻿using System.Collections.Generic;
+using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -10,20 +11,19 @@ namespace WgMod.Content.Items.Armor.YogaClothes;
 
 [Credit(ProjectRole.Programmer, Contributor.alphas0)]
 [Credit(ProjectRole.Artist, Contributor.alphas0)]
-
 public class YogaHeadband : ModItem
 {
-    public static int HeadSlot { get; private set; }
     public static LocalizedText SetBonusText { get; private set; }
+
+    WgStat _movePenalty = new(1f, 0.92f);
 
     public override void SetStaticDefaults()
     {
         ArmorIDs.Head.Sets.DrawFullHair[Item.headSlot] = true;
         ArmorIDs.Head.Sets.DrawHead[Item.headSlot] = true;
-
-        HeadSlot = Item.headSlot;
         SetBonusText = this.GetLocalization("SetBonus");
     }
+
     public override void SetDefaults()
     {
         Item.width = 26;
@@ -38,8 +38,13 @@ public class YogaHeadband : ModItem
         if (!player.TryGetModPlayer(out WgPlayer wg))
             return;
         float immobility = wg.Weight.ClampedImmobility;
+        _movePenalty.Lerp(immobility);
+        wg.MovementPenalty *= _movePenalty;
+    }
 
-        wg.MovementPenalty *= float.Lerp(1f, 0.92f, immobility);
+    public override void ModifyTooltips(List<TooltipLine> tooltips)
+    {
+        tooltips.FormatLines((1f - _movePenalty).Percent());
     }
 
     public override bool IsArmorSet(Item head, Item body, Item legs)
@@ -49,11 +54,9 @@ public class YogaHeadband : ModItem
 
     public override void UpdateArmorSet(Player player)
     {
-        if (!player.TryGetModPlayer(out YogaClothesPlayer ycp) || !player.TryGetModPlayer(out WgPlayer wg))
+        if (!player.TryGetModPlayer(out YogaClothesPlayer ycp))
             return;
-
         ycp._active = true;
-
         player.setBonus = SetBonusText.Format();
     }
 
@@ -77,14 +80,9 @@ public class YogaClothesPlayer : ModPlayer
 
     public override void PostUpdateEquips()
     {
-        if (_active)
-        {
-            if (!Player.TryGetModPlayer(out WgPlayer wg))
-                return;
-            if (Player.controlRight || Player.controlLeft || Player.controlJump)
-            {
-                wg.AddWeight(-0.15f);
-            }
-        }
+        if (!_active || !Player.TryGetModPlayer(out WgPlayer wg))
+            return;
+        if (Player.controlRight || Player.controlLeft || wg.JustJumped)
+            wg.AddWeight(-0.05f);
     }
 }

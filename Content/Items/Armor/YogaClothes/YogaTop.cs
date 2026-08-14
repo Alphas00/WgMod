@@ -1,4 +1,5 @@
-﻿using Terraria;
+﻿using System.Collections.Generic;
+using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using WgMod.Common.Players;
@@ -9,10 +10,9 @@ namespace WgMod.Content.Items.Armor.YogaClothes;
 
 [Credit(ProjectRole.Programmer, Contributor.alphas0)]
 [Credit(ProjectRole.Artist, Contributor.alphas0)]
-
 public class YogaTop : ModItem
 {
-    WgStat _movePenalty = new(0.99f, 0.92f);
+    WgStat _movePenalty = new(1f, 0.92f);
 
     public override void SetDefaults()
     {
@@ -28,8 +28,13 @@ public class YogaTop : ModItem
         if (!player.TryGetModPlayer(out WgPlayer wg))
             return;
         float immobility = wg.Weight.ClampedImmobility;
+        _movePenalty.Lerp(immobility);
+        wg.MovementPenalty *= _movePenalty;
+    }
 
-        wg.MovementPenalty *= float.Lerp(1f, 0.92f, immobility);
+    public override void ModifyTooltips(List<TooltipLine> tooltips)
+    {
+        tooltips.FormatLines((1f - _movePenalty).Percent());
     }
 
     public override void AddRecipes()

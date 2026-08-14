@@ -42,6 +42,9 @@ public partial class WgPlayer : ModPlayer
     /// <summary> Whether the weight is currently fixed/pinned. No gain or loss. </summary>
     public bool WeightFixed;
 
+    /// <summary> Whether the player has jumped this tick. </summary>
+    public bool JustJumped { get; private set; }
+
     public readonly int[] BuffDuration = new int[Player.MaxBuffs];
     internal int _ignoreWgBuffTimer = 2;
 
@@ -138,8 +141,15 @@ public partial class WgPlayer : ModPlayer
         _finalWeightFixed = WeightFixed;
         WeightFixed = false;
 
+        // Jump detection
         if (Player.jump <= 0)
             _hasJumped = false;
+        JustJumped = false;
+        if (!_hasJumped && Player.jump > 0)
+        {
+            JustJumped = true;
+            _hasJumped = true;
+        }
     }
 
     public override void PreUpdateBuffs()
@@ -215,11 +225,8 @@ public partial class WgPlayer : ModPlayer
         {
             float factor = MathF.Abs(Player.velocity.X) * 0.5f;
             factor += MathF.Abs(acc.X) * 5f;
-            if (!_hasJumped && Player.jump > 0)
-            {
-                _hasJumped = true;
+            if (JustJumped)
                 factor += 5f;
-            }
             factor /= 60f * 60f; // ticks to minutes
             AddWeight(-MovementWeightLossRate.ApplyTo(factor));
         }
