@@ -27,8 +27,8 @@ public partial class WgPlayer : ModPlayer
     /// <summary> How much movement will be reduced because of the player's weight. Multiply this. </summary>
     public StatModifier MovementPenalty;
 
-    /// <summary> How fast the player will lose weight from most sources. Add or subtract to this. </summary>
-    public StatModifier WeightLossRate;
+    /// <summary> How fast the player will lose weight from movement. Add or subtract to this. </summary>
+    public StatModifier MovementWeightLossRate;
 
     /// <summary> How fast the player will gain weight from most sources. Add or subtract to this. </summary>
     public StatModifier WeightGainRate;
@@ -87,8 +87,6 @@ public partial class WgPlayer : ModPlayer
         Weight start = Weight;
         if (mass > 0f)
             mass = WeightGainRate.ApplyTo(mass);
-        else
-            mass = WeightLossRate.ApplyTo(mass);
         SetWeight(Weight + mass, effects);
         return Weight.Mass - start.Mass;
     }
@@ -132,7 +130,7 @@ public partial class WgPlayer : ModPlayer
     {
         // Custom stats
         MovementPenalty = StatModifier.Default;
-        WeightLossRate = StatModifier.Default;
+        MovementWeightLossRate = StatModifier.Default;
         WeightGainRate = StatModifier.Default;
         FoodAbsorption = StatModifier.Default;
         MaxStage = WeightStage.Max;
@@ -223,7 +221,7 @@ public partial class WgPlayer : ModPlayer
                 factor += 5f;
             }
             factor /= 60f * 60f; // ticks to minutes
-            AddWeight(-factor);
+            AddWeight(-MovementWeightLossRate.ApplyTo(factor));
         }
 
         // Ice break
