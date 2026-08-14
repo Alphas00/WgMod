@@ -14,6 +14,9 @@ public partial class WgPlayer
     internal float _squishRest = 1f;
     internal float _squishPos = 1f;
     internal float _squishVel;
+
+    internal float _legOffsetX;
+    internal float _legOffsetY;
     internal float _bellyOffset;
 
     internal bool _fakeWalk;
@@ -53,15 +56,6 @@ public partial class WgPlayer
 
     internal void PostUpdateVisuals()
     {
-        _fakeWalk = _finalMovementFactor < 0.01f && (Player.controlLeft || Player.controlRight);
-        if (_fakeWalk)
-        {
-            _fakeWalkTime += 1f / 60f;
-            _fakeWalkTime %= 1f;
-        }
-        else
-            _fakeWalkTime = 0f;
-
         // Can't find a better way to change the draw position
         _lastGfxOffY = Player.gfxOffY;
         Player.gfxOffY += _addedGfxOffY;
@@ -72,6 +66,39 @@ public partial class WgPlayer
         {
             WgArmor.SetupArmorLayers(this);
             WgArmor.Render(Weight.GetStage(), ref _armorTarget, _armorLayers, Player.Male);
+        }
+    }
+
+    internal void UpdateAnimation()
+    {
+        _fakeWalk = _finalMovementFactor < 0.01f && (Player.controlLeft || Player.controlRight);
+        if (_fakeWalk)
+        {
+            _fakeWalkTime += 1f / 60f;
+            _fakeWalkTime %= 1f;
+        }
+        else
+            _fakeWalkTime = 0f;
+
+        int frame = Player.legFrame.Y / Player.legFrame.Height;
+        // Frame [0] - Idle
+        // Frame [5] - Jump
+        // Frame [6 to 19] - Walk
+
+        _legOffsetX = 0f;
+        _legOffsetY = 0f;
+        _bellyOffset = 0f;
+        if (_finalMovementFactor > 0.01f)
+        {
+            if (frame == 5)
+                _bellyOffset = Math.Clamp(Player.velocity.Y * Player.gravDir / 4f, -1f, 1f) * -2f;
+            else if (frame >= 6 && frame <= 19)
+            {
+                float frameTime = (frame - 6) / 13f;
+                _legOffsetX = MathF.Sin(frameTime * MathF.Tau) * 2f * Player.direction;
+                _legOffsetY = MathF.Max(MathF.Cos(frameTime * MathF.Tau), 0f) * -2f;
+                _bellyOffset = MathF.Sin(frameTime * MathF.Tau * 2f) * -2f;
+            }
         }
     }
 

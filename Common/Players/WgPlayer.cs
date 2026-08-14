@@ -306,6 +306,7 @@ public partial class WgPlayer : ModPlayer
                 _digestTimer = DigestTime * 2;
         }
 
+        UpdateAnimation();
         UpdateJiggle();
         PostUpdateVisuals();
 
