@@ -16,9 +16,8 @@ public partial class WgPlayer
     internal float _squishVel;
     internal float _bellyOffset;
 
-    internal bool _armSwing;
-    internal int _armSwingFrame;
-    internal int _armSwingTimer;
+    internal bool _fakeWalk;
+    internal float _fakeWalkTime;
 
     internal readonly WgArmor.Layer[] _armorLayers = new WgArmor.Layer[4];
     internal RenderTarget2D _armorTarget;
@@ -54,21 +53,14 @@ public partial class WgPlayer
 
     internal void PostUpdateVisuals()
     {
-        if (_armSwing)
+        _fakeWalk = _finalMovementFactor < 0.01f && (Player.controlLeft || Player.controlRight);
+        if (_fakeWalk)
         {
-            _armSwingTimer++;
-            if (_armSwingTimer >= 10)
-            {
-                _armSwingTimer = 0;
-                _armSwingFrame++;
-            }
-            if (_armSwingFrame >= 3)
-            {
-                _armSwing = false;
-                _armSwingFrame = 0;
-                _armSwingTimer = 0;
-            }
+            _fakeWalkTime += 1f / 60f;
+            _fakeWalkTime %= 1f;
         }
+        else
+            _fakeWalkTime = 0f;
 
         // Can't find a better way to change the draw position
         _lastGfxOffY = Player.gfxOffY;

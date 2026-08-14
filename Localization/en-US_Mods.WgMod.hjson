@@ -821,7 +821,6 @@ Buffs: {
 			'''
 		DisabledBuffs: Fat buffs and debuffs disabled
 		HitboxIncrease: Increased hitbox horizontally by {0} tiles
-		CantMoveArms: You're so fat your arms are practically uselesss
 
 		Stages: {
 			Name0: Regular

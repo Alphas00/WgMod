@@ -17,7 +17,7 @@ public static class WeightStage
     public const int BarelyMobile = 6;
     public const int Encumbered = 7;
     public const int Immobile = 8;
-    public const int Blob = 9; // Stage at which the player can no longer move their arms
+    public const int Blob = 9;
 
     /// <summary> Stage at which the player would be considered immobile under normal conditions </summary>
     public const int SoftImmobile = Encumbered;

@@ -273,7 +273,7 @@ public class SpriteSet
         public bool OnTop;
         public float OffsetX;
         public float OffsetY;
-        public bool ArmAlwaysBelow;
+        public bool ArmBelowWhenWalking;
 
         [JsonIgnore] public int Frame;
     }

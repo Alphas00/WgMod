@@ -68,11 +68,15 @@ public class WgPlayerDrawLayer : PlayerDrawLayer
         position.X += stageData.OffsetX * direction;
         position += new Vector2(set.DrawOffsetX * direction, set.DrawOffsetY * player.gravDir);
 
+        // TODO: Move legOffsetX, legOffsetY and bellyOffset to PostUpdateVisuals
         Rectangle legFrame = player.legFrame;
         int frame = legFrame.Y / legFrame.Height;
         // Frame [0] - Idle
         // Frame [5] - Jump
         // Frame [6 to 19] - Walk
+
+        if (wg._fakeWalk && frame == 0)
+            frame = (int)float.Lerp(6f, 19f, wg._fakeWalkTime);
 
         float legOffsetX = 0f;
         float legOffsetY = 0f;
