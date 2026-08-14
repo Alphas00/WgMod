@@ -779,6 +779,34 @@ Items: {
 			Increased projectile speed by {1}%
 			'''
 	}
+
+	YogaHeadband: {
+		SetBonus: Moving and jumping sheds a little weight
+		DisplayName: Yoga Headband
+		Tooltip:
+			'''
+			Stay determined!
+			Reduced fat movement penalty by 8%
+			'''
+	}
+
+	YogaPants: {
+		DisplayName: Yoga Pants
+		Tooltip:
+			'''
+			Feel the burn!
+			Reduced fat movement penalty by 8%
+			'''
+	}
+
+	YogaTop: {
+		DisplayName: Yoga Top
+		Tooltip:
+			'''
+			Move your body!
+			Reduced fat movement penalty by 8%
+			'''
+	}
 }
 
 Buffs: {
