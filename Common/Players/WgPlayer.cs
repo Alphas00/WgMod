@@ -156,7 +156,7 @@ public partial class WgPlayer : ModPlayer
     {
         EnsureBuff<FatBuff>();
         EnsureBuff<StomachBuff>();
-        if (Weight.GetStage() >= WeightStage.ForcedImmobile)
+        if (Weight.GetStage() >= WeightStage.HardImmobile)
             Player.AddBuff(ModContent.BuffType<Tired>(), 2);
     }
 
@@ -182,7 +182,7 @@ public partial class WgPlayer : ModPlayer
         int stage = Weight.GetStage();
         if (stage >= WeightStage.DamageReduction)
         {
-            if (stage < WeightStage.Immobile)
+            if (stage < WeightStage.SoftImmobile)
                 _finalKnockbackResistance = float.Lerp(0f, 0.6f, Weight.GetClampedFactor(Weight.FromStage(WeightStage.DamageReduction), Weight.Immobile));
             else
                 _finalKnockbackResistance = 1f;
@@ -190,10 +190,10 @@ public partial class WgPlayer : ModPlayer
         else
             _finalKnockbackResistance = 0f;
 
-        if (stage < WeightStage.ForcedImmobile)
+        if (stage < WeightStage.HardImmobile)
         {
             float basePenalty;
-            if (stage < WeightStage.Immobile)
+            if (stage < WeightStage.SoftImmobile)
             {
                 float immobility = Weight.ClampedImmobility;
                 basePenalty = float.Lerp(0f, 0.7f, immobility * immobility);

@@ -13,7 +13,7 @@ namespace WgMod.Content.Buffs;
 public class FatBuff : WgBuffBase
 {
     public const float MaxLifeIncreasePercentage = 0.2f;
-    public const int MaxStageGraphic = WeightStage.Immobile;
+    public const int MaxStageGraphic = WeightStage.SoftImmobile;
 
     WgStat _damageReduction = new(0f, 0.05f);
     WgStat _lifeIncrease = new(0f, 100f);

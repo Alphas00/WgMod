@@ -11,7 +11,7 @@ public readonly record struct Weight(Mass Mass)
     public readonly float ClampedImmobility => GetClampedFactor(Base, Immobile);
 
     public override readonly string ToString() => Mass.Display();
-    public readonly int GetStage() => (int)MathF.Floor(Immobility * WeightStage.Immobile);
+    public readonly int GetStage() => (int)MathF.Floor(Immobility * WeightStage.SoftImmobile);
 
     public readonly float GetStageFactor()
     {
@@ -24,7 +24,7 @@ public readonly record struct Weight(Mass Mass)
     public readonly float GetFactor(Weight start, Weight end) => Curve((Mass - start.Mass) / (end.Mass - start.Mass)); // Inverese lerp
     public readonly float GetClampedFactor(Weight start, Weight end) => Math.Clamp(GetFactor(start, end), 0f, 1f);
 
-    public static Weight FromStage(int stage) => FromImmobility(stage / (float)WeightStage.Immobile);
+    public static Weight FromStage(int stage) => FromImmobility(stage / (float)WeightStage.SoftImmobile);
     public static Weight FromImmobility(float factor) => new(float.Lerp(Base.Mass, Immobile.Mass, InverseCurve(factor)));
 
     public static Weight Clamp(Weight weight) => Clamp(weight, WeightStage.Max);
