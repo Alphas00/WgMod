@@ -53,7 +53,7 @@ public class WgArmsDrawLayer : PlayerDrawLayer
         int frameY = drawInfo.compFrontArmFrame.Y / drawInfo.compFrontArmFrame.Height;
         if (wg._fakeWalk && frameX == 2 && frameY == 0)
         {
-            frameX = 3 + (int)(Utils.PingPongFrom01To010(wg._fakeWalkTime) * 4f);
+            frameX = wg._fakeWalkFrameX;
             frameY = 1;
         }
 
