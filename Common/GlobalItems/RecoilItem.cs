@@ -13,9 +13,25 @@ public class RecoilItem : GlobalItem
 
     public float _airTime = 1;
 
-    public void RecoilStats(float recoilStrength, float recoilResistance, bool flipRecoil = false)
+    /// <summary>
+    /// This creates recoil by applying velocity to the player against the direction of their mouse.
+    /// </summary>
+    /// <param name="recoilStrength"> The power of the applied recoil. </param>
+    /// <param name="recoilResistance"> How much the player can resist the applied recoil, must be a clamped float. </param>
+    /// <param name="airTimeFactor"> 
+    /// How much firing in the air repeatedly reduces the recoil, must be a clamped float. Intended to prevent janky permaflight. 
+    /// <para> Defaults to 1f </para>
+    /// </param>
+    /// <param name="flipRecoil"> 
+    /// Makes the recoil send towards the player's mouse instead.  
+    /// <para> Defaults to false. </para>
+    /// </param>
+    public void RecoilStats(float recoilStrength, float recoilResistance, float airTimeFactor = 1f, bool flipRecoil = false)
     {
         Player player = Main.LocalPlayer;
+
+        if (player.noKnockback)
+            return;
 
         Vector2 mousePosition = Main.MouseWorld;
         float angle = Utils.AngleFrom(player.Center, mousePosition);
@@ -25,11 +41,11 @@ public class RecoilItem : GlobalItem
         {
             recoilStrength *= _airTime;
 
-            if (_airTime != 0)
-                _airTime -= 0.1f;
+            if (_airTime > airTimeFactor)
+                _airTime -= airTimeFactor;
+            else
+                _airTime = airTimeFactor;
         }
-        else
-            _airTime = 1;
 
         int direction = 1;
         if (flipRecoil)
@@ -38,6 +54,13 @@ public class RecoilItem : GlobalItem
         player.velocity += velocity * recoilStrength * recoilResistance * direction;
     }
 
+    public override void UpdateInventory(Item item, Player player)
+    {
+        if (CheckForSolidGround())
+            _airTime = 1;
+    }
+
+    /// <summary> Returns true when the player is grounded. </summary>
     bool CheckForSolidGround()
     {
         Player player = Main.LocalPlayer;
