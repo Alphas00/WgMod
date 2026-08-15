@@ -34,7 +34,7 @@ public class Tired : ModBuff
     {
         if (!player.TryGetModPlayer(out WgPlayer wg))
             return;
-        float factor = wg.Weight.GetClampedFactor(Weight.FromStage(WeightStage.HardImmobile), Weight.FromStage(WeightStage.Max));
+        float factor = wg.Weight.GetClampedFactor(WeightStage.HardImmobile, WeightStage.Max);
         _attackSpeed.Lerp(factor);
         player.GetAttackSpeed(DamageClass.Generic) *= _attackSpeed;
     }
