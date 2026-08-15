@@ -3,6 +3,7 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
+using WgMod.Common.GlobalItems;
 using WgMod.Common.Players;
 using WgMod.Content.Projectiles.Ranged;
 
@@ -67,7 +68,7 @@ public class Endocannon : ModItem
 
     public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
     {
-        if (!player.TryGetModPlayer(out WgPlayer wg))
+        if (!player.TryGetModPlayer(out WgPlayer wg) || !Item.TryGetGlobalItem(out RecoilItem ri))
             return;
         float immobility = wg.Weight.ClampedImmobility;
 
@@ -78,12 +79,18 @@ public class Endocannon : ModItem
             velocity *= 0.75f;
             damage *= 3;
 
+            ri.RecoilStats(2f, 1f - immobility);
+
             SoundEngine.PlaySound(SoundID.Item10, position);
 
             _cooldown = 0;
         }
         else
+        {
+            ri.RecoilStats(0.5f, 1f - immobility);
+
             _cooldown++;
+        }
 
         Vector2 muzzleOffset = Vector2.Normalize(velocity) * 18f;
 

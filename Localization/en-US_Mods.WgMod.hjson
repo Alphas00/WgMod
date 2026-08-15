@@ -497,6 +497,7 @@ Items: {
 		DisplayName: Endocannon
 		Tooltip:
 			'''
+			Low recoil
 			Every fifth shot becomes a high damage but low velocity dinner plate
 			Stats scale with your obesity
 			'''
