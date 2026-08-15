@@ -10,7 +10,9 @@ namespace WgMod.Content.Buffs.Debuffs;
 [Credit(ProjectRole.Idea, Contributor.igobee_)]
 public class Tired : ModBuff
 {
-    WgStat _attackSpeed = new(0.8f, 0.5f);
+    public const int StartStage = WeightStage.SoftImmobile;
+
+    WgStat _attackSpeed = new(0.9f, 0.6f);
 
     public override void SetStaticDefaults()
     {
@@ -34,7 +36,7 @@ public class Tired : ModBuff
     {
         if (!player.TryGetModPlayer(out WgPlayer wg))
             return;
-        float factor = wg.Weight.GetClampedFactor(WeightStage.HardImmobile, WeightStage.Max);
+        float factor = wg.Weight.GetClampedFactor(StartStage, WeightStage.Max);
         _attackSpeed.Lerp(factor);
         player.GetAttackSpeed(DamageClass.Generic) *= _attackSpeed;
     }
