@@ -1,8 +1,6 @@
-using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using WgMod.Common.GlobalItems;
 using WgMod.Common.Players;
 using WgMod.Content.Projectiles.Melee;
 
@@ -10,13 +8,11 @@ namespace WgMod.Content.Items.Weapons.Melee;
 
 [Credit(ProjectRole.Programmer, Contributor.maimaichubs)]
 [Credit(ProjectRole.Artist, Contributor.maimaichubs)]
-public class Sunrise : ModItem
+public class Sunrise : RecoilItem
 {
     WgStat _damage = new(1f, 1.25f);
     WgStat _knockback = new(1f, 1.25f);
     WgStat _velocity = new(1f, 1.5f);
-
-    public float immobility;
 
     public override void SetDefaults()
     {
@@ -43,19 +39,16 @@ public class Sunrise : ModItem
     {
         if (!player.TryGetModPlayer(out WgPlayer wg))
             return;
-        immobility = wg.Weight.ClampedImmobility;
-
+        float immobility = wg.Weight.ClampedImmobility;
         _damage.Lerp(immobility);
         _knockback.Lerp(immobility);
         _velocity.Lerp(immobility);
     }
 
-    public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
+    public override void ModifyRecoilStats(ref float recoilStrength, ref float airTimeFactor, ref bool flipRecoil)
     {
-        if (!Item.TryGetGlobalItem(out RecoilItem ri))
-            return;
-
-        ri.RecoilStats(3f, 1 - immobility, 0.1f);
+        recoilStrength = 3f;
+        airTimeFactor = 0.1f;
     }
 
     public override void ModifyWeaponDamage(Player player, ref StatModifier damage)
