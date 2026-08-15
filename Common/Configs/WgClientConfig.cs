@@ -15,6 +15,12 @@ public class WgClientConfig : ModConfig
     [DefaultValue(true)]
     public bool UseImperialUnits;
 
+    [DefaultValue(WeightStage.Max)]
+    [Range(WeightStage.Regular, WeightStage.Max)]
+    [Slider]
+    [DrawTicks]
+    public int StageCap;
+
     [Header("Visual")]
     [DefaultValue(false)]
     public bool DisableJiggle;

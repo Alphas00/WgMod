@@ -82,6 +82,7 @@ public partial class WgPlayer : ModPlayer
             return;
         if (WgClientConfig.Instance.DisableWeightGain)
             weight = new Weight(MathF.Min(weight.Mass, Weight.Mass));
+        weight = Weight.Clamp(weight, _finalMaxStage);
         SetWeightForced(weight, effects);
     }
 
@@ -98,7 +99,7 @@ public partial class WgPlayer : ModPlayer
     internal void SetWeightForced(Weight weight, bool effects = true)
     {
         int prevStage = Weight.GetStage();
-        Weight = Weight.Clamp(weight, _finalMaxStage);
+        Weight = weight;
         if (Weight.GetStage() != prevStage && effects)
         {
             SoundEngine.PlaySound(WgSounds.Belly, Player.Center);
@@ -136,7 +137,7 @@ public partial class WgPlayer : ModPlayer
         MovementWeightLossRate = StatModifier.Default;
         WeightGainRate = StatModifier.Default;
         FoodAbsorption = StatModifier.Default;
-        MaxStage = WeightStage.Max;
+        MaxStage = WgClientConfig.Instance.StageCap;
 
         _finalWeightFixed = WeightFixed;
         WeightFixed = false;

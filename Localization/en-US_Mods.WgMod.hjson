@@ -1011,7 +1011,7 @@ Configs: {
 			General: General settings
 			Visual: Visual settings
 			Sprites: Sprites
-			Volume: Gurgle Volume
+			Volume: Volume
 		}
 
 		DisableJiggle: {
@@ -1047,6 +1047,11 @@ Configs: {
 		UseImperialUnits: {
 			Label: Use Imperial Units
 			Tooltip: Use imperial (lbs) units instead of metric (kg)
+		}
+
+		StageCap: {
+			Label: Stage Cap
+			Tooltip: The maximum weight stage that the player can reach
 		}
 	}
 
