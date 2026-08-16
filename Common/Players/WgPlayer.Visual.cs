@@ -192,11 +192,5 @@ public partial class WgPlayer
     {
         if (Player.isDisplayDollOrInanimate)
             drawInfo.Position.Y += Player.gfxOffY;
-        /*if (Player.mount.Active)
-        {
-            drawInfo.Position.Y += drawInfo.mountOffSet;
-            drawInfo.mountOffSet *= WeightValues.GetMountScale(Weight.GetStage());
-            drawInfo.Position.Y -= drawInfo.mountOffSet;
-        }*/
     }
 }
