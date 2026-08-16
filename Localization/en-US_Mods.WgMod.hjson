@@ -812,6 +812,21 @@ Items: {
 			Reduced fat movement penalty by {0}%
 			'''
 	}
+
+	DecorativeSuperWeightGainPotion: {
+		DisplayName: Decorative Super Weight Gain Potion
+		Tooltip: ""
+	}
+
+	DecorativeWeightGainPotion: {
+		DisplayName: Decorative Weight Gain Potion
+		Tooltip: ""
+	}
+
+	DecorativeWeightLossPotion: {
+		DisplayName: Decorative Weight Loss Potion
+		Tooltip: ""
+	}
 }
 
 Buffs: {
@@ -1358,3 +1373,5 @@ Prefixes: {
 		AdditionalTooltip: uwu
 	}
 }
+
+MapObject.DecorativeWeightPotions: Decorative Weight Potion
