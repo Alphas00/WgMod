@@ -99,7 +99,7 @@ public partial class WgPlayer : ModPlayer
     internal void SetWeightForced(Weight weight, bool effects = true)
     {
         int prevStage = Weight.GetStage();
-        Weight = weight;
+        Weight = Weight.Clamp(weight);
         if (Weight.GetStage() != prevStage && effects)
         {
             SoundEngine.PlaySound(WgSounds.Belly, Player.Center);

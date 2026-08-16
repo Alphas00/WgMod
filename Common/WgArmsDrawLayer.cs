@@ -67,9 +67,7 @@ public class WgArmsDrawLayer : PlayerDrawLayer
         if (drawArmor && !drawInfo.compShoulderOverFrontArm)
             DrawCompShoulder(ref drawInfo, shoulderPosition, bodyRotation, bodyVect);
 
-        Color skinColor = drawInfo.colorBodySkin;
-        if (player.isDisplayDollOrInanimate)
-            skinColor = new Color(154, 115, 85).MultiplyRGB(skinColor);
+        Color skinColor = WgPlayerDrawLayer.GetSkinColor(drawInfo);
         DrawData drawData = new(texture.Value, armPosition, frame, skinColor, rotation, bodyVectBig, 1f, drawInfo.playerEffect)
         {
             shader = drawInfo.skinDyePacked
