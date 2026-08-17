@@ -1412,4 +1412,9 @@ Achievements: {
 		FriendlyName: Playtime!
 		Description: Have the Overflowing Mimic 'play with' a boss.
 	}
+
+	ImBigger: {
+		FriendlyName: I'm Bigger
+		Description: Defeat King Slime while at weight level of Blob.
+	}
 }
