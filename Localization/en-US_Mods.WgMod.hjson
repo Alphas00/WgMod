@@ -1434,7 +1434,7 @@ Achievements: {
 
 	ImBigger: {
 		FriendlyName: I'm Bigger
-		Description: Defeat King Slime while at weight level of Blob.
+		Description: Defeat King Slime while at weight level Blob.
 	}
 
 	LetsGetPhysical: {
