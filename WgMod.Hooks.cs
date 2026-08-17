@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.GameContent;
 using Terraria.ID;
 using WgMod.Common.Players;
 using WgMod.Content.Buffs;
@@ -13,7 +14,8 @@ namespace WgMod;
 
 public interface IUpdateCloud
 {
-    void PreUpdate(Cloud cloud);
+    /// <summary> Return true to do vanilla cloud updating </summary>
+    bool PreUpdate(Cloud cloud);
     void PostUpdate(Cloud cloud);
 }
 
@@ -198,8 +200,35 @@ public partial class WgMod
     {
         if (self.ModCloud is IUpdateCloud update)
         {
-            update.PreUpdate(self);
-            orig(self);
+            if (update.PreUpdate(self))
+                orig(self);
+            else
+            {
+                if (Main.bgAlphaFrontLayer[4] == 1f && self.position.Y > 200f)
+                {
+                    self.kill = true;
+                    self.Alpha -= 0.005f * (float)Main.dayRate;
+                }
+                if (!self.kill)
+                {
+                    if (self.Alpha < 1f)
+                    {
+                        self.Alpha += 0.001f * (float)Main.dayRate;
+                        if (self.Alpha > 1f)
+                            self.Alpha = 1f;
+                    }
+                }
+                else
+                {
+                    self.Alpha -= 0.001f * (float)Main.dayRate;
+                    if (self.Alpha <= 0f)
+                        self.active = false;
+                }
+                if (self.position.X + TextureAssets.Cloud[self.type].Width() * self.scale < 0f - 600f || self.position.X > Main.screenWidth + 600f)
+                    self.active = false;
+                self.width = (int)(TextureAssets.Cloud[self.type].Width() * self.scale);
+                self.height = (int)(TextureAssets.Cloud[self.type].Height() * self.scale);
+            }
             update.PostUpdate(self);
         }
         else
