@@ -44,7 +44,7 @@ public partial class WgMod
         On_Mount.Draw -= Mount_Draw;
         On_Main.GetPlayerArmPosition -= Main_GetPlayerArmPosition;
         On_Main.DrawProj_DrawExtras -= Main_DrawProj_DrawExtras;
-        On_Cloud.Update += Cloud_Update;
+        On_Cloud.Update -= Cloud_Update;
     }
 
     static void Player_AddBuff(On_Player.orig_AddBuff orig, Player self, int type, int timeToAdd, bool quiet, bool foodHack)
