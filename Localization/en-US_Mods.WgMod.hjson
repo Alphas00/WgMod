@@ -1417,4 +1417,9 @@ Achievements: {
 		FriendlyName: I'm Bigger
 		Description: Defeat King Slime while at weight level of Blob.
 	}
+
+	LetsGetPhysical: {
+		FriendlyName: Let's Get Physical!
+		Description: Mount a {$Items.Treadmill.DisplayName} while wearing the full Yoga Armor set.
+	}
 }
