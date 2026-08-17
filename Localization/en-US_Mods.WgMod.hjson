@@ -52,8 +52,8 @@ Items: {
 		DisplayName: Queenly Gluttony
 		Tooltip:
 			'''
-			Increases melee damage, critical strike chance, and armor penetration
-			Decreases melee speed
+			Increases melee damage by {0}%, critical strike chance by {2}%, and armor penetration by {3}
+			Decreases melee speed by {1}%
 			Melee attacks inflict pretty sparkle slime!
 			Effects scale with your obesity
 			'''
@@ -847,6 +847,20 @@ Items: {
 		DisplayName: Abundance
 		Tooltip: "'C. Lady'"
 	}
+
+	SolDrive: {
+		DisplayName: Sol Drive
+		Tooltip:
+			'''
+			Increases melee damage by {0}%, critical strike chance by {2}%, 
+			armor penetration by {3}, and increases melee size by {4}%
+			Reduces melee speed by {1}%
+			Doubles knockback
+			Attacks inflict a variety of debuffs
+			Effects scale with your obesity
+			'Still, my heart is blazing!'
+			'''
+	}
 }
 
 Buffs: {
@@ -1361,6 +1375,11 @@ Conditions: {
 
 Interface.Milk: Milk
 DeathReason.Milkmaid: Next time listen, honey.
+
+GlobalItem: {
+	Disabled: "[c/963232:Disabled by {0}]"
+	Ineffective: "[c/963232:Less effective when paired with {0}]"
+}
 
 Emotes: {
 	GroundedHarpyEmote.Command: groundedharpy
