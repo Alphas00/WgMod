@@ -1160,6 +1160,7 @@ Projectiles: {
 	SuperWeightLossPotionProjectile.DisplayName: Super Weight Loss Potion Projectile
 	WeightLossPotionProjectile.DisplayName: Weight Loss Potion Projectile
 	FatTombstone.DisplayName: Fat Tombstone
+	MimicAttack.DisplayName: Mimic Attack
 }
 
 NPCs: {
@@ -1405,5 +1406,10 @@ Achievements: {
 	Reshaped: {
 		FriendlyName: Reshaped
 		Description: Fatten up an eligible enemy using {$Items.PowderedSugar.DisplayName}.
+	}
+
+	Playtime: {
+		FriendlyName: Playtime!
+		Description: Have the Overflowing Mimic 'play with' a boss.
 	}
 }
