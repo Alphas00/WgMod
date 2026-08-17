@@ -30,7 +30,7 @@ public class SolDrive : ModItem
         Item.value = Item.buyPrice(gold: 14);
     }
 
-    public static readonly HashSet<DamageClass> Melee = [
+    public static readonly DamageClass[] Melee = [
         DamageClass.Melee,
         DamageClass.MeleeNoSpeed,
     ];
@@ -99,6 +99,9 @@ public class SolDrive : ModItem
 public class SolDrivePlayer : ModPlayer
 {
     public bool _active;
+
+    public int _dust = DustID.SolarFlare;
+
     public WgStat _meleeSize;
 
     public override void ResetEffects()
@@ -106,7 +109,7 @@ public class SolDrivePlayer : ModPlayer
         _active = false;
     }
 
-    public static readonly HashSet<DamageClass> Melee = [
+    public static readonly DamageClass[] Melee = [
         DamageClass.Melee,
         DamageClass.MeleeNoSpeed,
     ];
@@ -146,15 +149,27 @@ public class SolDrivePlayer : ModPlayer
         scale += _meleeSize;
     }
 
-    public override void EmitEnchantmentVisualsAt(Projectile projectile, Vector2 boxPosition, int boxWidth, int boxHeight)
+    public override void MeleeEffects(Item item, Rectangle hitbox)
     {
-        if (!Player.TryGetModPlayer(out QueenlyGluttonyPlayer qg))
+        if (!_active || !Melee.Contains(item.DamageType))
             return;
 
-        if (qg._active && (projectile.DamageType == DamageClass.Melee || projectile.DamageType == DamageClass.MeleeNoSpeed) && Main.rand.NextBool(3))
+        if (Main.rand.NextBool(3))
         {
-            int index = Dust.NewDust(boxPosition, boxWidth, boxHeight, DustID.PinkSlime, 0f, 0f, 100, default, 1f);
-            Main.dust[index].noGravity = true;
+            int dust = Dust.NewDust(hitbox.TopLeft(), hitbox.Width, hitbox.Height, _dust, 0f, 0f, 100, default, 1f);
+            Main.dust[dust].noGravity = true;
+        }
+    }
+
+    public override void EmitEnchantmentVisualsAt(Projectile projectile, Vector2 boxPosition, int boxWidth, int boxHeight)
+    {
+        if (!_active || !Melee.Contains(projectile.DamageType))
+            return;
+
+        if (Main.rand.NextBool(3))
+        {
+            int dust = Dust.NewDust(boxPosition, boxWidth, boxHeight, _dust, 0f, 0f, 100, default, 1f);
+            Main.dust[dust].noGravity = true;
         }
     }
 }

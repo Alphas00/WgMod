@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
@@ -27,6 +28,11 @@ public class QueenlyGluttony : ModItem
         Item.value = Item.buyPrice(gold: 4);
     }
 
+    public static readonly DamageClass[] Melee = [
+        DamageClass.Melee,
+        DamageClass.MeleeNoSpeed,
+    ];
+
     public override void UpdateAccessory(Player player, bool hideVisual)
     {
         if (!player.TryGetModPlayer(out WgPlayer wg) || !player.TryGetModPlayer(out QueenlyGluttonyPlayer qg) || !player.TryGetModPlayer(out SolDrivePlayer sd))
@@ -41,10 +47,13 @@ public class QueenlyGluttony : ModItem
             _critChance.Lerp(immobility);
             _armorPenetration.Lerp(immobility);
 
-            player.GetDamage(DamageClass.Melee) += _damage;
-            player.GetAttackSpeed(DamageClass.Melee) -= _attackSpeed;
-            player.GetCritChance(DamageClass.Melee) += _critChance;
-            player.GetArmorPenetration(DamageClass.Melee) += _armorPenetration;
+            foreach (var item in Melee)
+            {
+                player.GetDamage(item) += _damage;
+                player.GetAttackSpeed(item) -= _attackSpeed;
+                player.GetCritChance(item) += _critChance;
+                player.GetArmorPenetration(item) += _armorPenetration;
+            }
 
             qg._active = true;
         }
@@ -69,16 +78,23 @@ public class QueenlyGluttony : ModItem
 
 public class QueenlyGluttonyPlayer : ModPlayer
 {
-    internal bool _active;
+    public bool _active;
+
+    public int _dust = DustID.PinkSlime;
 
     public override void ResetEffects()
     {
         _active = false;
     }
 
+    public static readonly DamageClass[] Melee = [
+        DamageClass.Melee,
+        DamageClass.MeleeNoSpeed,
+    ];
+
     public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
     {
-        if (_active || hit.DamageType != DamageClass.Melee || hit.DamageType != DamageClass.MeleeNoSpeed)
+        if (_active || !Melee.Contains(hit.DamageType))
             return;
 
         if (Main.rand.NextBool(50))
@@ -87,15 +103,27 @@ public class QueenlyGluttonyPlayer : ModPlayer
             target.AddBuff(BuffID.GelBalloonBuff, 2 * 60);
     }
 
-    public override void EmitEnchantmentVisualsAt(Projectile projectile, Vector2 boxPosition, int boxWidth, int boxHeight)
+    public override void MeleeEffects(Item item, Rectangle hitbox)
     {
-        if (!Player.TryGetModPlayer(out QueenlyGluttonyPlayer qg))
+        if (!_active || !Melee.Contains(item.DamageType))
             return;
 
-        if (qg._active && (projectile.DamageType == DamageClass.Melee || projectile.DamageType == DamageClass.MeleeNoSpeed) && Main.rand.NextBool(3))
+        if (Main.rand.NextBool(3))
         {
-            int index = Dust.NewDust(boxPosition, boxWidth, boxHeight, DustID.PinkSlime, 0f, 0f, 100, default, 1f);
-            Main.dust[index].noGravity = true;
+            int dust = Dust.NewDust(hitbox.TopLeft(), hitbox.Width, hitbox.Height, _dust, 0f, 0f, 100, default, 1f);
+            Main.dust[dust].noGravity = true;
+        }
+    }
+
+    public override void EmitEnchantmentVisualsAt(Projectile projectile, Vector2 boxPosition, int boxWidth, int boxHeight)
+    {
+        if (!_active || !Melee.Contains(projectile.DamageType))
+            return;
+
+        if (Main.rand.NextBool(3))
+        {
+            int dust = Dust.NewDust(boxPosition, boxWidth, boxHeight, _dust, 0f, 0f, 100, default, 1f);
+            Main.dust[dust].noGravity = true;
         }
     }
 }
