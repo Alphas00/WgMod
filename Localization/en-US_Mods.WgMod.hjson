@@ -285,9 +285,9 @@ Items: {
 		DisplayName: Honeyed Ham Bat
 		Tooltip:
 			'''
-			Grows more powerful the more obese you are
 			Hitting enemies temporarily improves life regeneration
 			Honey globs fling off of the weapon to damage your enemies
+			Stats scale with your obesity
 			'You can't go wrong dousing something in honey.'
 			'''
 	}
