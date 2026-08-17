@@ -1,8 +1,10 @@
 using System.Collections.Generic;
 using Terraria;
+using Terraria.Achievements;
 using Terraria.ID;
 using Terraria.ModLoader;
 using WgMod.Common.Systems;
+using WgMod.Content.Achievements;
 using WgMod.Content.NPCs.TownNPCs.GroundedHarpy;
 using WgMod.Content.NPCs.TownNPCs.OverflowingMimic;
 
@@ -31,6 +33,7 @@ public class PowderedSugarProjectile : ModProjectile
             if (npc.active && npc.Hitbox.Intersects(Projectile.Hitbox) && ConvertNPC(npc))
             {
                 npc.active = false;
+                Reshaped.Condition.Complete();
                 break;
             }
         }
