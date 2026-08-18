@@ -1,6 +1,8 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.ModLoader;
+using WgMod.Common.Systems;
 
 namespace WgMod.Content.Clouds;
 
@@ -14,25 +16,33 @@ public class BigHarpy : AnimatedCloud, IUpdateCloud
 
 	public override float SpawnChance()
 	{
+		if (EventSystem.harpyMigration)
+			return 10f;
+
 		if (Main.dayTime)
 			return 1f;
+
 		return 0f;
 	}
 
 	public override void OnSpawn(Cloud cloud)
 	{
-		SetDir(cloud, Main.rand.NextBool() ? 1 : -1);
+		if (EventSystem.harpyMigration)
+			SetDir(cloud, -1);
+		else
+			SetDir(cloud, Main.rand.NextBool() ? 1 : -1);
 	}
 
 	public bool PreUpdate(Cloud cloud)
 	{
-		cloud.position.X += 0.5f * GetDir(cloud) + Main.windSpeedCurrent * 0.5f;
-		cloud.position.Y -= 0.1f;
+		cloud.position.X += (0.5f * GetDir(cloud) + Main.windSpeedCurrent * 0.5f) * (float)Main.dayRate;
+		cloud.position.Y -= 0.2f * (float)Main.dayRate;
 		return false;
 	}
 
 	public void PostUpdate(Cloud cloud)
 	{
+
 	}
 
 	public override bool Draw(SpriteBatch spriteBatch, Cloud cloud, int cloudIndex, ref DrawData drawData)
