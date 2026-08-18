@@ -1252,6 +1252,8 @@ NPCs: {
 		DisplayName: Overflowing Mimic
 		Census.SpawnCondition: Use {$Items.PowderedSugar.DisplayName} [i:WgMod/PowderedSugar] on a mimic
 	}
+
+	SugarSpecter.DisplayName: Sugar Specter
 }
 
 Dialogue: {
@@ -1366,6 +1368,7 @@ Bestiary: {
 	OverflowingMimic: Mimics are a form of slime who act much like hermit crabs, moving from chest to chest as they grow. This one may be a bit big for her chest, though...
 	HomingFood: Food cursed by a malevolent spirit to seek out and fatten up adventurers until they're defenseless.
 	SweetSpirit: These spirits that dwell in the caverns will try their best to fatten you up.
+	SugarSpecter: Specters made of condensed sugar and cotton candy. Kill them before they bloat you up in size...
 }
 
 Conditions: {
