@@ -59,7 +59,7 @@ public partial class WgPlayer : ModPlayer
     internal bool _displayWeight;
 
     Vector2 _prevVel;
-    int _digestTimer;
+    float _digestTimer;
     bool _hasJumped;
 
     public override void Initialize()
@@ -160,6 +160,13 @@ public partial class WgPlayer : ModPlayer
         EnsureBuff<StomachBuff>();
         if (Weight.GetStage() >= Tired.StartStage)
             Player.AddBuff(ModContent.BuffType<Tired>(), 2);
+        if (Stomach > 0f && (Player.HasBuff(BuffID.NeutralHunger) || Player.HasBuff(BuffID.Hunger) || Player.HasBuff(BuffID.Starving)))
+        {
+            if (Main.remixWorld && Main.dontStarveWorld)
+                Player.AddBuff(BuffID.NeutralHunger, 28800);
+            else
+                Player.AddBuff(BuffID.NeutralHunger, 18000);
+        }
     }
 
     public void EnsureBuff<T>(int time = 60) where T : ModBuff
@@ -300,6 +307,7 @@ public partial class WgPlayer : ModPlayer
         {
             if (Stomach > 0f)
             {
+                float rate = (float)Math.Max(Main.dayRate, 1.0);
                 if (_digestTimer < 0)
                 {
                     float delta = Stomach - MathF.Max(Stomach - Main.rand.NextFloat(DigestAmount * 0.5f, DigestAmount), 0f);
@@ -310,7 +318,7 @@ public partial class WgPlayer : ModPlayer
                     _digestTimer = Main.rand.Next(DigestTime, DigestTime * 2);
                 }
                 else
-                    _digestTimer--;
+                    _digestTimer -= rate;
             }
             else
                 _digestTimer = DigestTime * 2;
