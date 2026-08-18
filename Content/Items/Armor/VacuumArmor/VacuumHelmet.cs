@@ -51,11 +51,9 @@ public class VacuumHelmet : ModItem
             return;
 
         float immobility = wg.Weight.ClampedImmobility;
+
         _critChance.Lerp(immobility);
-
         _health.Lerp(immobility);
-        _health.Value = MathF.Floor(_health.Value / 5f) * 5f;
-
         _defense.Lerp(immobility);
         _resist.Lerp(immobility);
         _movePenalty.Lerp(immobility);

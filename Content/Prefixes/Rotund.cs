@@ -8,7 +8,8 @@ namespace WgMod.Content.Prefixes;
 
 public class Rotund : ModPrefix
 {
-    WgStat _damage = new(0.01f, 0.08f);
+    WgStat _damage = new(0.01f, 0.04f);
+    WgStat _critChance = new(0.01f, 0.04f);
     WgStat _attackSpeed = new(0.99f, 0.96f);
 
     public override PrefixCategory Category => PrefixCategory.Accessory;
@@ -35,9 +36,11 @@ public class Rotund : ModPrefix
         float immobility = wg.Weight.ClampedImmobility;
 
         _damage.Lerp(immobility);
+        _critChance.Lerp(immobility);
         _attackSpeed.Lerp(immobility);
 
         player.GetDamage(DamageClass.Generic) += _damage;
+        player.GetCritChance(DamageClass.Generic) += _critChance;
         player.GetAttackSpeed(DamageClass.Generic) *= _attackSpeed;
     }
 

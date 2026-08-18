@@ -14,7 +14,7 @@ namespace WgMod.Content.Items.Accessories.Fat;
 [Credit(ProjectRole.Idea, Contributor.the_trueterrafox)]
 public class BandOfSweetening : ModItem
 {
-    WgStat _regen = new(2f, 8f);
+    WgStat _regen = new(2f, 6f);
 
     public override void SetDefaults()
     {
