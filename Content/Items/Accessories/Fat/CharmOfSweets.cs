@@ -14,8 +14,8 @@ namespace WgMod.Content.Items.Accessories.Fat;
 [Credit(ProjectRole.Idea, Contributor.the_trueterrafox)]
 public class CharmOfSweets : ModItem
 {
-    WgStat _regen = new(4f, 16f);
-    WgStat _potionDelay = new(0.85f, 0.7f);
+    WgStat _regen = new(4f, 10f);
+    WgStat _potionDelay = new(0.85f, 0.6f);
 
     public override void SetDefaults()
     {
