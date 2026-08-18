@@ -9,7 +9,7 @@ namespace WgMod.Content.NPCs.Caverns;
 [Credit(ProjectRole.Artist, Contributor.igobee_)]
 public class SugarSpecter : SweetSpirit
 {
-    public override int FrameCount => 14;
+    public override int FrameCount => 13;
     public override int IdleFrames => 2;
     public override int WanderTime => 12 * 60;
     public override float WeightGain => 1f;
@@ -22,6 +22,7 @@ public class SugarSpecter : SweetSpirit
         NPC.damage = 40;
         NPC.defense = 18;
         NPC.lifeMax = 150;
+        NPC.value = 100f;
     }
 
     public override float SpawnChance(NPCSpawnInfo spawnInfo)
