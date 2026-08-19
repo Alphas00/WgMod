@@ -1050,7 +1050,6 @@ Configs: {
 			General: General settings
 			Visual: Visual settings
 			Sprites: Sprites
-			Volume: Volume
 		}
 
 		DisableJiggle: {
@@ -1076,11 +1075,6 @@ Configs: {
 		PlayerSpriteSet: {
 			Label: Player Sprite Set
 			Tooltip: Controls the aspect of fat player sprites
-		}
-
-		GurgleVolume: {
-			Tooltip: The volume of gurgles compared to the rest of the game's audio, setting it to 0 mutes gurgles entirely.
-			Label: Gurgle Volume
 		}
 
 		UseImperialUnits: {
@@ -1238,9 +1232,6 @@ NPCs: {
 	}
 
 	SugarSpecter.DisplayName: Sugar Specter
-	SkeleborerTail.DisplayName: Skeleborer Tail
-	SkeleborerHead.DisplayName: Skeleborer Head
-	SkeleborerBody.DisplayName: Skeleborer Body
 }
 
 Dialogue: {
@@ -1358,10 +1349,7 @@ Bestiary: {
 	SugarSpecter: Specters made of condensed sugar and cotton candy. Kill them before they bloat you up in size...
 }
 
-Conditions: {
-	BlackRiderDev: Mods.WgMod.Conditions.BlackRiderDev
-}
-
+Conditions.BlackRiderDev: Mods.WgMod.Conditions.BlackRiderDev
 Interface.Milk: Milk
 DeathReason.Milkmaid: Next time listen, honey.
 

@@ -33,7 +33,6 @@ public enum Contributor
     jumpsu2,
     _d_u_m_m_y_,
     igobee_,
-    minty0985,
 
     [Category("Contributors")]
     ubulumn,
