@@ -94,7 +94,7 @@ public class QueenlyGluttonyPlayer : ModPlayer
 
     public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
     {
-        if (_active || !Melee.Contains(hit.DamageType))
+        if (!_active || !Melee.Contains(hit.DamageType))
             return;
 
         if (Main.rand.NextBool(50))
