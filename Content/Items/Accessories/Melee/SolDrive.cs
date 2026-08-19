@@ -42,7 +42,7 @@ public class SolDrive : ModItem
 
         float immobility = wg.Weight.ClampedImmobility;
 
-        if (!qg._active)
+        if (!qg.active)
         {
             _damage.Lerp(immobility);
             _attackSpeed.Lerp(immobility);
@@ -64,7 +64,7 @@ public class SolDrive : ModItem
             player.kbGlove = true;
             player.magmaStone = true;
 
-            sd._active = true;
+            sd.active = true;
             sd._meleeSize = _meleeSize;
         }
     }
@@ -78,7 +78,7 @@ public class SolDrive : ModItem
 
         tooltips.FormatLines(_damage.Percent(), _attackSpeed.Percent(), _critChance, _armorPenetration, (_meleeSize + 0.1f).Percent());
 
-        if (qg._active)
+        if (qg.active)
         {
             tooltips.LineBeforeTooltip(out TooltipLine line);
             tooltips.Insert(tooltips.IndexOf(line) + 1, new TooltipLine(Mod, "NewTooltip", Language.GetTextValue("Mods.WgMod.GlobalItem.Disabled", ModContent.GetInstance<QueenlyGluttony>().DisplayName)));
@@ -98,7 +98,7 @@ public class SolDrive : ModItem
 
 public class SolDrivePlayer : ModPlayer
 {
-    public bool _active;
+    public bool active;
 
     public int _dust = DustID.SolarFlare;
 
@@ -106,7 +106,7 @@ public class SolDrivePlayer : ModPlayer
 
     public override void ResetEffects()
     {
-        _active = false;
+        active = false;
     }
 
     public static readonly DamageClass[] Melee = [
@@ -132,7 +132,7 @@ public class SolDrivePlayer : ModPlayer
 
     public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
     {
-        if (!Player.TryGetModPlayer(out WgPlayer wg) || !_active || !Melee.Contains(hit.DamageType))
+        if (!Player.TryGetModPlayer(out WgPlayer wg) || !active || !Melee.Contains(hit.DamageType))
             return;
         float immobility = wg.Weight.ClampedImmobility;
 
@@ -143,7 +143,7 @@ public class SolDrivePlayer : ModPlayer
 
     public override void ModifyItemScale(Item item, ref float scale)
     {
-        if (!_active || !Melee.Contains(item.DamageType) || Player.TryGetModPlayer(out ChampionsBeltPlayer cb) || cb._active)
+        if (!active || !Melee.Contains(item.DamageType) || Player.TryGetModPlayer(out ChampionsBeltPlayer cb) || cb.active)
             return;
 
         scale += _meleeSize;
@@ -151,7 +151,7 @@ public class SolDrivePlayer : ModPlayer
 
     public override void MeleeEffects(Item item, Rectangle hitbox)
     {
-        if (!_active || !Melee.Contains(item.DamageType))
+        if (!active || !Melee.Contains(item.DamageType))
             return;
 
         if (Main.rand.NextBool(3))
@@ -163,7 +163,7 @@ public class SolDrivePlayer : ModPlayer
 
     public override void EmitEnchantmentVisualsAt(Projectile projectile, Vector2 boxPosition, int boxWidth, int boxHeight)
     {
-        if (!_active || !Melee.Contains(projectile.DamageType))
+        if (!active || !Melee.Contains(projectile.DamageType))
             return;
 
         if (Main.rand.NextBool(3))
