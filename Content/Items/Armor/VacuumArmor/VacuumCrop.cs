@@ -33,16 +33,15 @@ public class VacuumCrop : ModItem
     {
         if (!player.TryGetModPlayer(out WgPlayer wg))
             return;
-
         float immobility = wg.Weight.ClampedImmobility;
+
         _attack.Lerp(immobility);
-
         _health.Lerp(immobility);
-        _health.Value = MathF.Floor(_health.Value / 5f) * 5f;
-
         _defense.Lerp(immobility);
         _resist.Lerp(immobility);
         _movePenalty.Lerp(immobility);
+
+        _health.Value = MathF.Floor(_health.Value / 5f) * 5f;
 
         player.GetDamage(DamageClass.Generic) += _attack;
         player.statLifeMax2 += _health;

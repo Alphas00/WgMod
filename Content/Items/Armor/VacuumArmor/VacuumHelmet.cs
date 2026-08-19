@@ -49,7 +49,6 @@ public class VacuumHelmet : ModItem
     {
         if (!player.TryGetModPlayer(out WgPlayer wg))
             return;
-
         float immobility = wg.Weight.ClampedImmobility;
 
         _critChance.Lerp(immobility);
@@ -57,6 +56,8 @@ public class VacuumHelmet : ModItem
         _defense.Lerp(immobility);
         _resist.Lerp(immobility);
         _movePenalty.Lerp(immobility);
+
+        _health.Value = MathF.Floor(_health.Value / 5f) * 5f;
 
         player.GetCritChance(DamageClass.Generic) += _critChance;
         player.statLifeMax2 += _health;
@@ -82,8 +83,8 @@ public class VacuumHelmet : ModItem
     {
         if (!player.TryGetModPlayer(out WgPlayer wg))
             return;
-
         float immobility = wg.Weight.ClampedImmobility;
+
         _setBonusRegen.Lerp(immobility);
         _setBonusHealth.Lerp(immobility);
 
