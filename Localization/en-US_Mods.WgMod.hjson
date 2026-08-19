@@ -1254,6 +1254,9 @@ NPCs: {
 	}
 
 	SugarSpecter.DisplayName: Sugar Specter
+	SkeleborerTail.DisplayName: Skeleborer Tail
+	SkeleborerHead.DisplayName: Skeleborer Head
+	SkeleborerBody.DisplayName: Skeleborer Body
 }
 
 Dialogue: {
