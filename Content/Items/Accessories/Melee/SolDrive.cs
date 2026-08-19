@@ -3,9 +3,9 @@ using System.Linq;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
-using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.Utilities;
+using WgMod.Common.GlobalItems;
 using WgMod.Common.Players;
 
 namespace WgMod.Content.Items.Accessories.Melee;
@@ -37,12 +37,11 @@ public class SolDrive : ModItem
 
     public override void UpdateAccessory(Player player, bool hideVisual)
     {
-        if (!player.TryGetModPlayer(out WgPlayer wg) || !player.TryGetModPlayer(out SolDrivePlayer sd) || !player.TryGetModPlayer(out QueenlyGluttonyPlayer qg))
+        if (!player.TryGetModPlayer(out WgPlayer wg) || !player.TryGetModPlayer(out SolDrivePlayer sd))
             return;
-
         float immobility = wg.Weight.ClampedImmobility;
 
-        if (!qg.active)
+        if (!ItemDisabling.GauntletLine)
         {
             _damage.Lerp(immobility);
             _attackSpeed.Lerp(immobility);
@@ -71,18 +70,7 @@ public class SolDrive : ModItem
 
     public override void ModifyTooltips(List<TooltipLine> tooltips)
     {
-        Player player = Main.LocalPlayer;
-
-        if (!player.TryGetModPlayer(out QueenlyGluttonyPlayer qg))
-            return;
-
         tooltips.FormatLines(_damage.Percent(), _attackSpeed.Percent(), _critChance, _armorPenetration, (_meleeSize + 0.1f).Percent());
-
-        if (qg.active)
-        {
-            tooltips.LineBeforeTooltip(out TooltipLine line);
-            tooltips.Insert(tooltips.IndexOf(line) + 1, new TooltipLine(Mod, "NewTooltip", Language.GetTextValue("Mods.WgMod.GlobalItem.Disabled", ModContent.GetInstance<QueenlyGluttony>().DisplayName)));
-        }
     }
 
     public override void AddRecipes()
@@ -100,9 +88,9 @@ public class SolDrivePlayer : ModPlayer
 {
     public bool active;
 
-    public int _dust = DustID.SolarFlare;
+    internal int _dust = DustID.SolarFlare;
 
-    public WgStat _meleeSize;
+    internal WgStat _meleeSize;
 
     public override void ResetEffects()
     {

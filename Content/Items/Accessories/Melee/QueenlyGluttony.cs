@@ -3,8 +3,8 @@ using System.Linq;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
-using Terraria.Localization;
 using Terraria.ModLoader;
+using WgMod.Common.GlobalItems;
 using WgMod.Common.Players;
 
 namespace WgMod.Content.Items.Accessories.Melee;
@@ -40,7 +40,7 @@ public class QueenlyGluttony : ModItem
 
         float immobility = wg.Weight.ClampedImmobility;
 
-        if (!sd.active)
+        if (!ItemDisabling.GauntletLine)
         {
             _damage.Lerp(immobility);
             _attackSpeed.Lerp(immobility);
@@ -61,18 +61,7 @@ public class QueenlyGluttony : ModItem
 
     public override void ModifyTooltips(List<TooltipLine> tooltips)
     {
-        Player player = Main.LocalPlayer;
-
-        if (!player.TryGetModPlayer(out SolDrivePlayer sd))
-            return;
-
         tooltips.FormatLines(_damage.Percent(), _attackSpeed.Percent(), _critChance, _armorPenetration);
-
-        if (sd.active)
-        {
-            tooltips.LineBeforeTooltip(out TooltipLine line);
-            tooltips.Insert(tooltips.IndexOf(line) + 1, new TooltipLine(Mod, "NewTooltip", Language.GetTextValue("Mods.WgMod.GlobalItem.Disabled", ModContent.GetInstance<SolDrive>().DisplayName)));
-        }
     }
 }
 
