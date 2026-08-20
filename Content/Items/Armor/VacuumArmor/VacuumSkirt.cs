@@ -24,6 +24,7 @@ public class VacuumSkirt : ModItem
 
     public override void SetStaticDefaults()
     {
+        ArmorIDs.Legs.Sets.OverridesLegs[Item.legSlot] = true;
         _glowMask = GlowMaskUtility.AddGlowMask(Texture + "_Legs_Glow");
     }
 
