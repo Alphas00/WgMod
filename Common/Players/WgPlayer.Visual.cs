@@ -42,7 +42,7 @@ public partial class WgPlayer
         {
             Main.RunOnMainThread(() =>
             {
-                WgArmor.SetupArmorLayers(this);
+                WgArmor.SetupArmorLayers(Player, _armorLayers);
                 WgArmor.Render(Weight.GetStage(), ref _armorTarget, _armorLayers, Player.Male);
             });
         }
@@ -67,7 +67,7 @@ public partial class WgPlayer
             return;
         if (WgArmor.Enabled)
         {
-            WgArmor.SetupArmorLayers(this);
+            WgArmor.SetupArmorLayers(Player, _armorLayers);
             WgArmor.Render(Weight.GetStage(), ref _armorTarget, _armorLayers, Player.Male);
         }
     }

@@ -166,6 +166,8 @@ public class SpriteSet
                 layer.ArmorTexture = mod.Assets.Request<Texture2D>(armorName, AssetRequestMode.ImmediateLoad).Value;
                 if (simpleArmor)
                 {
+                    if (layer.LegArmor)
+                        lookup = 2;
                     Main.RunOnMainThread(() =>
                     {
                         layer.ArmorTexture = WgArmorLUTs.ConvertSimple(lookup, layer.ArmorTexture);
@@ -233,6 +235,7 @@ public class SpriteSet
         public string Name;
         public LayerType Type;
         public RenderType Render;
+        public bool LegArmor;
 
         [JsonIgnore] public Asset<Texture2D> Texture;
         [JsonIgnore] public Texture2D ArmorTexture;

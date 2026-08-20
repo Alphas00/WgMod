@@ -6,7 +6,8 @@
     "Layers": [
         {
             "Name": "Leg",
-            "Type": "Legs"
+            "Type": "Legs",
+            "LegArmor": true
         },
         {
             "Name": "BackBoob",
