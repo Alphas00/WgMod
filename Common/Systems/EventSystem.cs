@@ -1,5 +1,3 @@
-using System.IO;
-using Steamworks;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;

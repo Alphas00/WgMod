@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using Terraria.Audio;
 using WgMod.Common.Configs;
