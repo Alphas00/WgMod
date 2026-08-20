@@ -314,7 +314,7 @@ public partial class WgPlayer : ModPlayer
                     SetStomach(Stomach - delta);
                     AddWeight(delta);
                     if (Main.rand.NextBool(75))
-                        Gurgle(true);
+                        PlaySound(WgSounds.Gurgle);
                     _digestTimer = Main.rand.Next(DigestTime, DigestTime * 2);
                 }
                 else

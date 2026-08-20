@@ -1050,6 +1050,7 @@ Configs: {
 			General: General settings
 			Visual: Visual settings
 			Sprites: Sprites
+			Volume: Volume
 		}
 
 		DisableJiggle: {
@@ -1085,6 +1086,21 @@ Configs: {
 		StageCap: {
 			Label: Stage Cap
 			Tooltip: The maximum weight stage that the player can reach
+		}
+
+		BellyVolume: {
+			Label: Belly
+			Tooltip: Volume of belly related sounds
+		}
+
+		GurgleVolume: {
+			Label: Gurgle
+			Tooltip: Volume of gurgle sounds
+		}
+
+		MiscVolume: {
+			Label: Miscellaneous
+			Tooltip: Volume of the remaining sounds
 		}
 	}
 
