@@ -44,12 +44,12 @@ For playtesting the latest versions and development, you can download the source
 
 # For the devs
 
-The [.editorconfig](.editorconfig) has some explicit rules about the naming of variables and such. Remember to run
-`dotnet format WgMod.sln` on the root folder every once in a while.
+The [.editorconfig](.editorconfig) has some explicit rules about the naming of variables and such.
 
-And if you have
-the [ReSharper command line tools](https://www.jetbrains.com/help/rider/ReSharper_Command_Line_Tools.html#install-and-use-resharper-command-line-tools-as-net-core-tools),
-run `jb cleanupcode --profile=WgMod --exclude=**.fx WgMod.sln`
+- Remember to run
+`dotnet format WgMod.sln` on the root folder every once in a while
+- And also `dotnet jb cleanupcode --profile=WgMod --exclude=**.fx WgMod.sln`
+- There are vscode tasks defined for these. Just run "Full cleanup"
 
 # Automatic wiki
 
