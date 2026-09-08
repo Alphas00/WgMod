@@ -43,7 +43,7 @@ public class QueenlyGluttony : ModItem
         player.GetCritChance(DamageClass.Melee) += _critChance;
         player.GetArmorPenetration(DamageClass.Melee) += _armorPenetration;
 
-        qg.active = true;
+        qg.Active = true;
     }
 
     public override void ModifyResearchSorting(ref ContentSamples.CreativeHelper.ItemGroup itemGroup)
@@ -59,13 +59,13 @@ public class QueenlyGluttony : ModItem
 
 public class QueenlyGluttonyPlayer : ModPlayer
 {
-    public bool active;
+    public bool Active;
 
-    public int _dust = DustID.PinkSlime;
+    readonly int _dust = DustID.PinkSlime;
 
     public override void ResetEffects()
     {
-        active = false;
+        Active = false;
     }
 
     public static readonly DamageClass[] Melee =
@@ -76,7 +76,7 @@ public class QueenlyGluttonyPlayer : ModPlayer
 
     public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
     {
-        if (!active || !Melee.Contains(hit.DamageType))
+        if (!Active || !Melee.Contains(hit.DamageType))
             return;
 
         if (Main.rand.NextBool(50))
@@ -87,26 +87,20 @@ public class QueenlyGluttonyPlayer : ModPlayer
 
     public override void MeleeEffects(Item item, Rectangle hitbox)
     {
-        if (!active || !Melee.Contains(item.DamageType))
+        if (!Active || !Melee.Contains(item.DamageType) || !Main.rand.NextBool(3))
             return;
 
-        if (Main.rand.NextBool(3))
-        {
-            int dust = Dust.NewDust(hitbox.TopLeft(), hitbox.Width, hitbox.Height, _dust, 0f, 0f, 100, default, 1f);
-            Main.dust[dust].noGravity = true;
-        }
+        Dust dust = Dust.NewDustDirect(hitbox.TopLeft(), hitbox.Width, hitbox.Height, _dust, 0f, 0f, 100, default, 1f);
+        dust.noGravity = true;
     }
 
     public override void EmitEnchantmentVisualsAt(Projectile projectile, Vector2 boxPosition, int boxWidth, int boxHeight)
     {
-        if (!active || !Melee.Contains(projectile.DamageType))
+        if (!Active || !Melee.Contains(projectile.DamageType) || !Main.rand.NextBool(3))
             return;
 
-        if (Main.rand.NextBool(3))
-        {
-            int dust = Dust.NewDust(boxPosition, boxWidth, boxHeight, _dust, 0f, 0f, 100, default, 1f);
-            Main.dust[dust].noGravity = true;
-        }
+        Dust dust = Dust.NewDustDirect(boxPosition, boxWidth, boxHeight, _dust, 0f, 0f, 100, default, 1f);
+        dust.noGravity = true;
     }
 }
 

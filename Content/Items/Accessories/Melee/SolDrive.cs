@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
@@ -17,7 +16,7 @@ public class SolDrive : ModItem
     WgStat _attackSpeed = new(0.08f, 0.16f);
     WgStat _critChance = new(5f, 10f);
     WgStat _armorPenetration = new(2f, 6f);
-    WgStat _meleeSize = new(0f, 0.1f);
+    WgStat _size = new(0f, 0.1f);
 
     public override void SetDefaults()
     {
@@ -39,7 +38,7 @@ public class SolDrive : ModItem
         _attackSpeed.Lerp(immobility);
         _critChance.Lerp(immobility);
         _armorPenetration.Lerp(immobility);
-        _meleeSize.Lerp(immobility);
+        _size.Lerp(immobility);
 
         player.GetDamage(DamageClass.Melee) += _damage;
         player.GetAttackSpeed(DamageClass.Melee) -= _attackSpeed;
@@ -52,12 +51,12 @@ public class SolDrive : ModItem
         player.magmaStone = true;
 
         sd.active = true;
-        sd._meleeSize = _meleeSize;
+        sd._size = _size;
     }
 
     public override void ModifyTooltips(List<TooltipLine> tooltips)
     {
-        tooltips.FormatLines(_damage.Percent(), _attackSpeed.Percent(), _critChance, _armorPenetration, (_meleeSize + 0.1f).Percent());
+        tooltips.FormatLines(_damage.Percent(), _attackSpeed.Percent(), _critChance, _armorPenetration, (_size + 0.1f).Percent());
     }
 
     public override void ModifyResearchSorting(ref ContentSamples.CreativeHelper.ItemGroup itemGroup)
@@ -82,7 +81,7 @@ public class SolDrivePlayer : ModPlayer
 
     internal int _dust = DustID.SolarFlare;
 
-    internal WgStat _meleeSize;
+    internal WgStat _size;
 
     public override void ResetEffects()
     {
@@ -113,10 +112,10 @@ public class SolDrivePlayer : ModPlayer
 
     public override void ModifyItemScale(Item item, ref float scale)
     {
-        if (!active || item.DamageType != DamageClass.Melee || Player.TryGetModPlayer(out ChampionsBeltPlayer cb) || cb.active)
+        if (!active || item.DamageType != DamageClass.Melee || Player.TryGetModPlayer(out ChampionsBeltPlayer cb) || cb.Active)
             return;
 
-        scale += _meleeSize;
+        scale += _size;
     }
 
     public override void MeleeEffects(Item item, Rectangle hitbox)

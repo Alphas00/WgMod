@@ -35,7 +35,7 @@ public class DogTail : GlobalItem
             return;
 
         float immobility = wg.Weight.ClampedImmobility;
-        dt.active = true;
+        dt.Active = true;
 
         _damageModifier.Lerp(immobility);
         dt._damageModifier = _damageModifier;
@@ -58,14 +58,14 @@ public class DogTail : GlobalItem
 
 public class DogTailPlayer : ModPlayer
 {
-    public bool active;
+    public bool Active;
     internal int _cooldown = 180;
     internal int _damage;
     internal float _damageModifier;
 
     public override void ResetEffects()
     {
-        active = false;
+        Active = false;
     }
 }
 
@@ -75,7 +75,7 @@ public class DogTailItem : GlobalItem
 
     public override void UseAnimation(Item item, Player player)
     {
-        if (!player.TryGetModPlayer(out DogTailPlayer dt) || !dt.active || dt._cooldown < 180 || item.damage < 1 || player.whoAmI != Main.myPlayer || !_meleeWeapons.Contains(item.DamageType))
+        if (!player.TryGetModPlayer(out DogTailPlayer dt) || !dt.Active || dt._cooldown < 180 || item.damage < 1 || player.whoAmI != Main.myPlayer || !_meleeWeapons.Contains(item.DamageType))
             return;
 
         if (Main.hardMode)
@@ -98,14 +98,7 @@ public class DogTailItem : GlobalItem
             case ItemUseStyleID.Guitar:
             case ItemUseStyleID.Rapier:
             case ItemUseStyleID.RaiseLamp:
-                Projectile.NewProjectile(
-                    player.GetSource_FromThis(),
-                    player.Center,
-                    velocity * 6f,
-                    ModContent.ProjectileType<BouncyBall>(),
-                    (int)(dt._damage * dt._damageModifier),
-                    5
-                );
+                Projectile.NewProjectile(player.GetSource_FromThis(), player.Center, velocity * 6f, ModContent.ProjectileType<BouncyBall>(), (int)(dt._damage * dt._damageModifier), 5);
                 break;
         }
     }

@@ -32,12 +32,13 @@ public class MechaskeletonLegs : ModItem
             return;
         float immobility = wg.Weight.ClampedImmobility;
 
+        int prevRocketBoots = player.rocketBoots;
+
         _movePenalty.Lerp(immobility);
         _moveSpeed.Lerp(immobility);
         _accRunSpeed.Lerp(immobility);
         _lavaMax.Lerp(immobility);
 
-        int prevRocketBoots = player.rocketBoots;
         player.moveSpeed += _moveSpeed;
         player.accRunSpeed = _accRunSpeed;
         player.rocketBoots = 1;

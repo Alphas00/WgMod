@@ -35,6 +35,7 @@ public class TerraskeletonLegs : ModItem
         float immobility = wg.Weight.ClampedImmobility;
 
         int prevRocketBoots = player.rocketBoots;
+
         player.moveSpeed += MoveSpeedBonus;
         player.accRunSpeed = 6.75f;
         player.rocketBoots = 4;
