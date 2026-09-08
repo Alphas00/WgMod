@@ -3,6 +3,7 @@ using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 using WgMod.Content.Items.Accessories.Fat;
+using WgMod.Content.Items.Accessories.Magic;
 using WgMod.Content.Items.Accessories.Melee;
 
 namespace WgMod.Common.GlobalNPCs;
@@ -21,6 +22,9 @@ public class LootGlobalNPC : GlobalNPC
                 break;
             case NPCID.Golem:
                 npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<MobilityBadge>(), 5));
+                break;
+            case NPCID.HallowBoss:
+                npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<ShimmeringVail>(), 3));
                 break;
         }
     }

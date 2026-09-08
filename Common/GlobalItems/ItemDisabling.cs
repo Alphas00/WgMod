@@ -4,6 +4,7 @@ using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using WgMod.Content.Items.Accessories.Fat;
+using WgMod.Content.Items.Accessories.Magic;
 using WgMod.Content.Items.Accessories.Melee;
 using WgMod.Content.Items.Accessories.Movement.Boots;
 
@@ -82,6 +83,13 @@ public class ItemDisabling : GlobalItem
         ModContent.ItemType<TerraskeletonLegs>(),
         ModContent.ItemType<MechaskeletonLegs>(),
         ModContent.ItemType<TwilightTracers>()
+    ]);
+
+    /// <summary> Every accessory in the Cross Necklace line </summary>
+    public static readonly Line CrossNecklaceLine = Line.Create([
+        ItemID.CrossNecklace,
+        ItemID.StarVeil,
+        ModContent.ItemType<ShimmeringVail>(),
     ]);
 
     public override void UpdateInventory(Item item, Player player)

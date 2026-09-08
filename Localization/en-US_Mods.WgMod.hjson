@@ -1054,6 +1054,16 @@ Items: {
 			Reduces damage from touching lava
 			'''
 	}
+
+	ShimmeringVail: {
+		DisplayName: Shimmering Vail
+		Tooltip:
+			'''
+			Fires {0} Exerlasting Rainbows upon taking damage, dealing {1} damage each
+			Increases the length of invincibility after taking damage by {2} seconds
+			Effects scale with your obesity
+			'''
+	}
 }
 
 Buffs: {
