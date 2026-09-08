@@ -24,8 +24,6 @@ public class WhaleHead : ModItem
     WgStat _fishing = new(5f, 10f);
 
     WgStat _setBonusSpeed = new(1f, 0.5f);
-    WgStat _setBonusJump = new(5f, 10f);
-    WgStat _setBonusFallSpeedRate = new(0.1f, 0.2f);
     WgStat _setBonusWaterSpeed = new(2f, 10f);
     WgStat _blowholeDamage = new(200f, 500f);
 
@@ -79,23 +77,18 @@ public class WhaleHead : ModItem
         float immobility = wg.Weight.GetClampedFactor(WeightStage.Regular, WeightStage.Blob);
 
         _setBonusSpeed.Lerp(immobility);
-        _setBonusJump.Lerp(immobility);
-        _setBonusFallSpeedRate.Lerp(immobility);
         _setBonusWaterSpeed.Lerp(immobility);
         _blowholeDamage.Lerp(immobility);
 
         wg.MovementPenalty *= _setBonusSpeed;
         wg.PreventImmobility = true;
         wg.MovementWeightLossRate *= SetBonusWeightLoss;
-        player.jumpSpeedBoost += _setBonusJump;
 
         player.breathEffectiveness += 3f;
         player.accFlipper = true;
 
         if (player.wet)
             player.moveSpeed += _setBonusWaterSpeed;
-        else
-            FallSpeedAccelerate(player, _setBonusFallSpeedRate);
 
         BreachAttack(player, _blowholeDamage);
 
@@ -120,19 +113,6 @@ public class WhaleHead : ModItem
 
         if (player.wet)
             _timer = 0;
-    }
-
-    public void FallSpeedAccelerate(Player player, float rate)
-    {
-        if (!player.CheckForSolidGround())
-        {
-            if (player.maxFallSpeed < 15f)
-                _setBonusFallSpeed += rate;
-        }
-        else
-            _setBonusFallSpeed = 0f;
-
-        player.maxFallSpeed += _setBonusFallSpeed;
     }
 
     public override void ModifyResearchSorting(ref ContentSamples.CreativeHelper.ItemGroup itemGroup)
