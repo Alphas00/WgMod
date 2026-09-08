@@ -1064,6 +1064,26 @@ Items: {
 			Effects scale with your obesity
 			'''
 	}
+
+	CryoJelly: {
+		DisplayName: Cryo Jelly
+		Tooltip: Whip attacks inflict frostburn
+	}
+
+	DamnedDessert: {
+		DisplayName: Damned Dessert
+		Tooltip: Melee and whip attacks inflict both frostbite and hellfire
+	}
+
+	CryoGauntlet: {
+		DisplayName: Cryo Gauntlet
+		Tooltip:
+			'''
+			Increases whip damage and attack speed by {0}% and whip knockback by {1}x
+			Increases whip range by {2}%
+			Effects scale with your obesity
+			'''
+	}
 }
 
 Buffs: {

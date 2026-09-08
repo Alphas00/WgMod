@@ -5,6 +5,7 @@ using Terraria.ModLoader;
 using WgMod.Content.Items.Accessories.Fat;
 using WgMod.Content.Items.Accessories.Magic;
 using WgMod.Content.Items.Accessories.Melee;
+using WgMod.Content.Items.Accessories.Summon;
 
 namespace WgMod.Common.GlobalNPCs;
 
@@ -25,6 +26,12 @@ public class LootGlobalNPC : GlobalNPC
                 break;
             case NPCID.HallowBoss:
                 npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<ShimmeringVail>(), 3));
+                break;
+            case NPCID.IceSlime:
+                npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<CryoJelly>(), 150));
+                break;
+            case NPCID.SpikedIceSlime:
+                npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<CryoJelly>(), 50));
                 break;
         }
     }
