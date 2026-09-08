@@ -80,9 +80,9 @@ public class QueenlyGluttonyPlayer : ModPlayer
             return;
 
         if (Main.rand.NextBool(50))
-            target.AddBuff(BuffID.Shimmer, 2 * 60);
+            target.AddBuff(BuffID.Shimmer, Main.rand.Next(1, 4) * 2 * 60);
         else
-            target.AddBuff(BuffID.GelBalloonBuff, 2 * 60);
+            target.AddBuff(BuffID.GelBalloonBuff, Main.rand.Next(1, 4) * 2 * 60);
     }
 
     public override void MeleeEffects(Item item, Rectangle hitbox)

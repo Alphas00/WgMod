@@ -93,15 +93,10 @@ public class SolDrivePlayer : ModPlayer
 
     public override void SetStaticDefaults()
     {
-        _buffs.Add(BuffID.Oiled, 25);
-        _buffs.Add(BuffID.OnFire, 50);
-        _buffs.Add(BuffID.Frostburn, 25);
-        _buffs.Add(BuffID.Frostburn2, 10);
-        _buffs.Add(BuffID.CursedInferno, 5);
-        _buffs.Add(BuffID.ShadowFlame, 1);
+        _buffs.Add(BuffID.OnFire3, 50);
+        _buffs.Add(BuffID.OnFire, 25);
         _buffs.Add(BuffID.GelBalloonBuff, 50);
         _buffs.Add(BuffID.Slimed, 25);
-        _buffs.Add(BuffID.Stinky, 10);
         _buffs.Add(BuffID.Shimmer, 1);
     }
 
