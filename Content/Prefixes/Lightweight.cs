@@ -40,7 +40,7 @@ public class Lightweight : ModPrefix
 
     public override IEnumerable<TooltipLine> GetTooltipLines(Item item)
     {
-        yield return new TooltipLine(Mod, "Lightweight", MovePenaltyTooltip.Format((_movePenalty.Value - 1f).Percent()))
+        yield return new TooltipLine(Mod, "Lightweight", MovePenaltyTooltip.Format((_movePenalty - 1f).Percent()))
         {
             OverrideColor = Terraria.ID.Colors.RarityPink
         };
