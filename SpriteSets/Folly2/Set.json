@@ -1,5 +1,5 @@
 {
-    "Author": "folly",
+    "Author": "folly, enkah",
     "DrawOffsetX": 8,
     "DrawOffsetY": 24,
     "ArmCount": 4,
@@ -21,11 +21,25 @@
         {
             "Name": "BackBoob",
             "Type": "Breasts",
+            "Render": "FemaleOnly",
+            "Physics": true
+        },
+        {
+            "Name": "BackBoob_Male",
+            "Type": "Breasts",
+            "Render": "MaleOnly",
             "Physics": true
         },
         {
             "Name": "Belly",
             "Type": "Belly",
+            "Render": "FemaleOnly",
+            "Physics": true
+        },
+        {
+            "Name": "Belly_Male",
+            "Type": "Belly",
+            "Render": "MaleOnly",
             "Physics": true
         }
     ],
@@ -33,6 +47,13 @@
         {
             "Name": "FrontBoob",
             "Type": "Breasts",
+            "Render": "FemaleOnly",
+            "Physics": true
+        },
+        {
+            "Name": "FrontBoob_Male",
+            "Type": "Breasts",
+            "Render": "MaleOnly",
             "Physics": true
         }
     ],
