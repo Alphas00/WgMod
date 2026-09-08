@@ -74,7 +74,7 @@ public class TwilightTracers : ModItem
     public override void AddRecipes()
     {
         CreateRecipe()
-            .AddIngredient<TwilightTracers>()
+            .AddIngredient<MechaskeletonLegs>()
             .AddIngredient(ItemID.EmpressFlightBooster)
             .AddTile(TileID.TinkerersWorkbench)
             .Register();
