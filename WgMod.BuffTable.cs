@@ -1,9 +1,14 @@
 using Terraria.ID;
+using Terraria.ModLoader;
+using WgMod.Content.Buffs;
+using WgMod.Content.Buffs.Consumables;
+using WgMod.Content.Buffs.Debuffs;
 
 namespace WgMod;
 
 partial class WgMod
 {
+    static int Buff<T>() where T : ModBuff => ModContent.BuffType<T>();
     static GainOptions GainOverTime(Mass totalGain, float totalTime) => new(totalGain, totalTime);
 
     void RegisterBuffs()
@@ -63,18 +68,15 @@ partial class WgMod
         ]);
 
         // WgMod
-        AddBuffs(
-            "WgMod",
-            [
-                ("AmbrosiaGorged", 6f),
-                ("WobWobWobWob", 6f),
-                ("GnomeLuck", 6f),
-                ("SpikedSkin", 6f),
-                ("FullOfSpider", 6f),
-                ("Caramel", 12f),
-                ("CrispyDebuff", 4f)
-            ]
-        );
+        AddBuffs([
+            (Buff<AmbrosiaGorged>(), 6f),
+            (Buff<WobWobWobWob>(), 6f),
+            (Buff<GnomeLuck>(), 6f),
+            (Buff<SpikedSkin>(), 6f),
+            (Buff<FullOfSpider>(), 6f),
+            (Buff<Caramel>(), 12f),
+            (Buff<Caramelized>(), 4f)
+        ]);
 
         // Calamity Mod
         AddBuffs(

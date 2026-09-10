@@ -25,7 +25,7 @@ public class WgItem : GlobalItem
     {
         if (!player.TryGetModPlayer(out WgPlayer wg))
             return true;
-        if (WgMod._buffTable.TryGetValue(item.buffType, out GainOptions gain) && gain.IsInstant)
+        if (ItemID.Sets.IsFood[item.type] && WgMod._buffTable.TryGetValue(item.buffType, out GainOptions gain) && gain.IsInstant)
         {
             if (wg.Stomach + gain.TotalGain > WgPlayer.StomachCapacity)
                 return false;

@@ -42,7 +42,7 @@ public class Caramelized : ModBuff
 
     public override void Update(Player player, ref int buffIndex)
     {
-        player.GetModPlayer<CrispyDebuffPlayer>().CaramelizedEffect = true;
+        player.GetModPlayer<CaramelizedPlayer>().CaramelizedEffect = true;
 
         int dustRate = 15;
         if (Main.rand.NextBool(dustRate))
@@ -91,7 +91,7 @@ public class CaramelizedNPC : GlobalNPC
     }
 }
 
-public class CrispyDebuffPlayer : ModPlayer
+public class CaramelizedPlayer : ModPlayer
 {
     public bool CaramelizedEffect;
 
